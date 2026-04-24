@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+/* 전체에 적용할 디자인 */
+*{
+    box-sizing: border-box;/* 크기 설정 기준을 테두리로 정한다*/
+    font-family: sans-serif;/*글꼴 통일 */
+}
+
+/* 
+    컨테이너 디자인 
+    - 기본적으로 가운데 배치되도록 구현
+    - 폭은 유틸리티 클래스로 지정하도록 구현
+*/
+.container{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 
+    셀 디자인
+    - 기본적으로 10px의 상하 간격을 가지도록 구현
+    - 필요하다면 인라인 스타일 또는 유틸리티 클래스로 재설정하도록 구현
+*/
+.cell{
+    margin: 10px 0px;
+}
+
+
+/* 
+    유틸리티 디자인
+    - 자주 사용할 법한 디자인들을 클래스로 만들어서 보관해둠
+*/
+.left{
+    text-align: left;
+}
+.center{
+    text-align: center;
+}
+.right{
+    text-align: right;
+}
