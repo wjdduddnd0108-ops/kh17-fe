@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스타일 태그</title>
+    <link rel="icon" href="/kh.png" type="image/png">
+</head>
+<body>
+    <!-- [팁] ALT + shift 아래키 를 누르면 현재 선택한 영역 또는 커서가 있는 줄이 복제된다 -->
+    
+    <!-- 
+        일일이 디자인하기는 어려우니 외부에 디자인 전용 영역을 생성하도록 구현 
+        <style>태그 생성 대상을 지정(선택)한 뒤 디자인 코드를 작성
+        대상을 선택하기 위한 구문을 선택자(selector)라고 부른다
+
+        [장점] 일괄 처리가 가능. 가독성이 좋음
+        [단점] 선택자를 공부해야한다 (원하는 것만 선택하기 위한 공부)
+    -->
+    <style>
+        /* 태그 선택자 : 태그명으로 선택 */
+        h1{
+            color: red;
+            background-color: white;
+        }
+        /* 아이디 선택자 : 아이디를 이용해서 선택 */
+        #title{
+            border: 1px solid black;
+        }
+        /* 클래스 선택자 : 여러 클래스 중 지정한 클래스를 가진 대상을 선택 */
+        .a{
+            font-style: italic;
+        }
+        .a.c{
+            text-decoration: line-through;
+        }
+        /* 모두 다 섞을 수 있다 (붙여서 작성) */
+        h1#title {}
+        #title2.a {}
+    </style>
+        
+    <h1>Hello css~</h1>
+    <h1 id="title">Hello css~</h1>
+    <h1 id="title2" class="a">Hello css~</h1>
+    <h1 class="a b c">Hello css~</h1>
+    <h1 class="a b d">Hello css~</h1>
+    <h1>Hello css~</h1>
+</body>
+</html>
