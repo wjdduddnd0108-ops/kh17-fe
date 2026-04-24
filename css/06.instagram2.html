@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>instagram</title>
+     <link rel="icon" href="/인스타그램.png" type="image/png">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        *{ /* 전체에게 설정한다! */
+            /* 이제부터 폭과 높이는 테두리가 기준이야 */
+            box-sizing: border-box;
+        }
+        /* 영역을 시각적으로 보이게 만드는 테스트 코드 */
+        div{
+            /* box-shadow: 우 하 번짐 퍼짐; */
+            box-shadow: 0 0 0 1px rgb(149, 165, 166);
+        }
+
+        /* 컨테이너 디자인 */
+        .container{
+            width: 530px;
+            margin: 50px auto;
+        }
+        /* 셀 디자인 */
+        .cell{
+            margin-top: 10xp;
+            margin-bottom: 10px;
+        }
+        /* 유틸리티 디자인 */
+        .center{
+            text-align: center;
+        }
+        input{
+            width: 100%;
+            font-family: sans-serif;
+            font-size: 20px;
+            padding: 0.75em;
+            outline: none;
+            border-radius: 0.75em;
+            display: block;
+            border-style: solid;
+            border-color: rgb(149, 165, 166);
+            border-width: 1px;
+        }
+        button{
+            width: 100%;
+            font-family: sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 0.5em;
+            background-color: rgb(52, 152, 219);
+            color: white;
+            border-width: 0px;
+            border-style: solid;
+             border-radius: 100px;
+            display: block;
+            outline: none;
+        }
+        a{
+            width: 100%;
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- 컨테이너(container) : 가장 작은 화면 단위 -->
+    <div class="container">
+        <!-- 셀(cell) : 화면의 한 줄-->
+        <div class="cell center" >
+            <img src="/인스타그램.png" width="80">
+        </div>
+        <hr>
+        <div class="cell" style="margin-top:100px;">
+            <h3>Instagram으로 로그인</h3>
+        </div>
+        <div class="cell">
+            <input type="text" name="memberId" required
+                    placeholder="휴대폰 번호, 사용자 이름 또는 이메일">
+        </div>
+        <div class="cell"> 
+            <input type="text" name="memberPassword" required
+                placeholder="비밀번호">
+        </div>
+        <div class="cell" style="margin-top: 20px;">
+            <button>로그인</button>
+        </div>
+        <div class="cell center" style="margin-top: 20px;">
+             <a href="#">비밀번호를 잊으셨나요?</a>
+        </div>
+    </div>
+</body>
+</html>
