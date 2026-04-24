@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        *{ /* 전체에게 설정한다! */
+            /* 이제부터 폭과 높이는 테두리가 기준이야 */
+            box-sizing: border-box;
+        }
+        /* 완전무식 디자인 */
+        h1{
+            width: 430px;
+            /* 영역 내부 요소(글자나 이미지처럼 실체가 있는것)들을 가운데 정렬 */
+            text-align: center;
+            /*
+                영역 태그를 중앙에 위치한것처럼 보이게 위치 설정 
+                auto는 가능한 많이(알아서)란 뜻  
+            */
+            /* margin-left: auto; */
+            /* margin-right: auto; */
+            margin: 20px auto;
+            margin-top: 50px;
+        }
+        input[name=memberId],input[name=memberPassword]{
+            font-family: sans-serif;
+            font-size: 20px;
+            width: 430px;
+            padding: 0.5em;
+            outline: none;
+            margin: 20px auto;
+            display: block;
+        }
+        button{
+            font-family: sans-serif;
+            font-size: 20px;
+            width: 430px;
+            padding: 0.5em;
+            background-color: rgb(44, 62, 80);
+            color: white;
+            display: block;
+            margin: 20px auto;
+        }
+        hr{
+            width: 430px;
+        }
+        div{
+            width: 430px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        body{
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>로그인</h1>
+    <form autocomplete="off">
+        <input type="text" name="memberId" required
+                placeholder="아이디 (*이메일 형식 입력불가)">
+        <input type="password" name="memberPassword" required
+                placeholder="비밀번호">
+        <button>로그인</button>
+        <div>
+            <input type="checkbox"> 아이디저장
+        </div>
+        <hr>
+        <div>
+            ．수강생은 현재 페이지
+            https://www.kh-academy.co.kr/login/loing.kh를
+            즐겨찾기 추가 해주세요.
+        </div>
+       
+        
+    </form>
+</body>
+</html>
