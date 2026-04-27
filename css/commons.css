@@ -140,6 +140,9 @@
     border: 1px solid #636e72;
     border-radius: 0.1em;
 }
+textarea.field{
+    resize: none;
+}
 .field:focus{/*조건부 디자인 : 입력 상태일 경우*/
     border-color: #2d3436;
 }

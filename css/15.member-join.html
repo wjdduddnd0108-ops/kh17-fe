@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+    
+    </style>
+</head>
+<body>
+    <form autocomplete="off" method="post" enctype="multipart/form-data">
+        <div class="container w-600 mt-50 mb-50">
+            <!-- 페이지 제목 -->
+            <div class="cell center">
+                <h1>회원 가입 정보 입력</h1>
+            </div>
+            <!-- 아이디 입력창 -->
+            <div class="cell">
+                <label>
+                    아이디 
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="memberId"
+                class="field w-100 required">
+            </div>
+            <!-- 이메일 입력창 -->
+            <div class="cell">
+                <label>
+                    이메일
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="memberEmail"
+                class="field w-100" inputmode="email" required>
+            </div>
+            <!-- 비밀번호 입력창 -->
+            <div class="cell">
+                <label>
+                    비밀번호
+                    <i class="fa-solid fa-asterisk red"></i>
+                    <i class="fa-solid fa-eye-slash"></i>
+                </label>
+                <input type="password" name="memberPassword"
+                class="field w-100" required>
+            </div>
+            <!-- 비밀번호 확인 입력창 : name 부여 안함(전송x)-->
+             <div class="cell">
+                <label>비밀번호 확인  <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="password" class="field w-100">
+             </div>
+            <!-- 닉네입 입력창 -->
+            <div class="cell">
+                <label>
+                    닉네임
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="memberNickname"
+                class="field w-100" required>
+            </div>
+            <!-- 생년월일 입력창 -->
+            <div class="cell">
+                <label>생년월일</label>
+                <input type="date" name="memberBirth"
+                class="field w-100">
+            </div>
+            <!-- 연락처 입력창 -->
+            <div class="cell">
+                <label>연락처</label>
+                <input type="text" name="memberContact"
+                inputmode="tel" class="field w-100">
+            </div>
+            <!-- 주소 입력창 -->
+            <div class="cell">
+                <label>주소</label>
+            </div>
+            <div class="cell">
+                <input type="text" inputmode="numeric"
+                    name="memberPost" class="field"
+                    size="6" maxlength="6" placeholder="우편번호">
+                <!-- 이 버튼은 전송버튼이 아니므로 type을 명시 -->
+                 <button type="button" class="btn btn-neutral">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                 </button>
+            </div>
+            <div class="cell">
+                <input type="text" name="memberAddress1"
+                    class="field w-100" placeholder="기본주소">
+            </div>
+            <div class="cell">
+                <input type="text" name="memberAddress2"
+                    class="field w-100" placeholder="상세주소">
+            </div>
+               
+            <!-- 상태메세지 입력창 -->
+            <div class="cell">
+                <label>상태메세지</label>
+                <textarea name="memberMessage"
+                 class="field w-100" rows="5">
+                </textarea>
+            </div>
+            <!-- 프로필이미지 선택창 -->
+            <div class="cell">
+                <label>프로필이미지</label>
+                 <input type="file" name="attach" accept=".png, .jpg" 
+                class="field w-100">
+            </div>
+            <!-- 가입 버튼 -->
+            <div class="cell mt-40">
+                <button class="btn btn-positive w-100">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>회원가입</span>
+                </button>
+            </div>
+        </div> 
+    </form>
+</body>
+</html>
