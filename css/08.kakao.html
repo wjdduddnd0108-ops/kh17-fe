@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오</title>
+    <link rel="icon" href="/카카오톡.png?v=1" type="image/png">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+        div{
+            /* box-shadow: 0 0 1px 0 lightgray; */
+        }
+
+        /* 
+            폭 유틸리티 클래스
+            - 50px 단위로 설정할 수 있도록 구현
+            - 200px ~ 1200px까지 구현
+            - w-* 로 구현
+        */
+        .w-200 {width:200px; }
+        .w-250 {width:250px; }
+        .w-300 {width:300px; }
+        .w-350 {width:350px; }
+        .w-400 {width:400px; }
+        .w-450 {width:450px; }
+        .w-500 {width:500px; }
+        .w-550 {width:550px; }
+        .w-600 {width:600px; }
+        .w-650 {width:650px; }
+        .w-700 {width:700px; }
+        .w-750 {width:750px; }
+        .w-800 {width:800px; }
+        .w-850 {width:850px; }
+        .w-900 {width:900px; }
+        .w-950 {width:950px; }
+        .w-1000 {width:1000px; }
+        .w-1050 {width:1050px; }
+        .w-1100 {width:1100px; }
+        .w-1150 {width:1150px; }
+        .w-1200 {width:1200px; }
+
+        /* 폭 비율 설정 */
+        .w-100 {width: 100%;}
+        .w-80 {width: 80%;}
+        .w-75 {width: 75%;}
+        .w-66 {width: 66.6666%;}
+        .w-60 {width: 60%;}
+        .w-50 {width: 50%;}
+        .w-40 {width: 40%;}
+        .w-33 {width: 33.3333%;}
+        .w-25 {width: 25%;}
+        .w-20 {width: 20%;}
+
+        /* 
+            여백(margin) 유틸리티 클래스
+            - 네 개의 방향(top, bottom, left, right)를 각각 처리
+            - left는 차별적인 단어 이슈+세로형 문제로 start로 대체하여 사용
+            - right 역시 같은 문제로 end로 대체하여 사용
+            - margin-left 는 ms, margin-right는 me로 구현
+        */
+        .mt-0  {margin-top: 0px;}
+        .mt-10 {margin-top: 10px;}
+        .mt-20 {margin-top: 20px;}
+        .mt-30 {margin-top: 30px;}
+        .mt-40 {margin-top: 40px;}
+        .mt-50 {margin-top: 50px;}
+
+        .mb-0  {margin-bottom: 0px;}
+        .mb-10 {margin-bottom: 10px;}
+        .mb-20 {margin-bottom: 20px;}
+        .mb-30 {margin-bottom: 30px;}
+        .mb-40 {margin-bottom: 40px;}
+        .mb-50 {margin-bottom: 50px;}
+
+        .ms-0  {margin-left: 0px;}
+        .ms-10 {margin-left: 10px;}
+        .ms-20 {margin-left: 20px;}
+        .ms-30 {margin-left: 30px;}
+        .ms-40 {margin-left: 40px;}
+        .ms-50 {margin-left: 50px;}
+
+        .me-0  {margin-right: 0px;}
+        .me-10 {margin-right: 10px;}
+        .me-20 {margin-right: 20px;}
+        .me-30 {margin-right: 30px;}
+        .me-40 {margin-right: 40px;}
+        .me-50 {margin-right: 50px;}
+        
+        /* 컴포넌트(Component) 디자인 */
+        
+        /* 입력창(field) 디자인 */
+        .field{
+            outline: none; /* 기본 갖옺선 제거*/
+            font-size: 20px;
+            padding: 0.35em 0.75em;
+            border: 1px solid #636e72;
+            border-radius: 0.1em;
+        }
+        .field:focus{/*조건부 디자인 : 입력 상태일 경우*/
+            border-color: #2d3436;
+        }
+
+        /* 
+            버튼(btn) 디자인
+            - btn이라는 클래스를 부여하면 글꼴이나 여백 등 기본 설정을 수행
+            - 역할(긍정/부정/중립)에 따라 색상을 부여
+                - 긍정버튼 : btn-positive 클래스를 추가로 부여
+                - 중립버튼 : btn-neutral 클래스로 추가로 부여
+                - 부정버튼 : btn-negative 클래스로 추가로 부여 
+        */
+        .btn{
+            outline: none;
+            font-size: 18px;
+            padding: 0.35em 0.75em;
+            border: 1px solid #636e72;
+            border-radius: 0.1em;
+        }
+
+        /* 
+            이번 화면에서만 필요한 디자인을 추가 (카카오 입력창) 
+            새로 만드는 것이 아니라 어디를 어떻게 고쳐쓸것인지를 작성
+        */
+        .field.field-underline{
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-radius: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .btn.btn-positive {
+            background-color: #FEE500;
+            border-color: #FEE500;
+            color: #191919;
+            padding: 0.7em;
+        }
+        .btn.btn-neutral {
+            background-color: #F0F0F0;
+            border-color: #F0F0F0;
+            color: #191919;
+            padding: 0.7em;
+        }
+        .btn.btn-negative {
+
+        }
+
+
+    </style>
+</head>
+<body>
+    <form autocomplete="off">
+    <div class="container w-450 mt-50">
+        <div class="cell center">
+             <img src="/카카오톡.png" width="200">
+        </div>
+        <div class="cell mt-30">
+            <input type="text" name="memberId" required
+            placeholder="카카오메일 아이디, 이메일, 전화번호"
+            class="field-underline w-100">
+        </div>
+        <div class="cell mt-20">
+            <input type="password" name="memberPassword" required
+            placeholder="비밀번호" class="field-underline w-100">
+        </div>
+        <div class="cell mb-20 mt-50">
+            <button class="btn btn-positive w-100">로그인</button>
+        </div>
+        <hr>
+        <div class="cell mt-20">
+            <button class="btn btn-neutral w-100">QR코드 로그인</button>
+        </div>
+    </div>
+    </form>
+  
+    </body>
+    </html>
