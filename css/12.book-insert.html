@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>책 정보 입력</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+    
+    </style>
+</head>
+<body>
+    <form autocomplete="off" method="post" enctype="multipart/form-data">
+        <div class="container w-400 mt-50">
+            <div class="cell center">
+                <h1>책 정보 등록</h1>
+            </div>
+            <div class="cell">
+                <label>책 이름</label>
+                <input type="text" name="bookTitle"
+                class="field w-100" required
+                placeholder="e.g., 해리포터와 마법사의 돌">
+            </div>
+            <div class="cell">
+                <label>저자</label>
+                <input type="text" name="bookAuthor"
+                class="field w-100"
+                placeholder="e.g., .J.K. 롤링">
+            </div>
+            <div class="cell">
+                <label>출간일</label>
+                <input type="date" name="bookPublicationDate"
+                class="field w-100"
+                placeholder="e.g., yyyy-MM-dd">
+            </div>
+            <div class="cell">
+                <label>책 가격</label>
+                <input type="text" name="bookPrice"
+                class="field w-100" inputmode="numeric" required
+                placeholder="e.g., 10000">
+            </div>
+            <div class="cell">
+                <label>출판사</label>
+                <input type="text" name="bookPublisher"
+                class="field w-100" 
+                placeholder="e.g., 문학수첩">
+            </div>
+            <div class="cell">
+                <label>페이지 수</label>
+                <input type="text" name="bookPageCount"
+                class="field w-100" required inputmode="numeric"
+                placeholder="e.g., 500">
+            </div>
+            <div class="cell">
+                <label>장르</label>
+                <select class="field w-100" name="bookGenre" required>
+                    <option value="">선택하세요</option>
+                    <option>판타지</option>
+		            <option>교양</option>
+		            <option>소설</option>
+		            <option>역사</option>
+		            <option>과학</option>
+		            <option>추리소설</option>
+		            <option>자기계발</option>
+		            <option>수험서</option>
+                </select>
+            </div>
+            <div class="cell">
+                <label>책 표지</label>
+                <input type="file" name="attach" accept=".png, .jpg">
+            </div>
+            </div>
+            <div class="cell mt-40 right">
+            <button class="btn btn-neutral">
+                목록으로
+            </button>
+            <button class="btn btn-positive">
+                등록하기
+            </button>
+        </div>
+    </form>
+</body>
+</html>

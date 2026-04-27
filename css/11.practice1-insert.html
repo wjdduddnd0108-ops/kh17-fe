@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강좌 입력</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+    
+    </style>
+</head>
+<body>
+    <form autocomplete="off" method="post" enctype="multipart/form-data">
+        <div class="container w-500 mt-50 mb-50">
+            <div class="cell center">
+                <h1>강좌 정보 등록</h1>
+            </div>
+            <div class="cell">
+                <label>강좌명 *</label>
+                <input type="text" name="practice1Name"
+                class="field w-100" required
+                placeholder="e.g., 정보처리 산업기사">
+            </div>
+            <div class="cell">
+                <label>카테고리 *</label>
+                <select class="field w-100" name="practice1Category" required>
+                    <option value="">선택하세요</option>
+                    <option>이론</option>
+                    <option>실습</option>
+                    <option>시험</option>
+                </select>            
+            </div>
+            <div class="cell">
+                <label>강의시간 *</label>
+                <input type="text" inputmode="numeric" 
+                name="practice1Time"
+                class="field w-100" required>
+            </div>
+            <div class="cell">
+                <label>수강료 *</label>
+                <input type="text" inputmode="numeric"
+                name="practice1Price"
+                class="field w-100" required>
+            </div>
+            <div class="cell">
+                <label>수강형태 *</label>
+                <select class="field w-100" name="practice1CourseType" required>
+                    <option value="">선택하세요</option>
+                    <option>온라인</option>
+                    <option>오프라인</option>
+                    <option>혼합</option>
+                </select>  
+            </div>
+            <div class="cell">
+                <label>미리보기</label>
+                <input type="file" name="attach"
+                accept=".png, .jpg" multiple
+                class="field w-100">
+            </div>
+            <div class="cell mt-40">
+                <button class="btn btn-positive w-100">강좌 생성하기</button>
+            </div>
+            <div class="cell w-100">
+                <button class="btn btn-neutral w-100">목록으로</button>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>

@@ -146,7 +146,7 @@
         - 중립버튼 : btn-neutral 클래스로 추가로 부여
         - 부정버튼 : btn-negative 클래스로 추가로 부여 
 */
-.btn{
+.btn {
     outline: none;
     font-size: 18px;
     padding: 0.5em 0.75em;
@@ -154,19 +154,19 @@
     border-radius: 0.1em;
     cursor: pointer;
 }
-.btn:hover{/* 조건부 디자인 : 마우스가 올라갔을 때*/
-    filter: brightness(0.95); /*살짝 어둡게*/
+.btn:hover { /* 조건부 디자인 : 마우스가 올라갔을 때 */
+    filter: brightness(0.95);
 }
-.btn.btn-postive{/* 긍정버튼 */
+.btn.btn-positive {/* 긍정버튼 */
     background-color: #0984e3;
     border-color: #0984e3;
     color: white;
 }
-.btn.btn-neutral{/* 중립버튼 */
+.btn.btn-neutral {/* 중립버튼 */
     background-color: #FFFFFF;
     color: #2d3436;
 }
-.btn.btn-negative{/* 부정버튼 */
+.btn.btn-negative {/* 부정버튼 */
     background-color: #d63031;
     border-color: #d63031;
     color: white;
