@@ -115,7 +115,22 @@
 .me-40 {margin-right: 40px;}
 .me-50 {margin-right: 50px;}
 
-         /* 컴포넌트(Component) 디자인 */
+/* 글자 색상 유틸리티 클래스 */
+.red { color: #e74c3c; }/* 로즈 레드 */
+.orange { color: #e67e22; }/* 소프트 오렌지 */
+.yellow { color: #f1c40f; }/* 선플라워 */
+.green { color: #2ecc71; }/* 에메랄드 */
+.blue { color: #3498db; }/* 피터리버 블루 */
+.purple { color: #9b59b6; }/* 아메지스트 */
+.white { color: #ecf0f1; }/* 클라우드 화이트 */
+.black { color: #2c3e50; }/* 미드나잇 블랙 */
+.gray { color: #95a5a6; }/* 콘크리트 그레이 */
+.silver { color: #bdc3c7; }/* 실버 미스트 */
+.gold { color: #d4af37; }/* 샌드 골드 */
+
+
+
+/* 컴포넌트(Component) 디자인 */
         
 /* 입력창(field) 디자인 */
 .field{
@@ -154,6 +169,12 @@
     border-radius: 0.1em;
     cursor: pointer;
 }
+a.btn{
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+
 .btn:hover { /* 조건부 디자인 : 마우스가 올라갔을 때 */
     filter: brightness(0.95);
 }
