@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡</title>
+     <link rel="icon" href="/images/kh.png" type="image/png">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+        .field{
+            border-radius: 0;
+        }
+        .btn.btn-positive{
+            background-color: #346AFF;
+            border-color: #346AFF;
+            color: #FAFEFF;
+        }
+        .btn.btn-neutral{
+            background-color: #FFFFFF;
+            color: #636E72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container w-450 mt-50">
+        <div class="cell center">
+            <img src="/images/쿠팡.png" width="200">
+        </div>
+        <div class="cell mt-40">
+            <input type="text" name="memberId" required
+                placeholder="아이디(이메일)"
+                class="field w-100">
+        </div>
+        <div class="cell mt-20">
+           <input type="password" name="memberPassword" required
+                placeholder="비밀번호"
+                class="field w-100">
+        </div>
+        <div class="cell mt-30">
+            <button class="btn btn-positive w-100">로그인</button>
+        </div>
+        <hr class="mt-20 mb-20">
+        <div class="cell">
+            <button class="btn btn-neutral w-100">회원가입</button>
+        </div>
+    </div>
+</body>
+</html>

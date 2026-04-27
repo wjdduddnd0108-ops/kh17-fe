@@ -149,8 +149,26 @@
 .btn{
     outline: none;
     font-size: 18px;
-    padding: 0.35em 0.75em;
+    padding: 0.5em 0.75em;
     border: 1px solid #636e72;
     border-radius: 0.1em;
+    cursor: pointer;
+}
+.btn:hover{/* 조건부 디자인 : 마우스가 올라갔을 때*/
+    filter: brightness(0.95); /*살짝 어둡게*/
+}
+.btn.btn-postive{/* 긍정버튼 */
+    background-color: #0984e3;
+    border-color: #0984e3;
+    color: white;
+}
+.btn.btn-neutral{/* 중립버튼 */
+    background-color: #FFFFFF;
+    color: #2d3436;
+}
+.btn.btn-negative{/* 부정버튼 */
+    background-color: #d63031;
+    border-color: #d63031;
+    color: white;
 }
     
