@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+
+        /* 리스트 그룹 디자인 */
+        .list-group{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .list-group > li {
+            /* border: 1px solid gray;*/
+            box-shadow: 0 0 0 1px gray;
+            margin: 1px 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>도서 목록</h1>
+        </div>
+        <div class="cell center">
+            <form autocomplete="off">
+                <select name="column" class="field">
+                    <option value="book_title">책 제목</option>
+                    <option value="book_author">책 저자</option>
+                    <option value="book_publisher">출판사</option>
+                    <option value="book_genre">장르</option>
+                </select>
+                <input type="text" name="keyword" required
+                class="field" placeholder="검색어 입력">
+                <button type="submit" class="btn btn-positive">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>검색</span>
+                </button>
+            </form>
+        </div>
+        <div class="cell right">
+            <a href="#" class="btn btn-neutral">신규 등록하기</a>
+        </div>
+        <!-- 
+            List Group 형태의 배치
+            - ul, ol 등을 개조해서 아래로 나열되는 영역을 구현 
+        -->
+        <div class="cell">
+            <ul class="list-group">
+                <li>
+                    <img src="https://www.dummyimage.com/90x120">
+                    <h2>도서 제목</h2>
+                    OOO지음,  OOO 출판 (yyyy-MM-dd) <br>
+                    판매가 10,000원<br>
+                    총 100p<br>
+                    교양
+                </li>
+                <li>
+                    <img src="https://www.dummyimage.com/90x120">
+                    <h2>도서 제목</h2>
+                    OOO지음,  OOO 출판 (yyyy-MM-dd) <br>
+                    판매가 10,000원<br>
+                    총 100p<br>
+                    교양
+                </li>
+                <li>
+                    <img src="https://www.dummyimage.com/90x120">
+                    <h2>도서 제목</h2>
+                    OOO지음,  OOO 출판 (yyyy-MM-dd) <br>
+                    판매가 10,000원<br>
+                    총 100p<br>
+                    교양
+                </li>
+            </ul>
+        </div>
+
+        <div class="cell mt-40">
+            <div class="pagination">
+                <a href="#">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+                <a href="#" class="on">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
+                <a href="#">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

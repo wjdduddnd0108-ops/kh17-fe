@@ -11,22 +11,55 @@
      <!-- 디자인을 작성하기 위한 영역 -->
     <link rel="stylesheet" type="text/css" href="./commons.css">
     <style>
-    
+        
+        /* 
+            링크 디자인 
+            - 변화를 부드럽게 보여주도록 처리
+            - transition-property : 변화를 부드럽게 처리할 항목
+            - transition-duration : 변화가 완료되는 지속시간
+            - transition-timing-function : 변화의 처리방식
+                - linear : 일정한 변화
+                - ease-out : 끝을 느리게 (자동차 브레이크)
+        */
+        .link {
+            display: inline-block;
+            color: #2d3436;
+            text-decoration: none;
+            transition-property: transform color;
+            transition-duration: 0.1s;
+            transition-timing-function: ease-out;
+        }
+        .link:hover {
+            text-decoration: underline;
+            color: #0984e3;
+
+            /*
+                transform을 이용한 물리적인 변화
+                - translate()로 이동
+                - rotate()로 회전
+                - skew()로 기울이기 
+                - scale()로 확대/축소 
+            */
+            
+            transform: scale(1.01);
+        }
     </style>
 </head>
 <body>
-    <div class="container w-600">
+    <div class="container w-1200 mt-50 mb-50">
         <div class="cell center">
             <h1>자유게시판</h1>
         </div>
-        타인에 대한 무분별한 비방글은 예고 없이 삭제될 수 있습니다
+        <div class="cell">
+            타인에 대한 무분별한 비방글은 예고 없이 삭제될 수 있습니다
+        </div>
         
         <div class="cell">
             <table class="table">
                 <thead>
                     <tr>
                         <th>게시판 번호</th>
-                        <th>제목</th>
+                        <th class="w-40">제목</th>
                         <th>작성자</th>
                         <th>작성일</th>
                         <th>조회수</th>
@@ -36,32 +69,99 @@
                 <tbody>
                     <tr>
                         <td>10</td>
-                        <td>테스트글</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트글1</a>
+                        </td>
                         <td>testuser1</td>
                         <td>2026-03-13</td>
                         <td>10</td>
                         <td>5</td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td>11</td>
-                        <td>테스트글2</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트글2</a>
+                        </td>
                         <td>testuser1</td>
                         <td>2026-04-13</td>
                         <td>100</td>
                         <td>20</td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td>12</td>
-                        <td>테스트글3</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트글3</a>
+                        </td>
                         <td>testuser1</td>
                         <td>2026-01-13</td>
                         <td>500</td>
                         <td>50</td>
                     </tr>
+                    <tr>
+                        <td>13</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트글4</a>
+                        </td>
+                        <td>testuser1</td>
+                        <td>2026-01-13</td>
+                        <td>500</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트글5</a>
+                        </td>
+                        <td>testuser1</td>
+                        <td>2026-01-13</td>
+                        <td>500</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트글6</a>
+                        </td>
+                        <td>testuser1</td>
+                        <td>2026-01-13</td>
+                        <td>500</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트글7</a>
+                        </td>
+                        <td>testuser1</td>
+                        <td>2026-01-13</td>
+                        <td>500</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트글8</a>
+                        </td>
+                        <td>testuser1</td>
+                        <td>2026-01-13</td>
+                        <td>500</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트글9</a>
+                        </td>
+                        <td>testuser1</td>
+                        <td>2026-01-13</td>
+                        <td>500</td>
+                        <td>50</td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
-        <div class="cell">
+        <div class="cell right">
             <a href="#" class="btn btn-neutral">글쓰기</a>
         </div>
         <div class="cell">
@@ -84,8 +184,8 @@
                 </a>
             </div>
         </div>
-        <div class="cell">
-            <form autocomplete="off" class="field">
+        <div class="cell center">
+            <form autocomplete="off">
                 <select name="column" class="field">
                     <option value="board_title">제목</option>
                     <option value="board-writer">작성자</option>

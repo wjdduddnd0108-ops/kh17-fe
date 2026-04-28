@@ -31,13 +31,13 @@
     - 자주 사용할 법한 디자인들을 클래스로 만들어서 보관해둠
 */
 .left{
-    text-align: left;
+    text-align: left !important;
 }
 .center{
-    text-align: center;
+    text-align: center !important;
 }
 .right{
-    text-align: right;
+    text-align: right !important;
 }
 
 /* 
@@ -46,39 +46,39 @@
     - 200px ~ 1200px까지 구현
     - w-* 로 구현
 */
-.w-200 {width:200px; }
-.w-250 {width:250px; }
-.w-300 {width:300px; }
-.w-350 {width:350px; }
-.w-400 {width:400px; }
-.w-450 {width:450px; }
-.w-500 {width:500px; }
-.w-550 {width:550px; }
-.w-600 {width:600px; }
-.w-650 {width:650px; }
-.w-700 {width:700px; }
-.w-750 {width:750px; }
-.w-800 {width:800px; }
-.w-850 {width:850px; }
-.w-900 {width:900px; }
-.w-950 {width:950px; }
-.w-1000 {width:1000px; }
-.w-1050 {width:1050px; }
-.w-1100 {width:1100px; }
-.w-1150 {width:1150px; }
-.w-1200 {width:1200px; }
+.w-200 {width:200px !important; }
+.w-250 {width:250px !important; }
+.w-300 {width:300px !important; }
+.w-350 {width:350px !important; }
+.w-400 {width:400px !important; }
+.w-450 {width:450px !important; }
+.w-500 {width:500px !important; }
+.w-550 {width:550px !important; }
+.w-600 {width:600px !important; }
+.w-650 {width:650px !important; }
+.w-700 {width:700px !important; }
+.w-750 {width:750px !important; }
+.w-800 {width:800px !important; }
+.w-850 {width:850px !important; }
+.w-900 {width:900px !important; }
+.w-950 {width:950px !important; }
+.w-1000 {width:1000px !important; }
+.w-1050 {width:1050px !important; }
+.w-1100 {width:1100px !important; }
+.w-1150 {width:1150px !important; }
+.w-1200 {width:1200px !important; }
 
 /* 폭 비율 설정 */
-.w-100 {width: 100%;}
-.w-80 {width: 80%;}
-.w-75 {width: 75%;}
-.w-66 {width: 66.6666%;}
-.w-60 {width: 60%;}
-.w-50 {width: 50%;}
-.w-40 {width: 40%;}
-.w-33 {width: 33.3333%;}
-.w-25 {width: 25%;}
-.w-20 {width: 20%;}
+.w-100 {width: 100% !important;}
+.w-80 {width: 80% !important;}
+.w-75 {width: 75% !important;}
+.w-66 {width: 66.6666% !important;}
+.w-60 {width: 60% !important;}
+.w-50 {width: 50% !important;}
+.w-40 {width: 40% !important;}
+.w-33 {width: 33.3333% !important;}
+.w-25 {width: 25% !important;}
+.w-20 {width: 20% !important;}
 
 /* 
     여백(margin) 유틸리티 클래스
@@ -87,46 +87,46 @@
     - right 역시 같은 문제로 end로 대체하여 사용
     - margin-left 는 ms, margin-right는 me로 구현
  */
-.mt-0  {margin-top: 0px;}
-.mt-10 {margin-top: 10px;}
-.mt-20 {margin-top: 20px;}
-.mt-30 {margin-top: 30px;}
-.mt-40 {margin-top: 40px;}
-.mt-50 {margin-top: 50px;}
+.mt-0  {margin-top: 0px !important;}
+.mt-10 {margin-top: 10px !important;}
+.mt-20 {margin-top: 20px !important;}
+.mt-30 {margin-top: 30px !important;}
+.mt-40 {margin-top: 40px !important;}
+.mt-50 {margin-top: 50px !important;}
 
-.mb-0  {margin-bottom: 0px;}
-.mb-10 {margin-bottom: 10px;}
-.mb-20 {margin-bottom: 20px;}
-.mb-30 {margin-bottom: 30px;}
-.mb-40 {margin-bottom: 40px;}
-.mb-50 {margin-bottom: 50px;}
+.mb-0  {margin-bottom: 0px !important;}
+.mb-10 {margin-bottom: 10px !important;}
+.mb-20 {margin-bottom: 20px !important;}
+.mb-30 {margin-bottom: 30px !important;}
+.mb-40 {margin-bottom: 40px !important;}
+.mb-50 {margin-bottom: 50px !important;}
 
-.ms-0  {margin-left: 0px;}
-.ms-10 {margin-left: 10px;}
-.ms-20 {margin-left: 20px;}
-.ms-30 {margin-left: 30px;}
-.ms-40 {margin-left: 40px;}
-.ms-50 {margin-left: 50px;}
+.ms-0  {margin-left: 0px !important;}
+.ms-10 {margin-left: 10px !important;}
+.ms-20 {margin-left: 20px !important;}
+.ms-30 {margin-left: 30px !important;}
+.ms-40 {margin-left: 40px !important;}
+.ms-50 {margin-left: 50px !important;}
 
-.me-0  {margin-right: 0px;}
-.me-10 {margin-right: 10px;}
-.me-20 {margin-right: 20px;}
-.me-30 {margin-right: 30px;}
-.me-40 {margin-right: 40px;}
-.me-50 {margin-right: 50px;}
+.me-0  {margin-right: 0px !important;}
+.me-10 {margin-right: 10px !important;}
+.me-20 {margin-right: 20px !important;}
+.me-30 {margin-right: 30px !important;}
+.me-40 {margin-right: 40px !important;}
+.me-50 {margin-right: 50px !important;}
 
 /* 글자 색상 유틸리티 클래스 */
-.red { color: #e74c3c; }/* 로즈 레드 */
-.orange { color: #e67e22; }/* 소프트 오렌지 */
-.yellow { color: #f1c40f; }/* 선플라워 */
-.green { color: #2ecc71; }/* 에메랄드 */
-.blue { color: #3498db; }/* 피터리버 블루 */
-.purple { color: #9b59b6; }/* 아메지스트 */
-.white { color: #ecf0f1; }/* 클라우드 화이트 */
-.black { color: #2c3e50; }/* 미드나잇 블랙 */
-.gray { color: #95a5a6; }/* 콘크리트 그레이 */
-.silver { color: #bdc3c7; }/* 실버 미스트 */
-.gold { color: #d4af37; }/* 샌드 골드 */
+.red { color: #e74c3c !important; }/* 로즈 레드 */
+.orange { color: #e67e22 !important; }/* 소프트 오렌지 */
+.yellow { color: #f1c40f !important; }/* 선플라워 */
+.green { color: #2ecc71 !important ; }/* 에메랄드 */
+.blue { color: #3498db !important; }/* 피터리버 블루 */
+.purple { color: #9b59b6 !important; }/* 아메지스트 */
+.white { color: #ecf0f1 !important; }/* 클라우드 화이트 */
+.black { color: #2c3e50 !important; }/* 미드나잇 블랙 */
+.gray { color: #95a5a6 !important; }/* 콘크리트 그레이 */
+.silver { color: #bdc3c7 !important; }/* 실버 미스트 */
+.gold { color: #d4af37 !important; }/* 샌드 골드 */
 
 
 
@@ -269,6 +269,33 @@ width: 100%;
     color: #e17055;
 }
 
+/* 
+링크 디자인 
+- 변화를 부드럽게 보여주도록 처리
+- transition-property : 변화를 부드럽게 처리할 항목
+- transition-duration : 변화가 완료되는 지속시간
+- transition-timing-function : 변화의 처리방식
+    - linear : 일정한 변화
+     - ease-out : 끝을 느리게 (자동차 브레이크)*/
+.link {
+    display: inline-block;
+    color: #2d3436;
+    text-decoration: none;
+    transition-property: transform color;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out;
+}
+.link:hover {
+    text-decoration: underline;
+    color: #0984e3;
 
-
-    
+    /*
+        transform을 이용한 물리적인 변화
+        - translate()로 이동
+        - rotate()로 회전
+        - skew()로 기울이기 
+        - scale()로 확대/축소 
+    */
+            
+    transform: scale(1.01);
+}
