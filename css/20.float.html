@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+        .first-char{
+            font-size: 100px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>Folat 속성 다루기</h1>
+        </div>
+        <div class="cell">
+            <span class="first-char">L</span>orem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet dui iaculis, gravida felis nec, molestie metus. Aenean eu vehicula augue. Pellentesque ornare varius ipsum, quis blandit augue ultricies in. Quisque aliquet sagittis lacus in dapibus. Maecenas quis lacinia metus. Vivamus eu faucibus diam. Vivamus suscipit interdum feugiat. Ut ut turpis ut ex pharetra imperdiet. Curabitur consequat feugiat ultrices. In neque lorem, vulputate non libero in, condimentum pharetra mi. Cras ornare lorem ac ex condimentum ornare. Morbi venenatis, nulla eget laoreet ultricies, nisi dui bibendum eros, at lobortis elit eros id elit. Nullam iaculis placerat erat in gravida. Maecenas congue felis vel lorem fringilla dictum vel quis sapien. Aliquam ultrices leo vel mauris euismod, at venenatis turpis interdum. Mauris venenatis at turpis a vestibulum.
+            <span class="first-char">I</span>nteger sodales rutrum turpis, vitae feugiat leo fringilla vel. Curabitur pharetra, elit nec placerat iaculis, orci risus iaculis nisl, nec ornare augue justo at libero. Praesent sit amet libero ornare, egestas lectus vitae, pellentesque eros. Proin bibendum lorem eu odio fringilla mollis. Sed varius massa sed sapien consectetur, sit amet pretium sem congue. Donec mi felis, congue vel ultricies a, feugiat nec ipsum. Phasellus sit amet turpis ac libero efficitur dignissim eu a enim. Mauris risus augue, dictum eget mi ut, bibendum pharetra nunc. Morbi in enim turpis. Nullam ac vulputate ligula.
+        </div>
+        <div class="cell mt-50">
+            inline-block은 반씩 나눠서 배치할 수 없다
+        </div>
+        <div class="cell">
+            <button class="btn" style="width:49.62%;">좌측</button>
+            <button class="btn" style="width:49.62%;">우측</button>
+        </div>
+
+        <div class="cell mt-50">
+            float를 써서 배치하면 여백이 안생긴다
+        </div>
+        <div class="cell">
+            <button class="btn w-50" style="float: left;">좌측</button>
+            <button class="btn w-50" style="float: right;">우측</button>
+        </div>
+        <div class="cell">
+            <div class="w-50" style="float: left;">좌측</div>
+            <!-- <div class="w-50" style="float: right;">우측</div> -->
+        </div>
+
+        <!-- 
+            *중요
+            - float는 여백이 없고 배치방향 설정이 쉽지만...
+            - 우리가 여태까지 설계한 레이아웃을 무시한다
+            - float는 제한된 공간에서 자기들끼리만 놀게 해야한다(격리)
+            - float속성을 정리할 수 있는 별도의 공간이 필요
+                -> (clear 속성이 사용된 영역이 필요)
+        -->
+        <div style="clear:both;"></div>
+
+        <div class="cell mt-50">
+            일반글자
+        </div>
+    </div>
+</body>
+</html>
