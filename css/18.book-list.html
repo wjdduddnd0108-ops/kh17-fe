@@ -11,16 +11,31 @@
      <!-- 디자인을 작성하기 위한 영역 -->
     <link rel="stylesheet" type="text/css" href="./commons.css">
     <style>
-    
+
+        /* 테이블 확장 스타일 - 마우스 감지 색상 변경 테이블 */
+        .table.table-hover > tbody > tr:hover{
+            background-color: #dfe6e9;
+        }
+
+        /* 
+            테이블 확장 스타일 - 줄무늬 테이블
+            - nth-child라는 조건은 "N번째 자식"이라는 뜻
+            - 값에 n을 포함시키면 n=1,2,3,4,5,.....로 변하며 적용
+        */
+        .table.table-stripe > thead > tr,
+        .table.table-stripe > tbody > tr:nth-child(2n)
+        {
+            background-color: #dfe6e9;
+        }
     </style>
 </head>
 <body>
-    <div class="container w-600">
+    <div class="container w-800">
         <div class="cell center">
             <h1>도서 목록</h1>
         </div>
-        <div class="cell">
-            <form autocomplete="off" class="field">
+        <div class="cell center">
+            <form autocomplete="off">
                 <select name="column" class="field">
                     <option value="book_title">책 제목</option>
                     <option value="book_author">책 저자</option>
@@ -35,16 +50,16 @@
                 </button>
             </form>
         </div>
-        <div class="cell">
+        <div class="cell right">
             <a href="#" class="btn btn-neutral">신규 등록하기</a>
         </div>
         <!-- 데이터 테이블 -->
         <div class="cell">
-            <table class="table">
+            <table class="table table-stripe">
                 <thead>
                     <tr>
                         <th>번호</th>
-                        <th>제목</th>
+                        <th width="30%">제목</th>
                         <th>저자</th>
                         <th>출간일</th>
                         <th>가격</th>
@@ -84,10 +99,40 @@
                         <td>200</td>
                         <td>소설</td>
                     </tr>
+                     <tr>
+                        <td>6</td>
+                        <td>삼국지</td>
+                        <td>나관중</td>
+                        <td>1522-01-01</td>
+                        <td>30,000</td>
+                        <td>민음사</td>
+                        <td>850</td>
+                        <td>역사</td>
+                    </tr>
+                     <tr>
+                        <td>7</td>
+                        <td>삼국지</td>
+                        <td>나관중</td>
+                        <td>1522-01-01</td>
+                        <td>30,000</td>
+                        <td>민음사</td>
+                        <td>850</td>
+                        <td>역사</td>
+                    </tr>
+                     <tr>
+                        <td>8</td>
+                        <td>삼국지</td>
+                        <td>나관중</td>
+                        <td>1522-01-01</td>
+                        <td>30,000</td>
+                        <td>민음사</td>
+                        <td>850</td>
+                        <td>역사</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-        <div class="cell">
+        <div class="cell mt-40">
             <div class="pagination">
                 <a href="#">
                     <i class="fa-solid fa-chevron-left"></i>
