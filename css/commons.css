@@ -299,3 +299,21 @@ width: 100%;
             
     transform: scale(1.01);
 }
+
+/*
+    float 전용 격리 영역 생성 
+    - .float-area 안에 있는 모든 항목은 float:left이다.
+    - 새로운 영역을 만들어 clear는 힘드니 가상영역을 활용
+        - ::before 는 시작 지점을 의미
+        - ::after 는 종료 지점을 의미
+*/
+.float-area > *{
+    float: left;
+}
+.float-area::after {
+    /* 이 영역은 실제로는 존재하지 않는다 */
+    content:"";
+    display: block; /*한줄을 다 차지하게 만들고*/
+    clear: both; /*사용한 float들을 청소*/
+
+}
