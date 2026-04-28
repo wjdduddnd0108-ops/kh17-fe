@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+        /* 
+            테이블 디자인
+            - 테이블은 다양한 태그가 조합된 구조를 가진다
+            - 최상위 태그인 <table>에 클래스를 부여하고 나머지즌 탐색
+            - 연계 선택자 : 하위, 후손 선택자
+
+            후손 선택자
+            - .table th 와 같이 띄어쓰기로 내부에 포함된 요소임을 명시
+            - 테이블이 중첩된 경우 원치 않는 대상이 선택될 수 있음
+
+            자식(하위) 선택자
+            - .table > thead > tr >th 과 같이 부등호 표시로 연결
+        */
+        .table{
+            width: 100%;
+            border: 1px solid #2d3436;
+            border-collapse: collapse;
+        }
+
+        .table > thead > tr > th,
+        .table > tbody > tr > td
+        {
+            border: 1px solid #2d3436;
+        }
+        .table > tbody {
+            text-align: center;
+        }
+        
+        /*
+            페이지네이션 디자인 
+            - .pagination이라고 추가하면 자동 적용되도록 구현
+            - a태그를 개조해서 폭 설정이 가능하도록 구현
+        */
+        .pagination{
+            text-align: center;
+        }
+        .pagination > a {
+            color: #2d3436;
+            text-decoration: none;
+            /* border: 1px solid transparent; */
+            display: inline-block;
+            font-size: 16px;
+            min-width: 2em;
+            padding: 0.25em;
+            text-align: center;
+        }
+        .pagination > a.on,
+        .pagination > a:hover{/*마우스가 올라갔을때*/
+            /* border: 1px solid #b2bec3; */
+            box-shadow: 0 0 0 1px #b2bec3;
+            font-weight: bold;
+            color: #e17055;
+        }
+    </style>
+</head>
+<body>
+    <div class="container w-600">
+        <div class="cell center">
+            <h1>국가 목록</h1>
+        </div>
+        <!-- 인라인 폼 -->
+        <div class="cell">
+            <form autocomplete="off" class="field">
+                <select name="column" class="field">
+                    <option value="country_name">국가명</option>
+                    <option value="country_name">대륙명</option>
+                    <option value="country_name">수도명</option>
+                </select>
+                <input type="text" name="keyword" required
+                class="field" placeholder="검색어 입력">
+                <button type="submit" class="btn btn-positive">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>검색</span>
+                </button>
+            </form>
+        </div>
+        <div class="cell">
+            <a href="#" class="btn btn-neutral">신규 등록하기</a>
+        </div>
+        <div class="cell">
+            결과수
+        </div>
+        <!-- 데이터 테이블 -->
+        <div class="cell">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>대륙</th>
+                        <th>이름</th>
+                        <th>수도</th>
+                        <th>인구</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>아시아</td>
+                        <td>대한민국</td>
+                        <td>서울</td>
+                        <td class="right">55,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>아시아</td>
+                        <td>일본</td>
+                        <td>도쿄</td>
+                        <td class="right">127,000,000</td>
+                    </tr>
+                     <tr>
+                        <td>3</td>
+                        <td>아시아</td>
+                        <td>중국</td>
+                        <td>베이징</td>
+                        <td class="right">1,412,000,000</td>
+                    </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>유럽</td>
+                        <td>영국</td>
+                        <td>런던</td>
+                        <td class="right">67,000,000</td>
+                    </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>유럽</td>
+                        <td>프랑스</td>
+                        <td>파리</td>
+                        <td class="right">66,000,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cell">
+            <div class="pagination">
+                <a href="#">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+                <a href="#" class="on">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
+                <a href="#"> 
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

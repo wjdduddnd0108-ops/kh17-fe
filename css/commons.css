@@ -195,4 +195,57 @@ a.btn{
     border-color: #d63031;
     color: white;
 }
+
+ /* 
+    테이블 디자인
+    - 테이블은 다양한 태그가 조합된 구조를 가진다
+    - 최상위 태그인 <table>에 클래스를 부여하고 나머지즌 탐색
+    - 연계 선택자 : 하위, 후손 선택자
+
+    후손 선택자
+    - .table th 와 같이 띄어쓰기로 내부에 포함된 요소임을 명시
+    - 테이블이 중첩된 경우 원치 않는 대상이 선택될 수 있음
+
+    자식(하위) 선택자
+    - .table > thead > tr >th 과 같이 부등호 표시로 연결
+*/
+.table{
+width: 100%;
+    border: 1px solid #2d3436;
+    border-collapse: collapse;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > td
+{
+     border: 1px solid #2d3436;
+}
+.table > tbody {
+    text-align: center;
+}
+/*
+    페이지네이션 디자인 
+    - .pagination이라고 추가하면 자동 적용되도록 구현
+    - a태그를 개조해서 폭 설정이 가능하도록 구현
+*/
+.pagination{
+    text-align: center;
+}
+.pagination > a {
+    color: #2d3436;
+    text-decoration: none;
+    /* border: 1px solid transparent; */
+    display: inline-block;
+    font-size: 16px;
+    min-width: 2em;
+    padding: 0.25em;
+    text-align: center;
+}
+.pagination > a.on,
+.pagination > a:hover{/*마우스가 올라갔을때*/
+    /* border: 1px solid #b2bec3; */
+    box-shadow: 0 0 0 1px #b2bec3;
+    font-weight: bold;
+    color: #e17055;
+}
     
