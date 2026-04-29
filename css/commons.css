@@ -317,3 +317,27 @@ width: 100%;
     clear: both; /*사용한 float들을 청소*/
 
 }
+
+
+/*
+    flex 디자인
+    - 기본 영역은 .flex-area로 설정
+    - 내부에 .flex-fill이 있다면 flex-grow 설정
+    - 정중앙 배치만 할 경우 .flex-center를 영역에 추가 설정
+    - 세로 배치를 원한다면 .flex-vertical를 영역에 추가 설정 
+*/
+.flex-area{
+    display: flex;
+    flex-direction: row;/* 한 줄에 배치*/
+    flex-wrap: nowrap;/* 줄바꿈 금지*/
+}
+.flex-area > flex-fill {
+    flex-grow: 1;
+}
+.flex-area.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+.flex-area.flex-vertical {
+    flex-direction: column;
+}
