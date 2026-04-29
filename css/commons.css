@@ -366,3 +366,29 @@ width: 100%;
         -webkit-box-orient: vertical;
         overflow: hidden;
 }
+
+
+.fullscreen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    /* 불투명(1) - 배경색을 주고 불투명도(opacity)를 조절 (내용물도 투명해짐) */
+    /* background-color: black; */
+    /* opacity: 0.5; */
+
+    /* 불투명(2) - 배경색에 투명도(alpha)를 부여 (내용물에는 영향이 없음) */
+    background-color: rgba(0, 0, 0, 0.5);
+
+    /* 내용물을 가운데 위치하도록 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fullscreen > .inner{
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+}

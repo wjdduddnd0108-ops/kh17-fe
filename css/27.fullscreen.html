@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+        body{
+
+        }
+        .fullscreen{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            /* width: 150px; */
+            bottom: 0;
+
+            /* 불투명(1) - 배경색을 주고 불투명도(opacity)를 조절 (내용물도 투명해짐) */
+            /* background-color: black; */
+            /* opacity: 0.5; */
+
+            /* 불투명(2) - 배경색에 투명도(alpha)를 부여 (내용물에는 영향이 없음) */
+            background-color: rgba(0, 0, 0, 0.5);
+
+            /* 내용물을 가운데 위치하도록 설정 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .fullscreen > .inner{
+            background-color: white;
+            padding: 20px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>전체화면 가리기?</h1>
+        </div>
+        <div class="cell">
+            <a href="https://www.google.com" class="link">구글로 이동하기</a>
+        </div>
+    </div>
+     <!-- 전체화면 가리기용 영역 -->
+    <div class="fullscreen">
+            <div class="inner">
+                <div class="center">
+                    <i class="fa-solid fa-spinner fa-spin fa-4x mb-10"></i>
+                </div>
+                <div>데이터를 불러오고 있습니다...</div>
+            </div>
+    </div>
+</body>
+</html>

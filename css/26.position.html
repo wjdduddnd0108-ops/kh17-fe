@@ -31,13 +31,71 @@
 </head>
 <body>
     <div class="container w800">
-        <div class="cell center">
+        <div class="cell">
             <h1>Position 다루기</h1>
 
             <div class="cell">
-                <div class="box">1</div>
-                <div class="box">2</div>
-                <div class="box">3</div>
+                Position : static 인 경우 어떤 항목의 위치는 앞 항목의 위치 바로 다음이 된다. <br>
+                block일 경우는 아래, inline일 경우는 우측이 다음 위치가 된다. <br>
+                기본값이며 설정하지 않아도 자동 적용된다.
+            </div>
+
+            <div class="cell">
+                <div class="box" style="position: static;">1</div>
+                <div class="box" style="position: static;">2</div>
+                <div class="box" style="position: static;">3</div>
+            </div>
+
+            <div class="cell">
+                position : relative일 경우 static과 배치 원리는 같지만 미세조정이 가능하다. <Br>
+                -위치를 변경하고 싶다면 top, bottom, left, right를 사용하여 조정 가능
+                -겹치는 영역의 우선순위는 z-index로 설정 가능 (미설정이면 나중에 만든 것이 위로감)
+            </div>
+
+             <div class="cell">
+                <div class="box" style="position: relative; left: 30px; top: 30px; z-index: 1;">4</div>
+                <div class="box" style="position: relative;">5</div>
+                <div class="box" style="position: relative;">6</div>
+            </div>
+
+            <div class="cell">
+                <div style="width: 100px; height: 100px;">
+                    <img src="/images/noodle.png" width="100%" height="100%">
+                    <div style="position: relative; bottom: 28px;" class="right">
+                        자장면
+                    </div>
+                </div>
+
+                <div class="cell mt-50">
+                    position:absolute 로 설정하면 제한된 영역(없으면 body)를 기준으로 절대적인 위치에 배치된다 <br>
+                    우리가 여태까지 사용하던 일반적인 배치의 범위를 벗어나게 된다. <br>
+                    위치 조정은 동일하게 top, bottom, left, right, z-index로 한다. <br>
+                    absolute의 기준 영역을 만들고 싶다면 해당 영역은 position:static이 아니어야 한다.
+                </div>
+
+                <div class="cell" style="position:relative; height: 200px;">
+                    <div class="box" style="position: absolute; top: 30px; left: 30px;">7</div>
+                    <div class="box" style="position: absolute; top: 60px; left: 60px;">8</div>
+                    <div class="box" style="position: absolute; top: 90px;left: 90px;">9</div>
+                </div>
+
+                <div class="cell">
+                    <div style="width: 100px; height: 100px; position: relative;">
+                        <img src="/images/noodle.png" width="100%" height="100%">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" class="white">자장면</div>
+                    </div>
+                </div>
+
+                <div class="cell mt-50">
+                    position:fixed는 뷰포트(viewport)를 기준으로 위치를 설정할 때 사용
+                </div>
+                <div class="cell">
+                    <div class="box" style="position: fixed; top: 30px; left: 30px; z-index: 999;">10</div>
+                    <div class="box" style="position: fixed; bottom: 50px; right: 50px;">11</div>
+                    <div class="box" style="position: fixed; top: 50%; right: 0; transform: translate(0,-50%);">
+                        <i class="fa-solid fa-chevron-right fa-5x"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
