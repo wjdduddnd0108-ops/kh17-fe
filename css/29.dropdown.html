@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>드롭다운(dropdown)</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+        div{
+            box-shadow: 0 0 0 1px;
+        }
+
+        .menu{
+            position: relative;
+            width: 120px;
+            z-index: 999;
+        }
+        .menu > .menu-content{
+            /* display: none; */
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            opacity: 0;
+            transition-property: opacity, transform;
+            transition-duration: 0.2s;
+            transition-timing-function: ease-in;
+            transform: translateY(-100%);
+            z-index: 998;
+        }
+        .menu:hover > .menu-content {
+            /* display: block; */
+            opacity: 1;
+            transform: translateY(0%);
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <label>
+            <i class="fa-solid fa-bars"></i>
+            메뉴
+        </label>
+        <div class="menu-content">
+            <div>항목1</div>
+            <div>항목2</div>
+            <div>항목3</div>
+            <div>항목4</div>
+        </div>
+    </div>
+    
+    <hr>아래쪽에 있는 어떤 다른 컨텐츠들
+</body>
+</html>

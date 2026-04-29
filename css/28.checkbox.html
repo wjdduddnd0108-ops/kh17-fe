@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>토글 디자인</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+        /*
+            목표 : .ck1이 체크되었을 때는 글자가 파란색으로, 아닐 때는 빨간색으로 나오게 처리
+            - 더하기는(+)는 바로 뒤 항목을 선택할 수 있는 연계 선택자 (후위 선택자)
+        */
+        .ck1 + span{
+            color: red;
+        }
+        .ck1:checked + span{
+            color: blue;
+        }
+        /*
+            목표: .ck2가 체크되었을 때는 파랑만 표시, 아닐 때는 빨강만 표시
+            - 물결(~)은 뒤에 있기만 하면 선택할 수 있는 연계 선택자 (후방 선택자)
+        */
+        /* .ck2 + .red{ */
+        .ck2 ~ .red{
+            display: inline;
+        }
+        /* .ck2 + .red + .blue{ */
+        .ck2 ~ .blue{
+            display: none;
+        }
+        /* .ck2.checked + .red { */
+        .ck2:checked ~ .red {
+            display: none;
+        }
+        /* .ck2.checked + .red + .blue{ */
+        .ck2:checked ~ .blue {
+            display: inline;
+        }
+
+
+        /* 사이드바 디자인 */
+        #sidebar{
+            display: none;
+        }
+        #sidebar ~ .sidebar-body{
+            background-color: #ffeaa7;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+
+            transition-property: margin-left;
+            transition-duration: 0.1s;
+            transition-timing-function: ease-out;
+        }
+        #sidebar:checked ~ .sidebar-body {
+            /* margin-left: -250px; */
+            transform: translateX(-100%);
+        }
+        #sidebar ~ label {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 999;
+
+            font: 24px;
+            width: 1.75em;
+            height: 1.75em;
+            border: 2px solid black;
+            background-color: white;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transform: rotate(180deg);
+            transition: transform 0.1s ease-out;
+            border-radius: 50%;
+        }
+        #sidebar:checked ~ label {
+            transform: rotate(0deg);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container w-500 mt-50 mb-50">
+        <div class="cell center">
+            <h1>토글 디자인(toggle design)</h1>
+        </div>
+
+        <div class="cell">
+            체크박스를 사용하여 : checked 스타일을 쓰면 토글 디자인이 가능하다.
+        </div>
+        <div class="cell">
+            <input type="checkbox" class="ck1">
+            <span>체크하세요</span>
+        </div>
+
+        <div class="cell">
+            <input type="checkbox" class="ck2">
+            <span class="red">이용 약관에 동의하지 않습니다</span>
+            <span class="blue">이용 약관에 동의합니다</span>
+        </div>
+
+        <!-- 목표 : 체크박스를 체크하면 사이드바가 나오고, 해제하면 사이드바가 사라지도록 구현 -->
+         <div class="cell">
+            <input type="checkbox" id="sidebar">
+            <label for="sidebar">
+                <!-- <i class="fa-solid fa-bars"></i> -->
+                <i class="fa-solid fa-arrow-right"></i>
+            </label>
+            <div class="sidebar-body">사이드바</div>
+         </div>
+    </div>
+</body>
+</html>

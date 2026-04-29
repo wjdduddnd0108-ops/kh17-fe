@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+        /* 모든 ul 태그의 기본 스타일을 제거 */
+        div{
+            box-shadow: 0 0 0 1px;
+        }
+        .menu,
+        .menu ul {
+            position: relative;
+            width: 120px;
+            z-index: 999;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            
+        }
+        /* 하위메뉴를 숨긴다 */
+        .menu ul{
+            /* display: none;*/
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            opacity: 0;
+            transition-property: opacity, transform;
+            transition-duration: 0.2s;
+            transition-timing-function: ease-in;
+            transform: translateY(-100%);
+            z-index: 998;
+        }
+        /* li에 마우스가 올라가면 하위 ul을 표시 */
+        .menu li:hover > ul {
+            /* display: block; */
+            opacity: 1;
+            transform: translateY(0%);
+        }
+    </style>
+</head>
+<body>
+    <!--
+        드롭다운을 <ul>을 써서 구현
+        - 메뉴는 계층형 구조를 가진다 (=트리구조). 
+    -->
+    <div class="flex-area" style="width: 120px;">
+        <ul class="menu">
+            <li>
+            
+                <a href="#">보여질 글자</a>
+                <ul>
+                    <li><a href="#">항목 1</a></li>
+                    <li><a href="#">항목 2</a></li>
+                    <li><a href="#">항목 3</a></li>
+                    <li><a href="#">항목 4</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="cell" style="width: 120px;">
+        <ul class="menu">
+            <li>
+            
+                <a href="#">보여질 글자</a>
+                <ul>
+                    <li><a href="#">항목 1</a></li>
+                    <li><a href="#">항목 2</a></li>
+                    <li><a href="#">항목 3</a></li>
+                    <li><a href="#">항목 4</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+
+    <hr>
+    메뉴에 영향을 받지 말아야 하는 컨텐츠들
+</body>
+</html>
