@@ -16,20 +16,119 @@
         }
         .outer{
             width: 100%;
+            height: 188px;
+            padding: 16px 0px;
         }
-        .outer > .inner{
+        .outer > .inner,
+        .outer > .inner > .flex-area{
+            height: 100%;
             border:1px solid gray;
             border-left: none;
             border-right: none;
             border-top: none;
         }
+        /* flex-shrink는 공간이 모자른 경우 어느 비율로 영역에서 가져갈지를 결정하는 속성(flex-grow) */
+        .outer .date-area{
+            width: 135px;
+            flex-shrink: 0;
+        }
+        .outer .image-area{
+            width: 240px;
+            flex-shrink: 0;
+        }
+        .outer .content-area{
+            margin-left: 15px;
+            flex-shrink: 1;
+            min-width: 0;/*flex로 인해서 생기는 늘어나는(최소폭을 확보하려는) 성질을 제거*/
+        }
+        /* 
+            제목은 1줄만 나오게 처리(나머지는 말줄임표) 
+            <디자인이 적용되기 위한 전제조건>
+            1. 폭이 정해져 있을 것 (flex의 경우 min-width를 제거) - 넘어감을 감지할 수 있도록
+            2. overflow 속성을 숨김(hidden)으로 바꿀 것
+            3. text-overflow 속성을 생략(ellipsis)으로 바꿀 것
+        */
+        .outer .content-area .title h3{
+            white-space: nowrap;/*줄바꿈 금지*/
+            overflow: hidden;/*넘어가면 숨김처리*/
+            text-overflow: ellipsis;/*글자가 넘어간 부분을 말줄임표로 표시*/
+        }
+        /*
+            내용은 2줄만 나오게 처리 (나머지는 말줄임표)  
+            - 원래 CSS의 신기능은 브라우저 개발사에서 실험적으로 도입한 뒤 반응이 좋으면 표준이 되는방식이다
+            - 브라우저 업체별로 실험적 기능을 제공하기 위한 접두사가 존재한다
+                `-webkit-`은 크롬, 사파리, 엣지, 안드로이드 등을 의미 (크로니움 엔진)
+                `-moz-`는 파이어폭스를 의미 (Gecko 엔진)
+                `-ms-`는 구형 Edge, Internet Explorer를 의미 (현재 사용하지 않음)
+                `-o-`는 오페라를 의미
+        */
+        .outer .content-area .detail{
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
-    <div class="container w-1000">
+    <div class="container w-1100">
         <div class="cell center">
-            <h1>멜론</h1> 
+            <h1>멜론 포스트 화면</h1> 
         </div>
+
+        <div class="cell">
+            <div class="flex-area flex-vertical">
+                <div class="outer">
+                    <div class="inner">
+                        <div class="flex-area">
+                            <div class="date-area flex-area flex-center">
+                                <div class="center">
+                                    <div style="font-size: 20px; font-weight: bold;">28</div>
+                                    <div style="font-size: 12px;" class="gray">2026.04</div>
+                                </div>
+                            </div>
+                            <div class="image-area">
+                                 <img src="https://www.dummyimage.com/240x135" width="100%" height="100%">
+                            </div>
+                            <div class="content-area flex-fill">
+                                <div class="title">
+                                    <h3 class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim a risus vitae suscipit. Aliquam laoreet nunc nisi, vel blandit neque tempor et. Curabitur eget justo lorem. Cras at bibendum odio. Vestibulum ante ipsum, commodo sed imperdiet ac, dignissim vehicula est. Mauris mattis non eros posuere placerat. Sed bibendum tellus sed ex euismod porta. Aliquam lobortis odio eget tristique porttitor. Suspendisse laoreet purus urna, consequat imperdiet neque elementum sit amet.</h3>
+                                </div> 
+                                <div class="detail mt-10">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dignissim a risus vitae suscipit. Aliquam laoreet nunc nisi, vel blandit neque tempor et. Curabitur eget justo lorem. Cras at bibendum odio. Vestibulum ante ipsum, commodo sed imperdiet ac, dignissim vehicula est. Mauris mattis non eros posuere placerat. Sed bibendum tellus sed ex euismod porta. Aliquam lobortis odio eget tristique porttitor. Suspendisse laoreet purus urna, consequat imperdiet neque elementum sit amet.
+                                </div>
+                                <div class="mt-20">
+
+                                    <span><i class="fa-solid fa-heart red"></i> 6</span>
+                                    | 
+                                    <span>댓글</span>
+                                    | 
+                                    조회수
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="cell">
             <div class="flex-area flex-vertical">
                 <div class="outer">

@@ -341,3 +341,28 @@ width: 100%;
 .flex-area.flex-vertical {
     flex-direction: column;
 }
+
+/* 말줄임표 처리 */
+.ellipsis{
+    white-space: nowrap;/*줄바꿈 금지*/
+    overflow: hidden;/*넘어가면 숨김처리*/
+    text-overflow: ellipsis;/*글자가 넘어간 부분을 말줄임표로 표시*/
+}
+.ellipsis-2{
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+}
+.ellipsis-3{
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+}
+.ellipsis-4{
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+}
