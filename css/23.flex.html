@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <style>
+        div{
+            box-shadow: 0 0 0 1px gray; 
+        }
+
+        /*
+            flex 디자인
+            - 기본 영역은 .flex-area로 설정
+            - 내부에 .flex-fill이 있다면 flex-grow 설정
+            - 정중앙 배치만 할 경우 .flex-center를 영역에 추가 설정
+            - 세로 배치를 원한다면 .flex-vertical를 영역에 추가 설정 
+        */
+        .flex-area{
+            display: flex;
+            flex-direction: row;/* 한 줄에 배치*/
+            flex-wrap: nowrap;/* 줄바꿈 금지*/
+        }
+        .flex-area > flex-fill {
+            flex-grow: 1;
+        }
+        .flex-area.flex-center {
+            justify-content: center;
+            align-items: center;
+        }
+        .flex-area.flex-vertical {
+            flex-direction: column;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container w-600">
+        <div class="cell center">
+            <h1>Flexible Laydout</h1>
+        </div>
+
+        <!-- 
+            float를 이용해도 다단 배치는 가능하다 
+            1. 높이가 서로 다를 경우 이를 보정하지 않는다 (구멍이 뚫린다)
+            2. 나머지라는 폭을 설정할 수 없다
+        -->
+        <div class="cell">
+            <div style="display: flex; flex-direction: column;">
+                <div class="w-100">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ipsum nunc, pretium et lorem eu, congue vehicula magna. Quisque congue lobortis neque, eu efficitur diam. Fusce hendrerit rhoncus efficitur. Quisque commodo finibus nulla a rutrum. Maecenas eu tincidunt diam. Sed quis mauris posuere, dignissim lorem interdum, dictum elit. Etiam ac enim imperdiet lectus dictum auctor eu at magna. Mauris interdum non massa et faucibus. Quisque ante urna, porta et tellus consequat, mattis ultricies tellus. Cras ut lobortis mi, non consequat lorem. Vivamus euismod libero venenatis, sollicitudin nulla sit amet, dapibus arcu. Aenean at purus tempus massa tincidunt pretium at at nunc.</div>
+                <div class="w-100">1단</div>
+                <!-- <div class="w-33">1단</div> -->
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="float-area">
+                <div class="w-200">1단</div>
+                <div class="w-66">2단</div>
+            </div>
+        </div>
+
+        <!--
+            flex 영역을 만들어서 float의 문제점들을 해결해보자 
+            1. flex는 영역에 설정하는 것 (float는 개별적으로 설정)
+            2. 별도로 설정하지 않으면 줄이 바뀌지 않음
+            3. 영역의 높이를 일정하게 맞춤
+            4. 방향전환이 자유로움 (flex-direction)
+        -->
+        <div class="cell">
+            <div style="display: flex;">
+                <div class="w-100">1단</div>
+                <div class="w-100">2단</div>
+                <!-- <div class="w-100">3단</div> -->
+                <!-- <div class="w-100">4단</div> -->
+            </div>
+        </div>
+
+        <!-- 클래스는 float처럼 flex-area라고 영역 지정 -->
+         <div class="cell">
+            <div class="flex-area">
+                <div class="w-100">1단</div>
+                <div class="w-100">2단</div>
+                <div class="w-100">3단</div>
+            </div>
+         </div>
+
+        <!--
+            flex 내부 항목에 flex-grow를 적으면 잔여 공간을 비율로 나눠가진다 
+            * (주의) 1:1이라고 해서 50%가 되는게 아니다(남은 공간을 나눠가지는 것)
+            * 한쪽만 줘서 남은 공간을 다 차지하도록 구현하면 "나머지"를 설정할 수 있다
+        -->
+         <div class="cell">
+            <div class="flex-area">
+                <div>1단</div>
+                <div style="flex-grow: 1;">2단</div>
+            </div>
+         </div>
+
+        <!--
+            flex는 내용물의 정렬상태를 매우 디테일하게 설정할 수 있다 (총 9가지 위치) 
+            -justify-content 속성으로 좌,우,중앙,양측 정렬등을 설정할 수 있다
+            - align-items 속성으로 상,중,하 정렬을 설정할 수 있다
+        -->
+          <div class="cell">
+            <div class="flex-area" 
+            style="height: 200px; justify-content: center; align-items: center;">
+                <div>
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    로딩중....
+                </div>
+            </div>
+          </div>
+
+
+    </div>
+
+
+</body>
+</html>
