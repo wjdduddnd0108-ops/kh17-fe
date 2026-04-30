@@ -392,3 +392,102 @@ width: 100%;
     padding: 20px;
     border-radius: 20px;
 }
+
+/* 메뉴 기본 설정 */
+.menu ,
+.menu ul {/* .sub-menu 대신*/
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/* (2) 서브메뉴를 숨김 */
+.menu ul{
+    display: none;
+}
+/* (3) 메뉴를 가로로 나오게 배치 */
+.menu {
+    display: flex;
+}
+/* (4) 1차메뉴에 폭 지정 */
+.menu li {
+    width: 120px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0.25em;
+    text-align: center;
+}
+/* (5) 메뉴에 마우스가 올라가면 하위 메뉴를 출력 */
+.menu li:hover > ul {
+    display: block;
+}
+/* (6) 하위메뉴는 absolute 배치를 통해 다음 컨텐츠의 위치 */
+.menu li{
+    position: relative;
+}
+.menu ul {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 120px;
+}
+/* (7) 좌우 분리를 위한 .divider 생성 */
+.menu > .divider {
+    width: 0px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+/*
+    (9) 3차메뉴부터는 좌측 아니면 우측에 나와야 함
+    - 기본적으로 우측에 나오도록 처리
+    - 단, divider 뒤에 있는 메뉴들은 좌측에 나오도록 처리
+*/
+.menu > li li:hover > ul {
+    top: 0;
+    left: 100%;
+}
+.menu > li.divider ~ li li:hover > ul {
+    top: 0;
+    left: auto;
+    right: 100%;
+}
+
+/* 이미지 디자인 */
+.image-shadow {
+    box-shadow: 0 0 2px 1px gray;
+}
+.image-circle {
+    border-radius: 50%;
+}
+.image-round {
+    border-radius: 1em;
+}
+.image-hover {
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    position: relative;
+}
+.image-hover > img {
+    width: 100%;
+    height: 100%;
+}
+.image-hover > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* display: none; */
+    opacity: 0;
+
+    transition: opacity 0.1s ease-out;
+}
+.image-hover:hover > .content {
+    /* display: flex; */
+    opacity: 1;
+}

@@ -12,9 +12,9 @@
     <link rel="stylesheet" type="text/css" href="./commons.css">
     <style>
         /* 시각화 테스트 */
-        ul { box-shadow: 0 0 0 1px black;}
+        /* ul { box-shadow: 0 0 0 1px black;}
         li { box-shadow: 0 0 0 1px blue;}
-        a { box-shadow: 0 0 0 1px red;}
+        a { box-shadow: 0 0 0 1px red;} */
         /* (1) list 태그의 기본 스타일 제거 */
         .menu ,
         .menu ul {/* .sub-menu 대신*/
@@ -75,6 +75,20 @@
         .menu li:hover{
             background-color: #636e72;
         }
+        /*
+            (9) 3차메뉴부터는 좌측 아니면 우측에 나와야 함
+            - 기본적으로 우측에 나오도록 처리
+            - 단, divider 뒤에 있는 메뉴들은 좌측에 나오도록 처리
+        */
+        .menu > li li:hover > ul {
+            top: 0;
+            left: 100%;
+        }
+        .menu > li.divider ~ li li:hover > ul {
+            top: 0;
+            left: auto;
+            right: 100%;
+        }
     </style>
 </head>
 <body>
@@ -84,7 +98,60 @@
         <li>
             <a href="#">1차메뉴</a>
             <!-- 2차메뉴 : 1차메뉴에 마우스가 올라가면 펼쳐지게 될 하위메뉴 -->
-            <ul class="sub-menu">
+            <ul>
+                <li>
+                    <a href="#">2차메뉴</a>
+                        <ul>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                        </ul>
+                </li>
+                <li>
+                    <a href="#">2차메뉴</a>
+                        <ul>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                        </ul>
+                </li>
+                <li>
+                    <a href="#">2차메뉴</a>
+                        <ul>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                        </ul>
+                </li>
+                <li>
+                    <a href="#">2차메뉴</a>
+                        <ul>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                        </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">1차메뉴</a>
+            <!-- 2차메뉴 : 1차메뉴에 마우스가 올라가면 펼쳐지게 될 하위메뉴 -->
+            <ul>
                 <li>
                     <a href="#">2차메뉴</a>
                 </li>
@@ -102,7 +169,7 @@
         <li>
             <a href="#">1차메뉴</a>
             <!-- 2차메뉴 : 1차메뉴에 마우스가 올라가면 펼쳐지게 될 하위메뉴 -->
-            <ul class="sub-menu">
+            <ul>
                 <li>
                     <a href="#">2차메뉴</a>
                 </li>
@@ -124,12 +191,31 @@
         <li>
             <a href="#">1차메뉴</a>
             <!-- 2차메뉴 : 1차메뉴에 마우스가 올라가면 펼쳐지게 될 하위메뉴 -->
-            <ul class="sub-menu">
+            <ul>
                 <li>
                     <a href="#">2차메뉴</a>
+                        <ul>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                        </ul>
                 </li>
                 <li>
                     <a href="#">2차메뉴</a>
+                        <ul>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                            <li>
+                                <a href="#">3차메뉴</a>
+                            </li>
+                        </ul>
                 </li>
                 <li>
                     <a href="#">2차메뉴</a>
