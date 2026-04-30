@@ -410,7 +410,7 @@ width: 100%;
 }
 /* (4) 1차메뉴에 폭 지정 */
 .menu li {
-    width: 120px;
+    width: 140px;
     font-size: 20px;
     font-weight: bold;
     padding: 0.25em;
@@ -428,7 +428,7 @@ width: 100%;
     position: absolute;
     left: 0;
     top: 100%;
-    width: 120px;
+    width: 140px;
 }
 /* (7) 좌우 분리를 위한 .divider 생성 */
 .menu > .divider {
