@@ -80,7 +80,7 @@
                     <option value="country_name">수도명</option>
                 </select>
                 <input type="text" name="keyword" required
-                class="field" placeholder="검색어 입력">
+                class="field" placeholder="검색어 입력" value="${param.keyword}">
                 <button type="submit" class="btn btn-positive">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>검색</span>
@@ -88,10 +88,10 @@
             </form>
         </div>
         <div class="cell right">
-            <a href="#" class="btn btn-neutral">신규 등록하기</a>
+            <a href="./insert" class="btn btn-neutral">신규 등록하기</a>
         </div>
         <div class="cell">
-            결과수
+            ${pageVO.beginRownum}-${pageVO.endRownum}/ 총 ${pageVO.count}개의 글
         </div>
         <!-- 데이터 테이블 -->
         <div class="cell">
@@ -106,44 +106,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>아시아</td>
-                        <td>대한민국</td>
-                        <td>서울</td>
-                        <td class="right">55,000,000</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>아시아</td>
-                        <td>일본</td>
-                        <td>도쿄</td>
-                        <td class="right">127,000,000</td>
-                    </tr>
-                     <tr>
-                        <td>3</td>
-                        <td>아시아</td>
-                        <td>중국</td>
-                        <td>베이징</td>
-                        <td class="right">1,412,000,000</td>
-                    </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>유럽</td>
-                        <td>영국</td>
-                        <td>런던</td>
-                        <td class="right">67,000,000</td>
-                    </tr>
-                      <tr>
-                        <td>5</td>
-                        <td>유럽</td>
-                        <td>프랑스</td>
-                        <td>파리</td>
-                        <td class="right">66,000,000</td>
-                    </tr>
+                    <c:forEach var="countryDto" items="${list}"></c:forEach>
+                        <tr>
+                            <td>${countryDto.countryNo}</td>
+                            <td>${countryDto.countryRegion}</td>
+                            <td><img src="./flag?countryNo=${countryDto.countryNo}" width="20">
+				                <a href="./detail?countryNo=${countryDto.countryNo}">
+				                ${countryDto.countryName}
+				                </a>
+                            </td>
+                            <td>${countryDto.countryCapital}</td>
+                            <td class="right"><fmt:formatNumber value="${countryDto.countryPopulation}" pattern="#,##0"></fmt:formatNumber></td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
+
+        <!-- 페이지네이션 -->
         <div class="cell">
             <div class="pagination">
                 <a href="#">
