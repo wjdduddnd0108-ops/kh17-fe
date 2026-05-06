@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트</title>
+
+    <script>
+        //화면과 연결할 함수
+        function sayHello(){
+            console.log("안녕하세요!");
+        }
+
+        function getTotal(){
+            var total = 0;
+            for(var i = 0; i<=50; i++){
+                total += i;
+            }
+            console.log(total);
+        }
+    </script>
+</head>
+<body>
+    <!-- 버튼을 클릭하면 sayHello 함수를 부르도록 인라인 스크립트 작성 -->
+    <button type="button" onclick="sayHello();">눌러보세요</button>
+
+
+    <button type="button" onclick="getTotal();">1부터 50까지 더하면 얼마일까요</button>
+</body>
+</html>
