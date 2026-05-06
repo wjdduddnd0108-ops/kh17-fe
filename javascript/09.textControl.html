@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        //input, select, textarea에 각각 "바나나"라는 글자를 설정해보자!
+        //- 자바스크립트에는 getter, setter가 없다 (특히 레거시 자바스크립트)
+        function copyText(){
+            var target1 = document.querySelector(".target1");
+            target1.value = "바나나";
+
+            //select - input과 동일
+            var target2 = document.querySelector(".target2");
+            target2.value = "바나나";
+
+            //textarea - input과 동일
+            var target3 = document.querySelector(".target3");
+            target3.value = "바나나";
+        }
+
+        function clearText(){
+            var target1 = document.querySelector(".target1");
+            target1.value = "";
+
+            //select - input과 동일
+            var target2 = document.querySelector(".target2");
+            target2.value = "";
+
+            //textarea - input과 동일
+            var target3 = document.querySelector(".target3");
+            target3.value = "";
+        }
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>글자 컨트롤</h1>
+        </div>
+
+        <div class="cell center">
+            <button type="button" class="btn btn-positive" onclick="copyText()">글자 채우기</button>
+            <button type="button" class="btn btn-negative" onclick="clearText()">글자 지우기</button>
+        </div>
+
+        <div class="cell mt-50">
+            <input type="text" class="field w-100 target1">
+        </div>
+        <div class="cell">
+            <select class="field w-100 target2">
+                <option value="">선택하세요</option>
+                <option>딸기</option>
+                <option>바나나</option>
+                <option>파인애플</option>
+            </select>
+        </div>
+        <div class="cell">
+            <textarea class="field w-100 target3" rows="5"></textarea>
+        </div>
+
+
+    </div>
+</body>
+</html>
