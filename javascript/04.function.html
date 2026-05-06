@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>함수</title>
+
+    <script>
+        //함수 (function)    
+        //- 자바의 정적메소드와 유사 (static method)
+        //- 클래스에 포함되어야 하는 자바와 달리 단독으로 존재할 수 있다
+        //- 용도는 같다 (자주 사용하는 코드를 보관시키고 불러서 실행)
+
+        // 자바였다면...?
+        // public static void test(){
+        //     System.out.println("테스트 코드");
+        // }
+
+        // 자바스크립트라면..?
+        function test(){
+            console.log("테스트 코드");
+        }
+        
+        // (ex) 자바의 정적메소드를 자바스크립트로 동일하게 구현
+        // public static int multiple(int a, int b){
+        //      return a * b;
+        //}
+
+        function multiple(a, b){
+            return a * b;
+        }
+        
+        // * 중요 : 자바스크립트 함수는 매개변수가 안맞아도 호출이 가능하다 (=오버로딩 불가)
+        // * 자바스크립트의 궁극적인 목표는 "화면"과 "함수"를 연결하는 것이다
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
