@@ -491,3 +491,42 @@ width: 100%;
     /* display: flex; */
     opacity: 1;
 }
+
+
+/* 
+    피드백 디자인
+    - 자바스크립트와 결합하여 입력창의 피드백을 표시하기 위한 디자인
+    - .field에 .success가 붙으면 뒤에 있는 .success-feedback을 출력
+    - .field에 .fail이 붙으면 뒤에 있는 .fail-feedback을 출력
+    - .field에 .success나 .fail이 붙으면 상황에 맞게 입력창도 디자인
+    - .field에 우측 여백을 주고 상황에 맞는 이미지를 출력 (background-image)
+*/
+.field ~ .success-feedback {
+    color: #0984e3;
+    display: none;
+}
+.field ~ .fail-feedback {
+    color: #d63031;
+    display: none;
+}
+.field.success ~ .success-feedback {
+    display: block;
+}
+.field.fail ~ .fail-feedback {
+    display: block;
+}
+.field{
+    background-size: 1em;
+    background-repeat: no-repeat;
+    background-position-x: right 0.5em;
+    background-position-y: center;
+    padding-right: 2em;
+}
+.field.success{
+    background-image: url("https://cdn.jsdelivr.net/gh/wjdduddnd0108-ops/cdn/valid.png");
+    border-color: #0984e3;
+}
+.field.fail{
+    background-image: url("https://cdn.jsdelivr.net/gh/wjdduddnd0108-ops/cdn/invalid.png");
+    border-color: #d63031;
+}
