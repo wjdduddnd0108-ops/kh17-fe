@@ -522,6 +522,9 @@ width: 100%;
     background-position-y: center;
     padding-right: 2em;
 }
+select.field {
+    background-position-x: right 1em;
+}
 .field.success{
     background-image: url("https://cdn.jsdelivr.net/gh/wjdduddnd0108-ops/cdn/valid.png");
     border-color: #0984e3;
