@@ -52,17 +52,12 @@
                 span.textContent = "8~16자의 사이 소문자,대문자,숫자,특수문자 반드시 1개이상 포함하여 작성하세요";
                 span.classList.add("red");
             }
-        }
-        //비밀번호 일치 검사
-        function equalMemberPassword(){
-            var input = document.querySelector("[name=q2]");
-          
+
             var input2 = document.querySelector(".password-check");
             var div2 = input2.nextElementSibling;//바로 뒤에 있는 태그
             var span2 = div2.children[0];//div 아래 있는 첫번째 span
 
             span2.classList.remove("red", "blue");
-            
             //비밀번호가 없는 경우를 고려
             if(input.value.length == 0){
                 span2.textContent = "비밀번호를 먼저 입력하세요";
@@ -111,7 +106,7 @@
             <h2>비밀번호 확인<span class="red">*</span></h2> 
         </div>
         <div class="cell">
-            <input type="password" class="field w-100 password-check" oninput="equalMemberPassword();">
+            <input type="password" class="field w-100 password-check" oninput="checkMemberPassword();">
             <!-- 피드백 바로 뒤에 붙이기만 해도됨 span안쓰고 -->
             <div>
                 <span></span>
