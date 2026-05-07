@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        function calculateCount(){
+            //[1] 입력창을 선택한다
+            var textarea = document.querySelector("[name=q1]")
+
+            //[2] 글자수를 계산한다
+            var size = getByteLength(textarea.value);
+
+            //[3] 글자수를 표시한다
+            // var count = document.querySelector(".count");
+            // var count = document.querySelector("[name=q1] + .count");
+            var div = textarea.nextElementSibling;//바로 뒤에 있는 태그를 내놔!
+            var span = div.children[0];//div 아래 있는 첫번째 태그를 내놔!
+            span.textContent = size;
+
+            //[4] 글자수가 1000을 넘게 되면 넘어간 만큼 잘라내보자!
+            if(size > 1000){
+                // var newContent = textarea.value.substring(0,1000);
+                // textarea.value = newContent;
+                // span.textContent = "1000";
+                span.classList.add("red");
+            }
+            else{
+                span.classList.remove("red");
+            }
+        }
+        
+        //심화 : UTF-8 기준 바이트 수 계산 함수
+        function getByteLength(str){
+            return new TextEncoder().encode(str).length;
+        }
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>자기소개서</h1>
+        </div>
+        <divl class="cell mt-40">
+            <h3>(Q) 최근 가장 관심있게 본 IT 소식은 무엇입니까?</h3>
+        </divl>
+        <div class="cell">
+            <textarea name="q1" class="field w-100" rows="10" oninput="calculateCount();"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+    </div>
+</body>
+</html>
