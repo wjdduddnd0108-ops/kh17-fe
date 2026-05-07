@@ -26,10 +26,12 @@
 
     <!-- 자바스크립트 작성 영역 -->
      <script>
+        //입력창에 이미 입력된 값은 어떠한 경우에도 문자열이기 때문에 계산 과정에서 숫자 변환이 필요
         function bankMoney(money){
             var display = document.querySelector(".display");
             var subdisplay = document.querySelector(".sub-display");
             // 현재 입력창 숫자로 바꿈
+            //display.textContent 가 비어있는 경우 고려 
             var currentVal = parseInt(display.textContent) || 0;
             // 새로 들어온 돈을 숫자로 바꿈
             var addVal = parseInt(money);
@@ -44,7 +46,38 @@
             console.log(display.textContent.charAt(0));
         }
 
+        function deleteOne(){
+            var display = document.querySelector(".display");
+            var subdisplay = document.querySelector(".sub-display");
 
+            var origin = display.textContent;
+            var minus = origin.substring(0, origin.length-1);
+
+            display.textContent = minus;
+            //서브디스플레이 에서도 빼기가 지원되게
+            if(minus.length == 0){//마이너스 했을때 비어있을때 nan 값이 안나오도록 0으로 변환
+                subdisplay.textContent = "0";
+            }
+            else{
+                subdisplay.textContent = parseInt(minus).toLocaleString();
+            }
+        }
+
+        function deleteAll(){
+            var display = document.querySelector(".display");
+            display.textContent = "0";
+
+            subdiplayMoney();
+        }
+
+        //.target의 입력값을 .display에 옮겨 표시하는 함수
+        function subdiplayMoney() {
+            var display = document.querySelector(".display");
+            var subdisplay = document.querySelector(".sub-display");
+
+            var money = parseInt(display.textContent);
+            subdisplay.textContent = money.toLocaleString();
+        }
         
      </script>
 </head>
@@ -54,7 +87,7 @@
             <h1>은행 이체 문제</h1>
         </div>
         <div class="cell">
-            <div class="display right"></div>
+            <div class="display right">이체할 금액을 입력하세요</div>
         </div>
         <div class="flex-area flex-center">
             <div class="outer">
@@ -80,6 +113,16 @@
             </div>
             <div class="outer">
                 <button type="button" class="btn btn-neutral" onclick="bankMoney(1)">일</button>
+            </div>
+        </div>
+        <div class="cell right">
+            <div class="outer">
+                <button type="button" class="btn btn-negative" onclick="deleteOne()">
+                    <i class="fa-solid fa-delete-left"></i>
+                </button>
+                 <button type="button" class="btn btn-negative" onclick="deleteAll()">
+                    <i class="fa-solid fa-eraser"></i>
+                </button>
             </div>
         </div>
         <div class="cell blue">

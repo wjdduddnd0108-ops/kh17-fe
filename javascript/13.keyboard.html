@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        function calculateLength(){
+            //[1] 입력창을 선택한다
+            var target = document.querySelector(".target");
+
+            //[2] 글자수를 계산한다
+            var size = target.value.length;
+
+            //[3] 글자수 표시영역을 선택하여 글자를 작성한다
+            var count = document.querySelector(".count");
+            count.textContent = size;
+
+            //[4] 정규표현식을 이용하여 원하는 패턴인지 검사
+            var numeric = document.querySelector(".numeric");
+            var regex = /^[0-9]+$/;
+            if(regex.test(target.value)){//정규식 통과했다면 (=숫자만 입력됐다면)
+                 numeric.textContent = "숫자만 작성되어 있어요";
+            }
+            else{
+                numeric.textContent = "숫자로만 작성하세요";
+            }
+        }
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>키보드 관련 이벤트</h1>
+        </div>
+        <div class="cell">
+            <input type="text" class="field w-100 target" oninput="calculateLength()">
+        </div>
+        <div class="cell right">
+            현재 <span class="count">0</span>글자 입력중입니다....
+        </div>
+
+        <div class="cell numeric right"></div>
+
+    </div>
+</body>
+</html>
