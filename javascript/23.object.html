@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        // 배열(Array)
+        // - 자바스크립트의 배열은 자바의 배열과는 다르고 ArrayList와 매우 비슷하다
+        // - 크기가 자동으로 늘어나거나 줄어든다 
+        //- 만드는 방법이 두 가지가 존재
+
+        //1. 초기값을 지정하여 생성
+        //(cf) 자바 :int[] n = new int[]{10, 20, 30, 40, 50};
+        var n = [10, 20, 30, 40, 50];
+        console.log(n);
+        console.log(n.length);//칸수(길이)
+        console.log(n[0], n[1], n[2], n[3], n[4])
+        console.log(n[5], n[6]);//자바에선 안되는데 자바스크립트에선 가능
+
+        n[10] = 100;//???
+        console.log(n);
+
+        //맨 뒤에 추가 (자바의 add)
+        n.push(200);
+        console.log(n);
+
+        //2. 크기만 지정해서 생성
+        //(cf) 자바 : int[] m = new int[5];
+        var m = new Array(5);
+        console.log(m);
+
+        //(Q) n의 모든 데이터 출력
+        for(var i = 0; i<n.length; i++){//자바와 동일
+            console.log(n[i]);
+        }
+        for(var i in n) {//존재하는 key만 나옴
+            console.log(n[i]);
+        }
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>제목</h1>
+        </div>
+
+
+    </div>
+</body>
+</html>
