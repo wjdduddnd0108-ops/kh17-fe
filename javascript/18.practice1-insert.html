@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        function checkPractice1Title(){
+            //태그선택 -> 값 추출 -> 유효성 검사 -> 결과 기록
+            var tag = document.querySelector("[name=practice1Title]");
+            var valid = tag.value.length > 0;
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+
+        }
+        function checkPractice1Category(){
+            var tag = document.querySelector("[name=practice1Category]")
+            var regex = /^(이론|실습|시험)$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }
+        //어떤 입력을 하든 숫자로 바꿔서 저장 (ex : 00001 -> 1)
+        function filterPractice1Time(){
+            var tag = document.querySelector("[name = practice1Time]");
+            var originValue = tag.value;
+            var replaceValue = originValue.replace(/[^0-9]/g, "");
+            //tag.value = replaceValue;//0001 안됨
+            tag.value = parseInt(replaceValue || 0);//replaceValue가 빈칸이면 0으로 대체
+        }
+        function checkPractice1Time(){
+            var tag = document.querySelector("[name = practice1Time]");
+            var duration = parseInt(tag.value);//NaN 나올 수 없음
+            var valid = duration % 30 == 0 && duration <= 300;
+            tag.classList.remove("success" , "fail");
+            tag.classList.add(valid ? "success" : "fail")
+        }
+        function filterPractice1Price(){
+            var tag = document.querySelector("[name = practice1Price]");
+            var originValue = tag.value;
+            var replaceValue = originValue.replace(/[^0-9]/g, "");
+            tag.value = parseInt(replaceValue || 0);
+        }
+        function checkPractice1Price(){
+            var tag = document.querySelector("[name=practice1Praice]");
+            var price = parseInt(tag.value);
+            var valid = price >= 0 && price <= 100000000;
+             tag.classList.remove("success" , "fail");
+            tag.classList.add(valid ? "success" : "fail")
+        }
+
+        function checkPractice1CourseType() {
+            var tag = document.querySelector("[name=practice1CourseType]");
+            var regex = /^(온라인|오프라인|혼합)$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }
+
+        function checkAttach(){}
+     </script>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data" autofocus="off">
+        <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>강좌 정보 등록</h1>
+        </div>
+        <div class="cell mt-40">
+            <label>강좌명 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" name="practice1Title" placeholder="e.g., 정보처리 산업기사"
+                class="field w-100" onblur="checkPractice1Title();">
+            <civ class="success-feedback">올바른 형식입니다</civ>
+            <civ class="fail-feedback">필수항목입니다</civ>
+        </div>
+
+        <div class="cell">
+            <label>카테고리 <i class="fa-solid fa-asterisk red"></i></label>
+            <select name="practice1Category" class="field w-100" oninput="checkPractice1Category();">
+                <option value="">선택하세요</option>
+                <option>이론</option>
+                <option>실습</option>
+                <option>시험</option>
+            </select>
+            <div class="fail-feedback">필수 선택 항목입니다</div>
+        </div>
+        
+        <div class="cell">
+            <label>강의시간 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" inputmode="numeric" name="practice1Time" class="field w-100" oninput="filterPractice1Time();"
+            onblur="checkPractice1Time();">
+            <div class="success-feedback">강의시간이 설정되었습니다</div>
+            <div class="fail-feedback">30시간 단위로 최대 300시간 이내에서 설정 가능합니다.</div>
+        </div>
+
+        <div class="cell">
+            <label>수강료 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" inputmode="numeric" name="practice1Price" class="field w-100" oninput="filterPractice1Price();"
+            onblur="checkPractice1Price();">
+            <div class="success-feedback">수강료가 설정되었습니다</div>
+            <div class="fail-feedback">수강료는 0 이상으로 설정해야 합니다</div>
+        </div>
+
+        <div class="cell">
+            <label>강의형태<i class="fa-solid fa-asterisk red"></i></label>
+            <select name="practice1CourseType" class="field w-100" oninput="checkPractice1CourseType();">
+                <option value="">선택하세요</option>
+                <option>온라인</option>
+                <option>오프라인</option>
+                <option>혼합</option>
+            </select>
+            <div class="fail-feedback">필수 선택 항목입니다</div>
+        </div>
+
+        <div class="cell mt-50">
+            <label>미리보기</label>
+            <input type="file" name="attach" accept=".png, .jpg" multiple class="file w-100">
+        </div>
+
+        <div class="cell mt-50">
+            <button type="submit" class="btn btn-positive w-100">
+                <i class="fa-solid fa-plus"></i>
+                <span>신규 강좌 개설하기</span>
+            </button>
+        </div>
+        
+
+        </div>    
+    </form>
+    
+</body>
+</html>

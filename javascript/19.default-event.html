@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        function checkMove(){
+            //정말로 이동할 것인지 의사를 한번 더 물어보고 진행
+            var choice = window.confirm("정말 이동하시겠습니까?");
+            console.log(choice);
+            if(choice == false) return false;
+
+        }
+
+        function checkForm(){
+            var choice = window.confirm("정말로 전송하시겠습니까?");
+            if(choice == false) return false;
+        }
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>기본 이벤트의 제어</h1>
+        </div>
+
+        <!-- 
+            a, form과 같이 태그에 내장된 이벤트가 존재하는 경우 이를 통제할 수 있어야 한다 
+            - a태그는 click 이벤트가 설정되어 있다 (onclick 함수) -> false를 반환하게 하면 차단 가능
+        -->
+
+        <div class="cell">
+            <a href="https://www.google.com" class="btn btn-neutral w-100"
+                onclick="return checkMove();">구글로 이동</a>
+        </div>
+
+        <div class="cell mt-40">
+            <form action="https://www.google.com" method="get" 
+                onsubmit="return checkForm();">
+                <button type="submit" class="btn btn-neutral w-100">구글로 이동</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
