@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+        body {
+            width: 2000px;
+            height: 5000px;
+        }
+        .btn-top {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 999;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        //자바스크립트가 제공해주는 내장객체의 종류와 활용
+        // console.log(window);
+
+        function window01(){
+            // window.alert("알림창 테스트");//window 객체에 있는 alert 함수를 실행
+            alert("알림창 테스트");//window는 생략 가능
+        }
+        function window02(){
+            var choice = window.confirm("확인창 테스트");
+            console.log("choice", choice)
+        }
+        function window03(){
+            var action = window.prompt("아무거나입력");
+            console.log("action", action);
+        }
+        function window04(){
+            //innerWidth/Height - 창 내부 뷰포트 크기
+            //outerWidth/Height - 창 외부 크기
+            //scrollX/Y - 스크롤 위치(좌측 혹은 상단의 좌표)
+            console.log(window01.innerWidth, window.innerHeight, window.scrollX, window.scrollY);
+        }
+
+        //(Q) .btn-top을 누르면 코드를 작성해서 스크롤을 가장 위로 올려보세요
+        function moveTop(){
+            // window.scrollTo(0,0);//단순한 이동
+            window.scrollTo({
+                top:0,
+                behavior : "smooth"
+            });
+        }
+        function window05(){
+            window.open("https://www.naver.com");//새탭
+        }
+        function window06(){
+            // window.open("https://www.naver.com", "myWindow");//새탭+추적
+            window.open("https://www.naver.com", "_blank", "width=500, height=500");//매번 새로운창
+        }
+        function location01(){
+            // windwo.location.href = "https://www.google.com";
+            location.href = "https://www.google.com";
+            // window.location.replace("https://www.google.com");
+            console.log(window.location);
+        }
+        function location02(){
+            var choice = window.confirm("정말?");
+            if(choice == false) return;
+
+            location.href = "https://www.naver.com";
+        }
+        function history01(){
+            // console.log(window.history);
+            // hisotry.back();
+            history.go(-1);
+        }
+        function document01(){
+            // console.log(window.document);
+            // var target = document.getElementById("sample1");//아이디를 이용한 태그 선택
+            // var target = document.getElementsByTagName("h2")[0];//태그명을 이용한 태그 선택(여러개)
+            // var target = document.getElementsByClassName("target1")[0];//클래스명을 이용한 태그 선택(여러개)
+
+            // var target = document.querySelector("#sample1");// css 선택자를 이용한 태그 선택
+            // var target = document.querySelector("h2");//태그명을 이용한 태그 선택
+            var target = document.querySelector(".target1");//클래스명을 이용한 태그 선택
+            target.style.color = "red";
+        }
+        function document02(){
+            //태그를 여러개 선택하여 배열로 반환하는 명령
+            var targets = document.querySelectorAll("h2");
+            // console.log(targets);
+            
+            for(var i=0;i<targets.length; i++){
+                targets[i].style.color = "red";
+            }
+        }
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>자바스크립트의 내장객체</h1>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-neutral" onclick="window01();">알림창</button>
+            <button type="button" class="btn btn-neutral" onclick="window02();">확인창</button>
+            <button type="button" class="btn btn-neutral" onclick="window03();">입력창</button>
+            <button type="button" class="btn btn-neutral" onclick="window04();">윈도우정보</button>
+            <button type="button" class="btn btn-neutral" onclick="window05();">새탭</button>
+            <button type="button" class="btn btn-neutral" onclick="window06();">새창</button>
+
+            <button type="button" class="btn btn-neutral btn-top" onclick="moveTop();">
+                <i class="fa-solid fa-arrow-up"></i>
+            </button>
+
+            <div class="cell mt-50">
+                <button type="button" class="btn btn-neutral" onclick="location01();">구글로 이동</button>
+                <button type="button" class="btn btn-neutral" onmouseenter="location02();">네이버로 이동</button>
+                <!-- 새로고침(reload) 등이 존재 -->
+            </div>
+
+            <div class="cell mt-50">
+                <button type="button" class="btn btn-neutral" onclick="history01();">뒤로가기</button>
+            </div>
+            <div class="cell mt-50">
+                <button type="button" class="btn btn-neutral" onclick="document01();">태그선택</button>
+                <button type="button" class="btn btn-neutral" onclick="document02();">태그선택</button>
+            </div>
+            <div class="cell">
+                <h2 id="sample1" class="target1">Hello Javascript!</h2>
+                <h2 id="sample2" class="target2">Hello Javascript!</h2>
+                <h2 id="sample3" class="target3">Hello Javascript!</h2>
+                <h2 id="sample4" class="target4">Hello Javascript!</h2>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
