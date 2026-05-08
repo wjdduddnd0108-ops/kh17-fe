@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        // 필수항목인지만
+        function checkBookTitle(){
+            var tag = document.querySelector("[name=bookTitle]");
+            var valid = tag.value.length > 0;
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+            return valid;
+        }
+        // 저자 특수문자 
+        function checkBookAuthor(){
+            var tag = document.querySelector("[name=bookAuthor]");
+            var regex = /^[^!@#$]+$/;
+
+            tag.classList.remove("success", "fail");
+            // 2. 비어있는지 확인 (공백만 있는 경우도 비어있다고 간주하려면 trim() 사용)
+            if (tag.value.length === 0) {
+                // 비어있다면 아무것도 하지 않고 true를 반환 (필수가 아니므로 통과)
+                return true;
+            }
+            var valid = regex.test(tag.value);
+            tag.classList.add(valid ? "success" : "fail");
+            return valid;
+        }
+        //조건식에 맞는 년도만
+        function checkBookPublicationDate(){
+            var tag = document.querySelector("[name=bookPublicationDate]");
+            var regex = /^([0-9]{4})-(((02)-(0[1-9]|1[0-9]|2[0-9]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
+            tag.classList.remove("success", "fail");
+            if (tag.value.length === 0){
+                return true;
+            }
+            var valid = regex.test(tag.value);
+            tag.classList.add(valid ? "success" : "fail");
+            return valid;
+        }
+        function filterBookPrice(){
+            var tag = document.querySelector("[name=bookPrice]");
+            var regex = /[^0-9]+/g;
+            var replacement = tag.value.replace(regex,"");
+            tag.value = replacement;
+        }
+        function checkBookPrice(){
+            var tag = document.querySelector("[name=bookPrice]");
+            var valid = tag.value.length > 0 && parseInt(tag.value) > 0; 
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+            return valid;
+        }
+        function filterBookPageCount(){
+            var tag = document.querySelector("[name=bookPageCount]");
+            var regex = /[^0-9]+/g;
+            var replacement = tag.value.replace(regex,"");
+            tag.value = replacement;
+        }
+        function checkBookPageCount(){
+            var tag = document.querySelector("[name=bookPageCount]");
+            var valid = tag.value.length > 0 && parseInt(tag.value) > 0; 
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+            return valid;
+        }
+        function checkBookGenre(){
+            var tag = document.querySelector("[name=bookGenre]");
+            var regex = /^(판타지|교양|소설|역사|과학|추리소설|자기계발|수험서)$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+            return valid;
+        }
+
+        function checkForm(){
+            var bookTitleValid = checkBookTitle();
+            var bookAuthorValid = checkBookAuthor();
+            var bookPublicationDateValid = checkBookPublicationDate();
+            var bookPriceValid = checkBookPrice();
+            var bookPageCountValid = checkBookPageCount();
+            var bookGenreValid = checkBookGenre();
+            
+            var valid = bookTitleValid && bookAuthorValid && bookPublicationDateValid
+            && bookPriceValid && bookPageCountValid && bookGenreValid;
+
+            return valid;
+        }
+
+     </script>
+</head>
+<body>
+     <form autocomplete="off" method="post" enctype="multipart/form-data" 
+        onsubmit="return checkForm();">
+        <div class="container w-500 mt-50 mb-50">
+            <div class="cell center">
+                <h1>신규 도서 등록</h1>
+            </div>
+            <div class="cell">
+                <label>도서명<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="bookTitle"
+                class="field w-100" onblur="checkBookTitle();">
+                <div class="fail-feedback">필수 항목입니다</div>
+            </div>
+            <div class="cell">
+                <label>지은이</label>
+                <input type="text" name="bookAuthor"
+                class="field w-100" onblur="checkBookAuthor();">
+                <div class="fail-feedback">특수문자는 들어갈 수 없습니다</div>
+            </div>
+            <div class="cell">
+                <label>출간일</label>
+                <input type="date" name="bookPublicationDate"
+                class="field w-100" oninput="checkBookPublicationDate();">
+                <div class="fail-feedback">올바르지 않은 년도입니다</div>
+            </div>
+            <div class="cell">
+                <label>판매가<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="bookPrice"
+                class="field w-100" inputmode="numeric" onblur="checkBookPrice();">
+                <div class="fail-feedback">0 이상의 숫자를 입력해주세요</div>
+            </div>
+            <div class="cell">
+                <label>출판사</label>
+                <input type="text" name="bookPublisher"
+                class="field w-100">
+            </div>
+            <div class="cell">
+                <label>페이지 수<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="bookPageCount"
+                class="field w-100" inputmode="numeric" onblur="checkBookPageCount();">
+                <div class="fail-feedback">0 이상의 숫자를 입력해주세요</div>
+            </div>
+            <div class="cell">
+                <label>장르<i class="fa-solid fa-asterisk red"></i></label>
+                <select class="field w-100" name="bookGenre" oninput="checkBookGenre();">
+                    <option value="">선택하세요</option>
+                    <option>판타지</option>
+		            <option>교양</option>
+		            <option>소설</option>
+		            <option>역사</option>
+		            <option>과학</option>
+		            <option>추리소설</option>
+		            <option>자기계발</option>
+		            <option>수험서</option>
+                </select>
+                <div class="fail-feedback">필수 항목입니다.</div>
+            </div>
+            <div class="cell">
+                <label>책 표지</label>
+                <input type="file" name="attach" accept=".png, .jpg" 
+                class="field w-100">
+            </div>
+            <div class="cell mt-40">
+                <button class="btn btn-positive w-100">
+                    등록하기
+                </button>
+            </div>
+            <div class="cell mt-40">
+                <a href="./list" class="btn btn-neutral w-100">
+                    목록으로
+                </a>
+            </div>
+        </div>
+    </form>
+
+    </div>
+</body>
+</html>
