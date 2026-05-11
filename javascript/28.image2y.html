@@ -16,42 +16,31 @@
 
     <!-- 자바스크립트 작성 영역 -->
      <script>
-        //클래스 부여안했을때
         window.addEventListener("load", function(){
-            var button = document.querySelector(".btn");
+            //화면 전체에 영향을 주는 데이터 (상태 데이터)
+            var size = 300;
 
-            button[0].addEventListener("click",function(){
-                var img = document.querySelector("img");
-                img.width = 150;
-            })
-            button[1].addEventListener("click",function(){
-                var img = document.querySelector("img");
-                img.width = 300;
-            })
-            button[2].addEventListener("click",function(){
-                var img = document.querySelector("img");
-                img.width = 450;
-            })
-        })
-
-        //클래스 부여했을때
-        window.addEventListener("load", function(){
             var btn = document.querySelector(".btn-s");
             btn.addEventListener("click", function(){
+                if(size == 100) return;
                 var target = document.querySelector("img");
-                target.width=150;
-            })
+                size -= 50;
+                target.width=size;
 
-            var btn = document.querySelector(".btn-m");
-            btn.addEventListener("click", function(){
-                var target = document.querySelector("img");
-                target.width=300;
+                var span = document.querySelector(".current");
+                span.textContent = "현재 : "+size+"px";
+
             })
 
             var btn = document.querySelector(".btn-l");
             btn.addEventListener("click", function(){
+                if(size == 500) return;
                 var target = document.querySelector("img");
-                target.width=450;
+                size += 50;
+                target.width=size;
+
+                var span = document.querySelector(".current");
+                span.textContent = "현재 : "+size+"px";
             })
 
         })
@@ -64,7 +53,7 @@
         </div>
         <div class="cell center">
             <button type="button" class="btn btn-s">작게</button>
-            <button type="button" class="btn btn-m">보통</button>
+            <span class="current">현재 : 300px</span>
             <button type="button" class="btn btn-l">크게</button>
         </div>
         <div class="cell center">
