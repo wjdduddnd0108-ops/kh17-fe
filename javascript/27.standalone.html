@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        //이벤트 중복 설정이 가능하도록 하기 위한 새로운 명령 : addEventListener 함수 사용
+        window.addEventListener("load", function(){
+            var btn = document.querySelector(".btn");
+            btn.addEventListener("click", function(){
+                var target = document.querySelector(".target");
+                target.style.color = "red";
+            })
+        });
+
+        // window.addEventListener("load", function(){
+        //     var btn = document.querySelector(".btn");
+        //     btn.addEventListener("click", function(){
+        //         var target = document.querySelector(".target");
+        //         target.style.backgroundColor = "yellow";
+        //     })
+        // });
+
+        //현재 방식의 문제점 : 중복된 이벤트 설정이 불가
+        // window.onload = function(){ 
+        //     //원래 app에 있던 코드들을 이곳에 작성
+        //     var btn = document.querySelector(".btn");
+        //     btn.onclick = function(){
+        //         //changeColor의 코드를 이곳에 작성
+        //         var target = document.querySelector(".target");
+        //         target.style.color = "red";
+        //     };
+        // };
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>독립형 자바스크립트</h1>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">색상변경</button>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello Javascript!</h2>
+        </div>
+
+
+    </div>
+</body>
+</html>

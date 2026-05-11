@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        //전체 선택 : .check-all에 input 이벤트가 생기면 .check-item에 상태를 전파한다
+        function checkAll(){
+            //전체 선택 체크박스를 가져온다
+            var all = document.querySelector(".check-all");
+            // console.log(all.checked);//논리로 나옴
+
+            //체크항목을 불러와서 상태를 전파한다
+            var checkboxes = document.querySelectorAll(".check-item");
+            for(var i=0; i < checkboxes.length; i++){
+                checkboxes[i].checked = all.checked;
+            }
+
+            //클린업
+            checkItem2();
+        }
+
+        //필수 항목 선택:
+        //- .check-required에 input 이벤트가 생기면 .check-item-required에 상태를 전파한다
+        function checkRequired(){
+            //필수 체크박스 선택
+            var required = document.querySelector(".check-required");
+
+            //체크 여부를 모든 필수 항목 체크박스에 전파
+            var checkboxes = document.querySelectorAll(".check-item-required");
+            for(var i=0; i<checkboxes.length; i++){
+                checkboxes[i].checked = required.checked;
+            }
+
+            checkItem2();
+        }
+
+        //개별 항목 검사
+        //- 개별 항목들이 모두 선택되어 있으면 전체 선택을 체크, 아니면 해제
+        //- 모두 체크되어 있는지 어떻게 알지?
+        // 1. 전체 체크박스를 불러와서 체크된 항목을 카운트한다
+        // 2. :checked 선택자를 활용
+
+        function checkItem1(){
+            //전체 체크아이템을 불러온다 (이 안에는 필수 체크박스도 존재)
+            var checkboxes = document.querySelectorAll(".check-item");
+            var count = 0;//전체 체크개수
+            var requiredCount = 0;//필수 체크개수
+            var requiredCheckedCount = 0;//필수 체크 개수
+
+            for(var i=0; i < checkboxes.length; i++){
+                if(checkboxes[i].checked){//체크가 되어있다면
+                    count++;
+                }
+                //필수 항목은 따로 검사
+                if(checkboxes[i].classList.contains("check-item-required")){//필수 항목 체크박스라면
+                        requiredCount++;
+
+                        if(checkboxes[i].checked){
+                            requiredCheckedCount++;
+                        }
+                    }
+            }
+            var allChecked = count == checkboxes.length;
+
+            //필수항목이 모두 선택되었다는건 필수항목 개수와 체크된 필수항목 개수가 같은걸 의미
+            var requiredChecked = requiredCount == requiredCheckedCount;
+
+            
+        }
+
+        function checkItem2(){
+            var all = document.querySelectorAll(".check-item");//전체 체크박스
+            var checkedCheckboxes = document.querySelectorAll(".check-item:checked");//체크된 체크박스
+            var allChecked = checkboxes.length == checkedCheckboxes.length;//전체 체크여부
+
+            var requiredCheckboxes = document.querySelectorAll(".check-item-required");//필수 체크박스
+            var checkedRequiredCheckboxes = 
+                    document.querySelector(".check-item-required:checked");//체크된 필수 체크박스
+            var requiredChecked = requiredCheckboxes.length == checkedRequiredCheckboxes.length;
+
+            //allChecked에 따라 전체선택 체크박스를 처리
+            var all = document.querySelector(".check-all");
+            all.checked  = allChecked;
+
+            //requiredChecked에 따라 필수 체크박스를 처리
+            var required = document.querySelector(".check-required");
+            required.checked = requiredChecked;
+        }
+
+
+
+        
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이용약관 동의</h1>
+            <p>정상적인 사이트 이용을 위해 다음 이용약관에 동의해주세요</p>
+        </div>
+
+        <div class="cell mt-50">
+            <!-- label 안에 체크박스와 글자를 넣으면 ID 없이 글자와 체크박스가 연결 -->
+            <label>
+                <input type="checkbox" class="check-required" oninput="checkRequired();">
+                <span>필수 이용약관에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell mt-50">
+            <!-- label 안에 체크박스와 글자를 넣으면 ID 없이 글자와 체크박스가 연결 -->
+            <label>
+                <input type="checkbox" class="check-all" oninput="checkAll();">
+                <span>전체 이용약관에 동의합니다</span>
+            </label>
+        </div>
+
+        <hr>
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-item check-item-required" oninput="checkItem2();">
+                <span>(필수) 개인정보 취급방칙에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-item check-item-required" oninput="checkItem2();">
+                <span>(필수) 홈페이지 이용규정을 준수하겠습니다</span>
+            </label>
+        </div>
+
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-item" oninput="checkItem2();">
+                <span>(선택) 이벤트성 정보 수신에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-item" oninput="checkItem2();">
+                <span>(선택) 개인정보 제 3자 제공에 동의합니다</span>
+            </label>
+        </div>
+
+    </div>
+</body>
+</html>
