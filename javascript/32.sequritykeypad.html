@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+
+        .outer {
+            width: 25%;
+            font-size: 24px;
+            padding: 0.75em;
+        }
+        .btn-number {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        window.addEventListener("load", function(){
+            var numberButtons = document.querySelectorAll(".btn-number");
+            var displays = document.querySelectorAll(".display");
+
+            var count = 0;
+
+            for(var i=0; i< numberButtons.length; i++){
+                numberButtons[i].addEventListener("click", function(){
+                    if(count >= displays.length) return;
+
+                    var num = this.dataset.number;//현재 클릭된 버튼
+
+                    if(!num) return;
+
+                    displays[count].textContent = num;
+                    
+                    count++;
+                })
+            }
+
+            var deleteOne = document.querySelector(".btn-deleteOne");
+            deleteOne.addEventListener("click", function(){
+                
+            })
+
+
+        })
+
+
+
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center mb-0">
+            <h1>암호화 키패드 문제</h1>
+        </div>
+
+        <!-- 입력한 숫자 확인창 -->
+        <div class="flex-area center mt-0">
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div> 
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+        </div>
+
+        <!-- 숫자 입력패드 -->
+        <div class="cell flex-area" style="flex-wrap: wrap;">
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="1">1</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="2">2</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="3">3</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="4">4</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="5">5</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="6">6</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="7">7</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="8">8</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="9">9</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-positive btn-number w-100" data-number="0">0</button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-neutral btn-number w-100"></button>
+            </div>
+             <div class="outer">
+                <button class="btn btn-neutral btn-number w-100"></button>
+            </div>
+             <div class="outer">
+                <button class="btn btn-neutral btn-number w-100"></button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-neutral btn-number w-100"></button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-neutral btn-number w-100"></button>
+            </div>
+            <div class="outer">
+                <button class="btn btn-neutral btn-number w-100"></button>
+            </div>
+        </div>
+        <div class="cell">
+            <button  type="button" class="btn btn-neutral btn-shuffle w-100">
+                버튼 재배치
+            </button>
+        </div>
+        <div class="cell">
+            <button  type="button" class="btn btn-negative btn-delete w-100">
+                한 글자 지우기
+            </button>
+        </div>
+        <div class="cell">
+            <button  type="button" class="btn btn-negative btn-clear w-100">
+                다시 입력하기
+            </button>
+        </div>
+
+
+
+
+
+    </div>
+</body>
+</html>

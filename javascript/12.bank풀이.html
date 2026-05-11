@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
+
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div { box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        //입력창에 이미 입력된 값은 어떠한 경우에도 문자열이기 때문에 계산 과정에서 숫자 변환이 필요
+        function addMoney(amount){
+            var target = document.querySelector(".target");
+            //target.value가 비어있는 경우를 고려하여 코드를 작성
+            //if(target.value == "") {
+            //if(target.value == '') {
+            //if(!target.value) {
+            if(target.value.length == 0) {//앞으로 사용할 방식
+                target.value = amount;
+            }
+            else {
+                var newAmount = parseInt(target.value) + amount;
+                target.value = newAmount;
+            }
+
+            displayAmount();
+        }
+        function deleteOne() {
+            var target = document.querySelector(".target");
+            var origin = target.value;
+            target.value = origin.substring(0, origin.length-1);
+
+            displayAmount();
+        }
+        function deleteAll() {
+            var target = document.querySelector(".target");
+            target.value = "";
+
+            displayAmount();
+        }
+
+        //.target의 입력값을 .display에 옮겨 표시하는 함수
+        function displayAmount() {
+            //(+추가) 입력값을 외부 화면에 출력
+            var target = document.querySelector(".target");
+            var display = document.querySelector(".display");
+            var displayKorean = document.querySelector(".display-korean");
+
+            if(target.value.length == 0) {//비어있으면
+                display.textContent = "금액을 입력하세요";
+                displayKorean.textContent = "금액을 입력하세요";
+            }
+            else {
+                var money = parseInt(target.value);
+                display.textContent = "이체 금액은 총 " + money.toLocaleString()+"원 입니다";
+                displayKorean.textContent = "이체 금액은 총 " + getKoreanAmount(money) +"원 입니다";
+            }
+        }
+
+        //한글 금액을 계산하는 함수
+        function getKoreanAmount(money) {
+            //네자리씩 끊어서 계산하기 위해 숫자를 만분의일로 나눠가면서 진행
+            var str = "";
+            var count = 0;//네자리씩 몇번 끊었는지 세는 변수 (1부터 단위가 붙음)
+            for(var i=money; parseInt(i) > 0; i /= 10000) {
+                //끝 네 자리를 순서대로 part1, 2, 3, 4로 저장
+                var part1 = parseInt(i / 1000 % 10);//뒤에서 4번째 자리 (뒤에 천이 붙음)
+                var part2 = parseInt(i / 100 % 10);//뒤에서 3번째 자리 (뒤에 백이 붙음)
+                var part3 = parseInt(i / 10 % 10);//뒤에서 2번째 자리 (뒤에 십이 붙음)
+                var part4 = parseInt(i % 10);//뒤에서 1번째 자리 (뒤에 안붙음)
+                console.log("part", part1, part2, part3, part4);
+                
+                //자리별 숫자에 대한 한글을 구한다
+                var prefix1 = getKoreanNumberString(part1);
+                var prefix2 = getKoreanNumberString(part2);
+                var prefix3 = getKoreanNumberString(part3);
+                var prefix4 = getKoreanNumberString(part4);
+
+                //각 자리별로 0이 아니면 단위를 추가
+                if(prefix1.length > 0) prefix1 += "천";
+                if(prefix2.length > 0) prefix2 += "백";
+                if(prefix3.length > 0) prefix3 += "십";
+                var lengthTotal = prefix1.length + prefix2.length + prefix3.length + prefix4.length;
+                if(count > 0 && lengthTotal > 0) {//네자리중에 한자리라도 있고 만단위 이상이라면
+                    prefix4 += getKoreanNumberPosition(count);
+                }
+                console.log("prefix", prefix1, prefix2, prefix3, prefix4);
+
+                var prefix = prefix1 + prefix2 + prefix3 + prefix4;
+                str = prefix + str;
+
+                count++;
+            }
+            return str;
+        }
+
+        //숫자에 대한 한글을 반환하는 함수
+        function getKoreanNumberString(number) {
+            switch(number) {
+            case 1: return "일";
+            case 2: return "이";
+            case 3: return "삼";
+            case 4: return "사";
+            case 5: return "오";
+            case 6: return "육";
+            case 7: return "칠";
+            case 8: return "팔";
+            case 9: return "구";
+            default: return "";
+            }
+        }
+
+        //자리수에 대한 한글을 반환하는 함수
+        function getKoreanNumberPosition(count) {            
+            switch(count) {
+            case 1: return "만";
+            case 2: return "억";
+            case 3: return "조";
+            case 4: return "경";
+            case 5: return "해";
+            default: return "";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container w-800 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이체 금액 입력</h1>
+        </div>
+
+        <div class="cell mt-40">
+            <input class="field w-100 target right" placeholder="이체할 금액을 입력하세요">
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-neutral" onclick="addMoney(100000000);">억</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(10000000);">천만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(1000000);">백만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(100000);">십만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(10000);">만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(1000);">천</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(100);">백</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(10);">십</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(1);">일</button>
+            <button type="button" class="btn btn-negative" onclick="deleteOne();">
+                <i class="fa-solid fa-delete-left"></i>
+            </button>
+            <button type="button" class="btn btn-negative" onclick="deleteAll();">
+                <i class="fa-solid fa-eraser"></i>
+            </button>
+        </div>
+
+        <div class="cell mt-50 display" style="font-size: 24px;">
+            금액을 입력하세요
+        </div>
+        <div class="cell mt-50 display-korean" style="font-size: 24px;">
+            금액을 입력하세요
+        </div>
+    </div>
+</body>
+</html>

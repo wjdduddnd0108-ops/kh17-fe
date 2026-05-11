@@ -331,8 +331,9 @@ width: 100%;
     flex-direction: row;/* 한 줄에 배치*/
     flex-wrap: nowrap;/* 줄바꿈 금지*/
 }
-.flex-area > flex-fill {
+.flex-area > .flex-fill {
     flex-grow: 1;
+    flex-basis: 0;
 }
 .flex-area.flex-center {
     justify-content: center;

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        window.addEventListener("load", function(){
+            //금액 버튼 이벤트 설정
+            var numberButtons = document.querySelectorAll(".btn-number");
+            for(var i=0; i < numberButtons.length; i++){
+                numberButtons[i].addEventListener("click", function(){
+                    var display = document.querySelector(".display");
+                    var subdisplay = document.querySelector(".sub-display");
+
+                    var currentVal = parseInt(display.textContent) || 0;//기존에 있던 금액의 숫자값 없으면 0으로 대체
+                    var addVal = parseInt(this.dataset.number);//추가해야할 금액의 숫자값
+                    
+                    display.textContent = currentVal + addVal;
+                    subdisplay.textContent = (currentVal + addVal).toLocaleString();
+                });
+            }
+
+            //한 글자 지우기 버튼 이벤트 설정
+            var deleteOne = document.querySelector(".btn-deleteOne");
+            deleteOne.addEventListener("click",function(){
+                var display = document.querySelector(".display");
+                var subdisplay = document.querySelector(".sub-display");
+
+                var origin = display.textContent;
+                var minus = origin.substring(0, origin.length-1);
+
+                display.textContent = minus;
+                //서브디스플레이 에서도 빼기가 지원되게
+                if(minus.length == 0){//마이너스 했을때 비어있을때 nan 값이 안나오도록 0으로 변환
+                    subdisplay.textContent = "0";
+                }
+                else{
+                    subdisplay.textContent = parseInt(minus).toLocaleString();
+                }
+            });
+
+            //전체 지우기 버튼 이벤트 설정
+            var deleteAll = document.querySelector(".btn-deleteAll");
+            deleteAll.addEventListener("click",function(){
+                var display = document.querySelector(".display");
+                var subdiplay = document.querySelector(".sub-display");
+                display.textContent = "0";
+                subdiplay.textContent = "0";
+                
+            });
+        });
+
+
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>제목</h1>
+        </div>
+         <div class="cell">
+            <div class="display right">이체할 금액을 입력하세요</div>
+        </div>
+        <div class="flex-area flex-center">
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="100000000">일억</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="10000000">천만</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="1000000">백만</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="100000">십만</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="10000">만</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="1000">천</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="100" >백</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="10" >십</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="1" >일</button>
+            </div>
+        </div>
+        <div class="cell right">
+            <div class="outer">
+                <button type="button" class="btn btn-negative btn-deleteOne">
+                    <i class="fa-solid fa-delete-left"></i>
+                </button>
+                 <button type="button" class="btn btn-negative btn-deleteAll">
+                    <i class="fa-solid fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+        <div class="cell blue">
+            이체하시려는 금액은 총 <span class="sub-display">0</span>원 입니다
+        </div>
+    </div>
+</body>
+</html>
