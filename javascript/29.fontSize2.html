@@ -17,18 +17,38 @@
     <!-- 자바스크립트 작성 영역 -->
      <script>
         window.addEventListener("load", function(){
-            var buttons = document.querySelectorAll(".btn");
+            //주어진 폰트 크기 내에서만 변화가 이루어지도록 구현
+            var sizeList = [8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72,96,128,172,256];
+            var index = 6;
 
-            for(var i=0; i < buttons.length; i++) {
-                buttons[i].addEventListener("click", function(){
-                    var target = document.querySelector(".target");
-                    //dataset.size는 태그에 적힌 data-size의 값을 불러오라는 의미
-                    var size = this.dataset.size;//this는 이벤트가 발생한 주인공
-                    target.style.fontSize = size;
-                });
-            }
+            var btnMinus = document.querySelector(".btn-minus");
+            btnMinus.addEventListener("click", function(){
+                //this는 minus버튼
+                if(index == 0) return;
+
+                index --;
+
+                var target = document.querySelector(".target");
+                target.style.fontSize = sizeList[index] + "px";
+
+                var span = document.querySelector(".current");
+                span.textContent = sizeList[index];
+            });
+
+            var btnPlus = document.querySelector(".btn-plus");
+            btnPlus.addEventListener("click", function(){
+                //this는 plus버튼
+                if(index == sizeList.length-1) return;
+
+                index++;
+
+                var target = document.querySelector(".target");
+                target.style.fontSize = sizeList[index] + "px";
+
+                var span = document.querySelector(".current");
+                span.textContent = sizeList[index];
+            });
         });
-        
      </script>
 </head>
 <body>
@@ -37,9 +57,9 @@
             <h1>글자 크기 변경 문제</h1>
         </div>
         <div class="cell center">
-            <button type="button" class="btn btn-neutral" data-size="12px"><span><i class="fa-solid fa-minus" ></i></span></button>
-            <span class="current">현재 : 16px</span>
-            <button type="button" class="btn btn btn-neutral" data-size="20px"><span><i class="fa-solid fa-plus"></i></span></button>
+            <button type="button" class="btn btn-neutral btn-minus" ><span><i class="fa-solid fa-minus" ></i></span></button>
+            <span class="current">16</span>
+            <button type="button" class="btn btn btn-neutral btn-plus" ><span><i class="fa-solid fa-plus"></i></span></button>
         </div>
         <div class="cell target">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam malesuada fringilla imperdiet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque quis ligula quis diam faucibus fringilla. Nullam sollicitudin sem nec libero lobortis, nec aliquam mi blandit. Aliquam egestas neque nec suscipit porta. Fusce bibendum sapien eu diam laoreet dapibus. Pellentesque interdum tristique lectus, id mattis augue ultricies a. Aliquam venenatis ornare sagittis. Nulla nec cursus turpis, nec vehicula ex. Aliquam ac nunc tempus, suscipit ipsum pretium, auctor sapien.
