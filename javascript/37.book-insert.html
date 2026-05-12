@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        window.addEventListener("load", function(){
+            var state = {
+                bookTitleValid : false,
+                bookAuthorValid : false,
+                bookPublicationDateValid : false,
+                bookPriceValid : false,
+                bookPageCountValid : false,
+                bookGenreValid : false,
+
+                ok : function(){
+                    return this.bookTitleValid && this.bookAuthorValid && this.bookPublicationDateValid
+                            && this.bookPriceValid && this.bookPageCountValid && this.bookGenreValid;
+                }
+            }
+
+            document.querySelector("[name=bookTitle]").addEventListener("blur", function(){
+                var valid = this.value.length > 0;
+                this.classList.remove("success", "fail");
+                this.classList.add(valid ? "success" : "fail");
+                state.bookTitleValid = valid;
+            });
+            document.querySelector("[name=bookAuthor]").addEventListener("blur", function(){
+                var regex = /^[^!@#$]+$/;
+                this.classList.remove("success", "fail");
+                // 2. 비어있는지 확인 (공백만 있는 경우도 비어있다고 간주하려면 trim() 사용)
+                if (this.value.length === 0) {
+                    // 비어있다면 아무것도 하지 않고 true를 반환 (필수가 아니므로 통과)
+                    state.bookAuthorValid = true;
+                    return;
+                }
+                var valid = regex.test(this.value);
+                this.classList.add(valid ? "success" : "fail");
+                state.bookAuthorValid = valid;
+            });
+            document.querySelector("[name=bookPublicationDate]").addEventListener("input", function(){
+                var regex = /^([0-9]{4})-(((02)-(0[1-9]|1[0-9]|2[0-9]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
+                this.classList.remove("success", "fail");
+                if (this.value.length === 0){
+                    state.bookPublicationDateValid = true;
+                    return;
+                }
+                var valid = regex.test(this.value);
+                this.classList.add(valid ? "success" : "fail");
+                state.bookPublicationDateValid = valid;
+            });
+            document.querySelector("[name=bookPrice]").addEventListener("input", function(){
+                var originValue = this.value;
+                var replaceValue = originValue.replace(/[^0-9]/g, "");
+                this.value = parseInt(replaceValue || 0);
+            });
+            document.querySelector("[name=bookPrice]").addEventListener("blur", function(){
+                var valid = this.value.length > 0 && parseInt(this.value) > 0; 
+                this.classList.remove("success", "fail");
+                this.classList.add(valid ? "success" : "fail");
+                state.bookPriceValid = valid;
+            });
+            document.querySelector("[name=bookPageCount]").addEventListener("input", function(){
+                var originValue = this.value;
+                var replaceValue = originValue.replace(/[^0-9]/g, "");
+                this.value = parseInt(replaceValue || 1); 
+            });
+            document.querySelector("[name=bookPageCount]").addEventListener("blur", function(){
+                var valid = this.value.length > 0 && parseInt(this.value) > 0; 
+                this.classList.remove("success", "fail");
+                this.classList.add(valid ? "success" : "fail");
+                state.bookPageCountValid = valid;
+            });
+            document.querySelector("[name=bookGenre]").addEventListener("input", function(){
+                var regex = /^(판타지|교양|소설|역사|과학|추리소설|자기계발|수험서)$/;
+                var valid = regex.test(this.value);
+                this.classList.remove("success", "fail");
+                this.classList.add(valid ? "success" : "fail");
+                state.bookGenreValid = valid;
+            });
+            
+            document.querySelector(".form-check").addEventListener("submit", function(e){
+                //검사는 잘 이루어지고 있는데 ... 화면에 아무것도 표시되지 않아서 아쉬우니 강제로 이벤트 발생
+                document.querySelector("[name=bookTitle]").dispatchEvent(new Event('blur'));
+                document.querySelector("[name=bookAuthor]").dispatchEvent(new Event('blur'));
+                document.querySelector("[name=bookPublicationDate]").dispatchEvent(new Event('input'));
+                document.querySelector("[name=bookPrice]").dispatchEvent(new Event('blur'));
+                document.querySelector("[name=bookPageCount]").dispatchEvent(new Event('blur'));
+                document.querySelector("[name=bookGenre]").dispatchEvent(new Event('input'));
+
+                if(state.ok() == false){//state가 정상이 아니면
+                    e.preventDefault();//보내는걸 중지하자!
+                }
+            });
+
+        });
+     </script>
+</head>
+<body>
+    <form autocomplete="off" method="post" enctype="multipart/form-data" 
+        onsubmit="return checkForm();" class="form-check">
+        <div class="container w-500 mt-50 mb-50">
+            <div class="cell center">
+                <h1>신규 도서 등록</h1>
+            </div>
+            <div class="cell">
+                <label>도서명<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="bookTitle"
+                class="field w-100">
+                <div class="fail-feedback">필수 항목입니다</div>
+            </div>
+            <div class="cell">
+                <label>지은이</label>
+                <input type="text" name="bookAuthor"
+                class="field w-100">
+                <div class="fail-feedback">특수문자는 들어갈 수 없습니다</div>
+            </div>
+            <div class="cell">
+                <label>출간일</label>
+                <input type="date" name="bookPublicationDate"
+                class="field w-100">
+                <div class="fail-feedback">올바르지 않은 년도입니다</div>
+            </div>
+            <div class="cell">
+                <label>판매가<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="bookPrice"
+                class="field w-100" inputmode="numeric">
+                <div class="fail-feedback">0 이상의 숫자를 입력해주세요</div>
+            </div>
+            <div class="cell">
+                <label>출판사</label>
+                <input type="text" name="bookPublisher"
+                class="field w-100">
+            </div>
+            <div class="cell">
+                <label>페이지 수<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="bookPageCount"
+                class="field w-100" inputmode="numeric">
+                <div class="fail-feedback">0 이상의 숫자를 입력해주세요</div>
+            </div>
+            <div class="cell">
+                <label>장르<i class="fa-solid fa-asterisk red"></i></label>
+                <select class="field w-100" name="bookGenre">
+                    <option value="">선택하세요</option>
+                    <option>판타지</option>
+		            <option>교양</option>
+		            <option>소설</option>
+		            <option>역사</option>
+		            <option>과학</option>
+		            <option>추리소설</option>
+		            <option>자기계발</option>
+		            <option>수험서</option>
+                </select>
+                <div class="fail-feedback">필수 항목입니다.</div>
+            </div>
+            <div class="cell">
+                <label>책 표지</label>
+                <input type="file" name="attach" accept=".png, .jpg" 
+                class="field w-100">
+            </div>
+            <div class="cell mt-40">
+                <button class="btn btn-positive w-100">
+                    등록하기
+                </button>
+            </div>
+            <div class="cell mt-40">
+                <a href="./list" class="btn btn-neutral w-100">
+                    목록으로
+                </a>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

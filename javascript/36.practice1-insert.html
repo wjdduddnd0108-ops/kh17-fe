@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        window.addEventListener("load", function(){
+            //상태 객체
+            var state = {
+                practice1TitleValid : false,
+                practice1CategoryValid : false,
+                practice1TimeValid : false,
+                practice1PriceValid : false,
+                practice1CourseTypeValid : false,
+
+                ok : function(){
+                    return this.practice1TitleValid && this.practice1CategoryValid
+                            && this.practice1TimeValid && this.practice1PriceValid && this.practice1CourseTypeValid;
+                }
+            }
+
+            //입력창 검사
+            document.querySelector("[name=practice1Title]").addEventListener("blur", function(){
+                var valid = this.value.length > 0;
+                this.classList.remove("success", "fail");
+                this.classList.add(valid ? "success" : "fail");
+                state.practice1TitleValid = valid;
+            });
+            document.querySelector("[name=practice1Category]").addEventListener("input", function(){
+                var regex = /^(이론|실습|시험)$/;
+                var valid = regex.test(this.value);
+                this.classList.remove("success", "fail");
+                this.classList.add(valid ? "success" : "fail");
+                state.practice1CategoryValid = valid;
+            });
+            document.querySelector("[name=practice1Time]").addEventListener("input", function(){
+                //state와는 무관
+                var originValue = this.value;
+                var replaceValue = originValue.replace(/[^0-9]/g, "");
+                this.value = parseInt(replaceValue || 0);
+            });
+            // document.querySelector("[name=practice1time]").addEventListener("input", numberFilter);
+            // inputmode를 통해 숫자 입력칸을 모두 바꾸기 위해 전체 선택
+            // var numberInputList = document.querySelectorAll("[inputmode=numeric]");
+            // for(var i =0; i <numberInputList.length; i++){
+            //     numberInputList[i].addEventListener("input", numberFilter);
+            // }
+
+            document.querySelector("[name=practice1Time]").addEventListener("blur", function(){
+                var duration = parseInt(this.value);//NaN 나올 수 없음
+                var valid = duration % 30 == 0 && duration <= 300;
+                this.classList.remove("success" , "fail");
+                this.classList.add(valid ? "success" : "fail")
+                state.practice1TimeValid = valid;
+            });
+            document.querySelector("[name=practice1Price]").addEventListener("input", function(){
+                var originValue = this.value;
+                var replaceValue = originValue.replace(/[^0-9]/g, "");
+                this.value = parseInt(replaceValue || 0);
+            });
+            document.querySelector("[name=practice1Price]").addEventListener("blur", function(){
+                var price = parseInt(this.value);
+                var valid = price >= 0 && price <= 100000000;
+                this.classList.remove("success" , "fail");
+                this.classList.add(valid ? "success" : "fail")
+                state.practice1PriceValid = valid;
+            });
+            document.querySelector("[name=practice1CourseType]").addEventListener("input", function(){
+                var regex = /^(온라인|오프라인|혼합)$/;
+                var valid = regex.test(this.value);
+                this.classList.remove("success", "fail");
+                this.classList.add(valid ? "success" : "fail");
+                state.practice1CourseTypeValid = valid;
+            });
+
+            //폼 전송 처리
+            document.querySelector(".form-check").addEventListener("submit", function(e){
+
+                // 보내야 하는게 많아지면 전체 선택하는 방법
+                // var selectList = document.querySelectorAll("select[name]");
+                // for(var i=0; i< selectList.length; i++){
+                //     selectList[i].dispatchEvent(new Event("input"));
+                // }
+                // var inputList = document.querySelectorAll("input[name]");
+                // for(var i=0; i< inputList.length; i++){
+                //     inputList[i].dispatchEvent(new Event("blur"));
+                // }
+
+                document.querySelector("[name=practice1Title]").dispatchEvent(new Event('blur'));
+                document.querySelector("[name=practice1Category]").dispatchEvent(new Event('input'));
+                document.querySelector("[name=practice1Time]").dispatchEvent(new Event('blur'));
+                document.querySelector("[name=practice1Price]").dispatchEvent(new Event('blur'));
+                document.querySelector("[name=practice1CourseType]").dispatchEvent(new Event('input'));
+
+                if(state.ok() == false){
+                    e.preventDefault();
+                }
+            });
+
+            //유틸리티 함수
+            //  어차피 숫자 체크는 동일하기 때문에 유틸리티 함수 만들고 이거 통해 검사
+            // function numberFilter(){
+            //     //state와는 무관
+            //     var originValue = this.value;
+            //     var replaceValue = originValue.replace(/[^0-9]/g, "");
+            //     this.value = parseInt(replaceValue || 0);
+            // }
+
+            //(+추가) 파일 입력창에서 이벤트가 발생했을 때 이를 분석
+            document.querySelector("[name=attach]").addEventListener("input", function(){
+                //this == 파일선택창
+                //* 파일 입력창에는 files라는 내장항목이 있고, 파일을 고르거나 취소하면 결과가 담긴다
+                // console.log(this.files);
+                if(this.files.length > 0){//파일을 선택한 경우
+                    console.log("파일 선택!");
+                    //미리보기를 구현할 경우 this.files에 담긴 이미지들을 img태그를 만들어서 넣고 화면에 추가
+                }
+                else{//파일을 선택 취소한 경우
+                    console.log("파일 선택 취소")
+                    //미리보기를 구현할 경우 기존에 만들어진 모든 미리보기들을 제거해야함
+                }
+            })
+        });
+     </script>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data" autofocus="off" class="form-check">
+        <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>강좌 정보 등록</h1>
+        </div>
+        <div class="cell mt-40">
+            <label>강좌명 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" name="practice1Title" placeholder="e.g., 정보처리 산업기사" class="field w-100">
+            <div class="success-feedback">올바른 형식입니다</div>
+            <div class="fail-feedback">필수항목입니다</div>
+        </div>
+
+        <div class="cell">
+            <label>카테고리 <i class="fa-solid fa-asterisk red"></i></label>
+            <select name="practice1Category" class="field w-100">
+                <option value="">선택하세요</option>
+                <option>이론</option>
+                <option>실습</option>
+                <option>시험</option>
+            </select>
+            <div class="fail-feedback">필수 선택 항목입니다</div>
+        </div>
+        
+        <div class="cell">
+            <label>강의시간 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" inputmode="numeric" name="practice1Time" class="field w-100">
+            <div class="success-feedback">강의시간이 설정되었습니다</div>
+            <div class="fail-feedback">30시간 단위로 최대 300시간 이내에서 설정 가능합니다.</div>
+        </div>
+
+        <div class="cell">
+            <label>수강료 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" inputmode="numeric" name="practice1Price" class="field w-100">
+            <div class="success-feedback">수강료가 설정되었습니다</div>
+            <div class="fail-feedback">수강료는 0 이상으로 설정해야 합니다</div>
+        </div>
+
+        <div class="cell">
+            <label>강의형태<i class="fa-solid fa-asterisk red"></i></label>
+            <select name="practice1CourseType" class="field w-100">
+                <option value="">선택하세요</option>
+                <option>온라인</option>
+                <option>오프라인</option>
+                <option>혼합</option>
+            </select>
+            <div class="fail-feedback">필수 선택 항목입니다</div>
+        </div>
+
+        <div class="cell mt-50">
+            <label>미리보기</label>
+            <input type="file" name="attach" accept=".png, .jpg" multiple class="file w-100">
+        </div>
+
+        <div class="cell mt-50">
+            <button type="submit" class="btn btn-positive w-100">
+                <i class="fa-solid fa-plus"></i>
+                <span>신규 강좌 개설하기</span>
+            </button>
+        </div>
+        
+
+        </div>    
+    </form>
+</body>
+</html>
