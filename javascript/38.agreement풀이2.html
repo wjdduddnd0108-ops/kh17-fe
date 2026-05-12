@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이용약관 동의</title>
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
+
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div { box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script src="./checkbox.js">/*코드 써도 버려짐*/</script>
+    <script>
+        //추가로 작성할 코드가 있다면 별도의 <script>를 만들어서 실행
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이용약관 동의</h1>
+            <p>정상적인 사이트 이용을 위해 다음 이용약관에 동의해주세요</p>
+        </div>
+
+        <div class="cell mt-50">
+            <!-- label 안에 체크박스와 글자를 넣으면 ID 없이 글자와 체크박스가 연결 -->
+            <label>
+                <input type="checkbox" class="check-all"> 
+                <span>전체 이용약관에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-required"> 
+                <span>필수 이용약관에 동의합니다</span>
+            </label>
+        </div>
+
+        <hr>
+
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item check-item-required"> 
+                <span>(필수) 개인정보 취급방침에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item check-item-required"> 
+                <span>(필수) 홈페이지 이용규정을 준수하겠습니다</span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item"> 
+                <span>(선택) 이벤트성 정보 수신에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item"> 
+                <span>(선택) 개인정보 제 3자 제공에 동의합니다</span>
+            </label>
+        </div>
+
+        <hr>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-all"> 
+                <span>전체 이용약관에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-required"> 
+                <span>필수 이용약관에 동의합니다</span>
+            </label>
+        </div>
+    </div>
+</body>
+</html>

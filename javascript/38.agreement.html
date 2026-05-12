@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        //지연 실행 코드
+        window.addEventListener("load", function(){
+            var all = document.querySelector(".check-all");
+            var checkboxes = document.querySelectorAll(".check-item");
+            var requiredAll = document.querySelector(".check-required");
+            var requireds = document.querySelectorAll(".check-item-required");
+
+            //전체 선택
+            all.addEventListener("input", function(){
+                var status = all.checked;
+
+                for(var i = 0; i < checkboxes.length; i++){
+                    checkboxes[i].checked = status;
+                }
+            })
+
+            //필수항목
+            requiredAll.addEventListener("input", function(){
+                var status = requiredAll.checked;
+
+                for(var i = 0; i < requireds.length; i++){
+                    requireds[i].checked = status;
+                }
+            })
+
+        });
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이용약관 동의</h1>
+            <p>정상적인 사이트 이용을 위해 다음 이용약관에 동의해주세요</p>
+        </div>
+
+        <div class="cell mt-50">
+            <!-- label 안에 체크박스와 글자를 넣으면 ID 없이 글자와 체크박스가 연결 -->
+            <label>
+                <input type="checkbox" class="check-required">
+                <span>필수 이용약관에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell mt-50">
+            <!-- label 안에 체크박스와 글자를 넣으면 ID 없이 글자와 체크박스가 연결 -->
+            <label>
+                <input type="checkbox" class="check-all">
+                <span>전체 이용약관에 동의합니다</span>
+            </label>
+        </div>
+
+        <hr>
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-item check-item-required" oninput="checkItem2();">
+                <span>(필수) 개인정보 취급방칙에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-item check-item-required" oninput="checkItem2();">
+                <span>(필수) 홈페이지 이용규정을 준수하겠습니다</span>
+            </label>
+        </div>
+
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-item" oninput="checkItem2();">
+                <span>(선택) 이벤트성 정보 수신에 동의합니다</span>
+            </label>
+        </div>
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-item" oninput="checkItem2();">
+                <span>(선택) 개인정보 제 3자 제공에 동의합니다</span>
+            </label>
+        </div>
+
+    </div>
+</body>
+</html>
