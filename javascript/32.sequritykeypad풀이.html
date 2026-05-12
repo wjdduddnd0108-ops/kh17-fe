@@ -36,11 +36,12 @@
             padding: 5px;
         }
 
-        .button-group button {
+        .button-group > .inner > button {
             width: 100%;
             height: 2.5em;
         }
 
+        
     </style>
 
     <!-- 자바스크립트 작성 영역 -->
@@ -67,7 +68,28 @@
 
                     password += this.textContent;
                     display();
-                })
+
+                    //추가 : 현재 클릭한 버튼 + 아무버튼이나 한개의 색상을 변경
+                    // var index = r.nextInt(버튼개수);
+                    var index = parseInt(Math.random() * numberButtons.length);
+                    var button = this;
+                    this.style.backgroundColor = "black";
+                    this.style.color = "white";
+                    numberButtons[index].style.backgroundColor = "black";
+                    numberButtons[index].style.color = "white";
+
+                    //자바 : Thread.sleep(100);
+                    //자바스크립트 : setTimeout(함수, 딜레이);
+                    setTimeout(function(){
+                        button.style.backgroundColor = "";
+                        button.style.color = "";
+                        
+                        numberButtons[index].style.backgroundColor = "";
+                        numberButtons[index].style.color = "";
+                    }, 100);
+
+
+                });
             }
 
             //4차 목표 : 지우기, 초기화 버튼 
@@ -101,6 +123,9 @@
                     numberButtons[i].classList.add(numbers[i] === "" ? "btn-neutral": "btn-positive");
                 }
             });
+
+            //최종 목표 : 시작하자마자  셔플 버튼을 한번 클릭
+             document.querySelector(".btn-shuffle").click();
         })
 
 

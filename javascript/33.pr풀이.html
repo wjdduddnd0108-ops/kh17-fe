@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        
+        window.addEventListener("load", function(){
+            //목표 : 모든 .field-answer에 입력이 발생할 경우 글자수 계산 후 출력
+            var fields = document.querySelectorAll(".field-answer");
+
+            for(let i = 0; i < fields.length; i++){
+                fields[i].addEventListener("input", function(){
+                    //this는 입력이 발생한 textarea
+                    var size = this.value.length;
+
+                    //넘어가는 부분을 잘라내고 싶다면
+                    if(size>1000){
+                        this.value = this.value.substring(0, 1000);
+                        size = 1000;
+                    }
+
+                    //출력 대상은 무조건 상대경로로 찾아야한다
+                    var span = this.nextElementSibling.children[0];
+                    span.textContent = size;
+
+                    //출력 대상은 무조건 상대경로로 찾아야한다
+            });
+        }
+        });
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>자기소개서</h1>
+        </div>
+        <div class="cell mt-40">
+            <h3>(Q) 최근 가장 관심있게 본 IT 소식은 무엇입니까?</h3>
+        </div>
+        <div class="cell mb-50">
+            <textarea name="q1" class="field w-100 field-answer" rows="10"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+        <div class="cell mt-40">
+            <h3>(Q) 당신의 성격 장단점</h3>
+        </div>
+        <div class="cell mb-50">
+            <textarea name="q2" class="field w-100 field-answer" rows="10"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+        <div class="cell mt-40">
+            <h3>(Q) 역경을 이겨낸 경험이 있다면 적어주세요</h3>
+        </div>
+        <div class="cell mb-50">
+            <textarea name="q3" class="field w-100 field-answer" rows="10"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
