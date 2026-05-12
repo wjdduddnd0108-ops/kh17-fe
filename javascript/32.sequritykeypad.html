@@ -26,6 +26,8 @@
 
     <!-- 자바스크립트 작성 영역 -->
      <script>
+        //1차 목표 : 문자열에 저장된 비밀번호가 display에 나눠져서 표시되도록 처리
+
         window.addEventListener("load", function(){
             var numberButtons = document.querySelectorAll(".btn-number");
             var displays = document.querySelectorAll(".display");
@@ -46,10 +48,11 @@
                 })
             }
 
-            var deleteOne = document.querySelector(".btn-deleteOne");
-            deleteOne.addEventListener("click", function(){
+
+            // var deleteOne = document.querySelector(".btn-deleteOne");
+            // deleteOne.addEventListener("click", function(){
                 
-            })
+            // })
 
 
         })
@@ -64,8 +67,8 @@
             <h1>암호화 키패드 문제</h1>
         </div>
 
-        <!-- 입력한 숫자 확인창 -->
-        <div class="flex-area center mt-0">
+        <!-- 설정된 비밀번호를 표시할 영역 -->
+        <div class="flex-area center mt-0 display-group">
             <div class="flex-fill display" style="padding: 40px 0;">
                 
             </div>

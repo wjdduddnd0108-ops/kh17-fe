@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+
+        .display-group {
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+            height: 2.5em;
+        }
+
+        .display-group > .display {
+            width: 16.6666%;
+            padding: 0.5em;
+            text-align: center;
+            
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .button-group > .inner {
+            width: 25%;
+            padding: 5px;
+        }
+
+        .button-group button {
+            width: 100%;
+            height: 2.5em;
+        }
+
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+         
+         window.addEventListener("load", function(){
+            //2차 목표 : 숫자버튼을 만들어서 누르면 비밀번호가 추가되도록 처리
+            var password = ""; 
+
+             
+            //password의 값을 display에 하나씩 출력
+            function display(){
+                var displayList = document.querySelectorAll(".display");
+                for(var i = 0; i< displayList.length; i++){
+                    displayList[i].textContent = password[i];
+                }
+            }
+            var numberButtons = document.querySelectorAll(".btn-number");
+            
+            for(var i= 0; i < numberButtons.length; i++){
+                numberButtons[i].addEventListener("click", function(){
+                    //this == 클릭한 버튼
+                    if(password.length >= 6) return;
+
+                    password += this.textContent;
+                    display();
+                })
+            }
+
+            //4차 목표 : 지우기, 초기화 버튼 
+            document.querySelector(".btn-delete").addEventListener("click", function(){
+                //this는 지우기 버튼
+                password = password.substring(0, password.length-1);
+                display();
+            })
+
+            document.querySelector(".btn-clear").addEventListener("click", function(){
+                //this는 초기화 버튼
+                password = "";
+                display();
+            })
+
+
+            //5차 목표 버튼 섞기 
+            document.querySelector(".btn-shuffle").addEventListener("click", function(){
+                //버튼이 16개니까 16칸짜리 배열을 만들어서 버튼에 순서대로 배치 글자를 설정
+                var numbers = [1,2,3,4,5,6,7,8,9,0,"","","","","",""];
+
+                // numbers.sort(function(){
+                //     return Math.random() - 0.5;
+                // })
+                numbers.sort(()=>Math.random() - 0.5);
+
+                var numberButtons = document.querySelectorAll(".btn-number");
+                for(var i=0; i < numberButtons.length; i++){
+                    numberButtons[i].textContent = numbers[i];
+                    numberButtons[i].classList.remove("btn-neutral", "btn-positive");
+                    numberButtons[i].classList.add(numbers[i] === "" ? "btn-neutral": "btn-positive");
+                }
+            });
+        })
+
+
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center mb-0">
+            <h1>암호화 키패드 문제</h1>
+        </div>
+
+        <!-- 설정된 비밀번호를 표시할 영역 -->
+        <div class="flex-area flex-center mt-0 display-group">
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div> 
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+            <div class="flex-fill display" style="padding: 40px 0;">
+                
+            </div>
+        </div>
+
+        <!-- 숫자 입력패드 -->
+        <div class="cell">
+            <div class="button-group">
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">1</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">2</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">3</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">4</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">5</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">6</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">7</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">8</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">9</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-positive btn-number">0</button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-neutral btn-number"></button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-neutral btn-number"></button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-neutral btn-number"></button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-neutral btn-number"></button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-neutral btn-number"></button>
+                </div>
+                <div class="inner">
+                    <button type="button" class="btn btn-neutral btn-number"></button>
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <button  type="button" class="btn btn-neutral btn-shuffle w-100">
+                <i class="fa-solid fa-shuffle"></i>
+                <span>버튼 재배치</span>
+            </button>
+        </div>
+        <div class="cell">
+            <button  type="button" class="btn btn-negative btn-delete w-100">
+                <i class="fa-solid fa-delete-left"></i>
+                <span>한 글자 지우기</span>
+            </button>
+        </div>
+        <div class="cell">
+            <button  type="button" class="btn btn-negative btn-clear w-100">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>다시 입력하기</span>
+            </button>
+        </div>
+
+
+
+
+
+    </div>
+</body>
+</html>
