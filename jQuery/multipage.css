@@ -1,0 +1,13 @@
+/* progressbar 디자인 */
+.progressbar {
+    height: 5px;
+}
+.progressbar > .gauge {
+    width: 0%;
+    height: 100%;
+    
+    transition: width 0.1s ease-out;
+
+    background: #833AB4;
+    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+}
