@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            //버튼
+            $(".btn-number").on("click", function(){
+                //클릭한 숫자
+                var num = $(this).data("number");//이렇게 불러오면 문자열
+                //원래 글자
+                var display= $(".display").text();//이렇게 불러오면 문자열
+                var current = display + num;
+                $(".display").text(current);
+            });
+            //한글자 지우기 버튼
+            $(".btn-delete").on("click", function(){
+                //원래 글자
+                var display= $(".display").text();
+                //자르기
+                // var cut = origin.substring(0, display.length-1);//자바랑 같이 학습하기 위해
+                $(".display").text(display.slice(0, -1));
+                
+            });
+            //전부 지우기
+            $(".btn-clear").on("click", function(){
+                $(".display").text("");
+            });
+        })
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>휴대전화 키패드 문제</h1>
+        </div>
+        <div class="cell">
+            <!-- <input type="text" class="field w-100 display" placeholder="전화번호 입력"> -->
+            <div class="display center" style="font-size: 30px;"></div>
+        </div>
+        <div class="cell center mb-30">
+            <button type="button" class="btn btn-neutral btn-number" data-number="7" style="width: 30%;">
+                <i class="fa-solid fa-7"></i>
+            </button>
+            <button type="button" class="btn btn-neutral btn-number" data-number="8" style="width: 30%;">
+                <i class="fa-solid fa-8"></i>
+            </button>
+            <button type="button" class="btn btn-neutral btn-number" data-number="9" style="width: 30%;">
+                <i class="fa-solid fa-9"></i>
+            </button>
+        </div>
+        <div class="cell center mb-30">
+            <button type="button" class="btn btn-neutral btn-number" data-number="4" style="width: 30%;">
+                <i class="fa-solid fa-4"></i>
+            </button>
+            <button type="button" class="btn btn-neutral btn-number" data-number="5" style="width: 30%;">
+                <i class="fa-solid fa-5"></i>
+            </button>
+            <button type="button" class="btn btn-neutral btn-number" data-number="6" style="width: 30%;">
+                <i class="fa-solid fa-6"></i>
+            </button>
+        </div>
+        <div class="cell center mb-30">
+            <button type="button" class="btn btn-neutral btn-number" data-number="1" style="width: 30%;">
+                <i class="fa-solid fa-1"></i>
+            </button>
+            <button type="button" class="btn btn-neutral btn-number" data-number="2" style="width: 30%;">
+                <i class="fa-solid fa-2"></i>
+            </button>
+            <button type="button" class="btn btn-neutral btn-number" data-number="3" style="width: 30%;">
+                <i class="fa-solid fa-3"></i>
+            </button>
+        </div>
+        <div class="cell center mb-30">
+            <button type="button" class="btn btn-neutral btn-number" data-number="*" style="width: 30%;">
+                <i class="fa-solid fa-star-of-life"></i>
+            </button>
+            <button type="button" class="btn btn-neutral btn-number" data-number="0" style="width: 30%;">
+                <i class="fa-solid fa-0"></i>
+            </button>
+            <button type="button" class="btn btn-neutral btn-number" data-number="#" style="width: 30%;">
+                <i class="fa-solid fa-hashtag"></i>
+            </button>
+        </div>
+        <div class="cell center">
+            <button type="button" class="btn btn-negative btn-delete" style="width: 45%;">
+                <i class="fa-solid fa-delete-left"></i>
+                한글자 지우기
+            </button>
+            <button type="button" class="btn btn-negative btn-clear" style="width: 45%;">
+                <i class="fa-solid fa-rotate-right"></i>
+                전부 지우기
+            </button>
+        </div>
+    </div>
+</body>
+</html>
