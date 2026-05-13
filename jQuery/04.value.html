@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            //.target에 입력이 발생하면 값을 불러와서 .copy1, .copy2, copy3에 그대로 복사
+            $(".target").on("input", function(){
+               //this는 .target
+               //var content = this.value;//JS
+               var content = $(this).val();//jQuery
+
+               //document.querySelector(".copy1").value = content;//JS
+               $(".copy1").val(content);//jQuery
+
+               //document.querySelector(".copy2").textContent = content;//JS
+               $(".copy2").text(content);//jQuery
+
+            //    document.querySelector(".copy3").innerHTML = content;//JS
+               $(".copy3").html(content);//jQuery
+            });
+        });
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>val(), text(), html() 비교</h1>
+        </div>
+
+        <!-- 입력창에 입력이 발생하면 값을 불러와서 div에 각각 다른 방식으로 복사 -->
+         <div class="cell mt-50">
+            <input type="text" class="field w-100 target" placeholder="글자 입력">
+         </div>
+
+         <!-- 글자가 복사될 대상 생성 -->
+          <div class="cell mt-50">
+            <input type="text" class="field w-100 copy1" readonly>
+          </div>
+          <div class="cell copy2"></div>
+          <div class="cell copy3"></div>
+    </div>
+</body>
+</html>
