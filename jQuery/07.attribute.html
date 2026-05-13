@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+
+            //[1] prop()이 더 좋거나 편리한 경우
+            //목표 : 잠금/잠금해제 버튼을 누르면 입력창에 readonly를 설정 또는 해제
+            $(".btn-lock").on("click", function(){
+                // document.querySelector(".target").readOnly = true;//js
+                // $(".target").attr("readonly", "readonly");//readonly="readonly"를 적어라
+                $(".target").prop("readonly", true);//readonly를 활성화 시켜라!
+            });
+            $(".btn-unlock").on("click", function(){
+                // $(".target").removeAttr("readonly");//readonly를 삭제
+                $(".target").prop("readonly", false);//readonly를 비활성화 시켜라!
+            });
+
+            //[2] attr(), prop() 뭘 쓰든 동일한 경우
+            $(".btn-date").on("click", function(){
+                // $(".target").attr("type", "date");//type="date"로 덮어써라!
+                $(".target").prop("type", "date");//입력창의 type 속성을 date로 변경해라
+            });
+            $(".btn-text").on("click", function(){
+                // $(".target").attr("type", "date");//type="text"로 덮어써라!
+                $(".target").prop("type", "text");//입력창의 type 속성을 text로 변경해라
+            });
+
+            //[3] attr()만 가능한 경우 (흔치 않음... 기술 전체를 새롭게 만드는 경우 주로 사용)
+            //attr은 현재 대상에 존재하지 않는 속성을 만들거나 불러올 수 있다
+            $(".btn-dataset").on("click", function(){
+                $(".target").attr("hello-money", "5000");//가능
+                //$(".target").prop("hello-money", "5000");//불가능
+            });
+
+        });
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>prop()과 attr()의 차이</h1>
+        </div>
+
+        <div class="cell mt-50">
+            <input type="text" class="field w-100 target">
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-neutral btn-lock">입력창 잠금</button>
+            <button type="button" class="btn btn-neutral btn-unlock">입력창 잠금해제</button>
+        </div>
+        <div class="cell">
+            <button type="button" class="btn btn-neutral btn-date">날짜 입력창으로 변경</button>
+            <button type="button" class="btn btn-neutral btn-text">글자 입력창으로 변경</button>
+        </div>
+        <div class="cell">
+            <button type="button" class="btn btn-neutral btn-dataset">데이터셋 추가</button>
+        </div>
+
+
+    </div>
+</body>
+</html>
