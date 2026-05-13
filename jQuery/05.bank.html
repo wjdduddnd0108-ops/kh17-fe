@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            
+            $(".btn-number").on("click",function(){
+                //var money = parseInt(this.dataset.money);//js
+                var num = parseInt($(this).data("number"));//이렇게 불러오면 문자열
+                //원래 글자
+                var display= parseInt($(".display").text()); //이렇게 불러오면 문자열
+
+                var current = display + num;
+
+
+                //target.value = result;//js
+                $(".display").text(current);
+                $(".sub-display").text((current).toLocaleString());
+            });
+            $(".btn-deleteOne").on("click",function(){
+                // var origin = documnet.querySelector(".target").value;//js
+                var display= $(".display").text();
+
+                // var cut = origin.substring(0, origin.length-1);
+                $(".display").text(display.slice(0, -1));
+
+                // document.querySelector(".target").value = cut;//js
+                $(".sub-display").text((display.slice(0, -1)).toLocaleString());
+            });
+            $(".btn-deleteAll").on("click",function(){
+                //document.querySelector(".target").value = "";//js
+                $(".display").text(0);
+                $(".sub-display").text(0);
+            });
+        });
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이체 금액 입력</h1>
+        </div>
+         <div class="cell">
+            <div class="display right">0</div>
+        </div>
+        <div class="flex-area flex-center">
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="100000000">일억</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="10000000">천만</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="1000000">백만</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="100000">십만</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="10000">만</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="1000">천</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="100" >백</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="10" >십</button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral btn-number" data-number="1" >일</button>
+            </div>
+        </div>
+        <div class="cell right">
+            <div class="outer">
+                <button type="button" class="btn btn-negative btn-deleteOne">
+                    <i class="fa-solid fa-delete-left"></i>
+                </button>
+                 <button type="button" class="btn btn-negative btn-deleteAll">
+                    <i class="fa-solid fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+        <div class="cell blue">
+            이체하시려는 금액은 총 <span class="sub-display">0</span>원 입니다
+        </div>
+    </div>
+</body>
+</html>
