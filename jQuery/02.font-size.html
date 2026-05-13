@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            // $(".btn-s").on("click",function(){
+            //     $(".target").css("font-size", "12px");
+            // });
+            // $(".btn-n").on("click",function(){
+            //     $(".target").css("font-size", "16px");
+            // });
+            // $(".btn-l").on("click",function(){
+            //     $(".target").css("font-size", "20px");
+            // });
+            $(".btn-size").on("click", function(){
+                //this는 클릭한 버튼
+                //JS : var size = this.dataset.size;
+                //jQuery : var size = $(this).data("size");
+                var size = $(this).data("size");//현재 버튼에 설정된 data-size를 불러온다
+                $(".target").css("font-size",size);
+            });
+
+
+        });
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>글자 크기 변경 문제</h1>
+        </div>
+        <div class="cell center">
+            <button type="button" class="btn btn-neutral btn-size" data-size="12px">작게(12px)</button>
+            <button type="button" class="btn btn-neutral btn-size" data-size="16px">보통(16px)</button>
+            <button type="button" class="btn btn btn-neutral btn-size" data-size="20px">크게(20px)</button>
+        </div>
+        <div class="cell target">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam malesuada fringilla imperdiet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque quis ligula quis diam faucibus fringilla. Nullam sollicitudin sem nec libero lobortis, nec aliquam mi blandit. Aliquam egestas neque nec suscipit porta. Fusce bibendum sapien eu diam laoreet dapibus. Pellentesque interdum tristique lectus, id mattis augue ultricies a. Aliquam venenatis ornare sagittis. Nulla nec cursus turpis, nec vehicula ex. Aliquam ac nunc tempus, suscipit ipsum pretium, auctor sapien.
+        </div>
+    </div>
+</body>
+</html>

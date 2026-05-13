@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            //상태데이터
+            var size = 16;
+
+            //- 버튼
+            $(".btn-minus").on("click", function(){
+                if(size === 2) return;
+
+                size--;
+                //JS : document.querySelector(".target").style.fontSize = size+"px";
+                //jQuery
+                $(".target").css("font-size", size+"px");
+
+                //JS
+                // document.querySelector(".current").textContent = size;
+                //jQuery
+                $(".current").text(size);
+            });
+            //+ 버튼
+            $(".btn-plus").on("click", function(){
+                if(size === 40) return;
+
+                size++;
+                $(".target").css("font-size", size+"px");
+
+                $(".current").text(size);
+            });
+
+
+        });
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>글자 크기 변경 문제</h1>
+        </div>
+        <div class="cell center">
+            <button type="button" class="btn btn-neutral btn-minus">-</button>
+            <span class="current ms-20 me-20">16</span>
+            <button type="button" class="btn btn btn-neutral btn-plus">+</button>
+        </div>
+        <div class="cell target">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam malesuada fringilla imperdiet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque quis ligula quis diam faucibus fringilla. Nullam sollicitudin sem nec libero lobortis, nec aliquam mi blandit. Aliquam egestas neque nec suscipit porta. Fusce bibendum sapien eu diam laoreet dapibus. Pellentesque interdum tristique lectus, id mattis augue ultricies a. Aliquam venenatis ornare sagittis. Nulla nec cursus turpis, nec vehicula ex. Aliquam ac nunc tempus, suscipit ipsum pretium, auctor sapien.
+        </div>
+    </div>
+</body>
+</html>
