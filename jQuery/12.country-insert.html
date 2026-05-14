@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./preview.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            //상태 객체
+            var state = {
+                countryRegionValid : false,
+                countryNameValid : false,
+                countryCapitalValid : false,
+                countryPopulationValid : false,
+                ok : function(){
+                    return Object.values(this)//이 객체의 모든 이름에 대한 값을 반환
+                            .filter(v => typeof v == "boolean")//boolean값만 추출해서
+                    //      .filter(function(v))
+                    //            return typeof v == "boolean";
+                    // })
+                    .every(v => v == true);//모두 true인지 확인해서 반환해라!
+                    // .every (function(v){
+                    //     return v ===  true;
+                    // })
+
+                }
+            };
+            //개별 입력창 검사
+            //document.querySelector("[name=countryRegion]").addEventListener("input", function(){});
+            $("[name=countryRegion]").on("input", function(){
+                var regex = /^(아시아|아프리카|[남북]아메리카|유럽|오세아니아)$/;
+                // var valid = regex.test(this.value);//js
+                var valid = regex.test($(this).val());//jquery
+                // this.classList.remove("success", "fail");//js
+                // this.classList.add(valid ? "success" : "fail");//js
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.countryRegionValid = valid;//외부 state에 보관
+            });
+            $("[name=countryName]").on("blur", function(){
+                var regex = /^[가-힣]{1,10}$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.countryNameValid = valid;//외부 변수에 보관(set)
+            });
+            $("[name=countryCapital]").on("blur", function(){
+                var valid = $(this).val().length > 0;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.countryCapitalValid = valid;//state에 보관
+            });
+            $("[name=countryPopulation]").on("blur", function(){
+                var value = $(this).val();
+                var valid = value.length > 0 && parseInt(value) > 0;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.countryPopulationValid = valid;//외부 state에 결과 저장
+            });
+    
+            //숫자 입력창 처리
+            $("[inputmode=numeric]").on("input", function(){
+                var originValue = $(this).val();
+                var replaceValue = originValue.replace(/[^0-9]/g, "");
+                $(this).val(parseInt(replaceValue || 1));
+            });
+
+            //폼 검사
+            //document.querySelector(".form-check").addEventListener("submit")
+            $(".form-check").on("submit", function(){
+                $(this).find("select[name]").trigger("input");
+                $(this).find("input[name], textarea[name]").trigger("blur");
+                // document.querySelector("[name=countryRegion]").dispatchEvent(new Event('input'));
+                // document.querySelector("[name=countryName]").dispatchEvent(new Event('blur'));
+                // document.querySelector("[name=countryCapital]").dispatchEvent(new Event('blur'));
+                // document.querySelector("[name=countryPopulation]").dispatchEvent(new Event('blur'));
+
+                return state.ok();//state.ok() 상태에 따라 전송해!
+            });
+        });
+     </script>
+</head>
+<body>
+    <form action="./insert" method="post" autocomplete="off" class="form-check">
+        <div class="container w-600 mt-50 mb-50">
+            <div class="cell center">
+                <h1>국가 정보 등록</h1>
+            </div>
+             <div class="cell">
+                <label>대륙명 <i class="fa-solid fa-asterisk red"></i></label>
+                <select class="field w-100" name="countryRegion" >
+                    <option value="">선택하세요</option>
+                    <option>아시아</option>
+                    <option>아프리카</option>
+                    <option>북아메리카</option>
+                    <option>남아메리카</option>
+                    <option>유럽</option>
+                    <option>오세아니아</option>
+                </select>
+                <!-- <div class="success-feedback"></div> -->
+                <div class="fail-feedback">필수 항목입니다</div>
+            </div>
+
+            <div class="cell">
+                <label>국가명<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="countryName" class="field w-100">
+                <div class="success-feedback">올바른 형식의 이름입니다</div>
+                <div class="fail-feedback">한글로만 작성 가능합니다!</div>
+            </div>
+
+            <div class="cell">
+                <label>수도명<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="countryCapital" class="field w-100">
+                <div class="fail-feedback">한글로만 작성 가능합니다!</div>
+            </div>
+
+            <div class="cell">
+            <label>인구수 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" inputmode="numeric"
+                name="countryPopulation"
+                class="field w-100"
+                placeholder="e.g., 55000000">
+                <div class="fail-feedback">0 이상의 숫자를 입력해주세요</div>
+            </div>
+
+            <div class="cell">
+                <label>국기</label>
+                <input type="file" name="attach" accept=".png, .jpg"
+                    class="file w-100 preview-input">
+
+            </div>
+            <div class="cell flex preview-area"></div>
+
+            <div class="cell mt-50">
+                <button type="submit" class="btn btn-positive w-100">등록하기</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -79,14 +79,8 @@
 
             document.querySelector(".form-check").addEventListener("submit", function(e){
                 //검사는 잘 이루어지고 있는데 ... 화면에 아무것도 표시되지 않아서 아쉬우니 강제로 이벤트 발생
-                document.querySelector("[name=countryRegion]").dispatchEvent(new Event('input'));
-                document.querySelector("[name=countryName]").dispatchEvent(new Event('blur'));
-                document.querySelector("[name=countryCapital]").dispatchEvent(new Event('blur'));
-                document.querySelector("[name=countryPopulation]").dispatchEvent(new Event('blur'));
+                    
 
-                if(state.ok() == false){//state가 정상이 아니면
-                    e.preventDefault();//보내는걸 중지하자!
-                }
             });
         });
      </script>

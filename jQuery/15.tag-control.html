@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            //목표 : .btn-create를 클릭하면 .create-area에 어떤 화면을 생성
+            $(".btn-create").on("click", function(){
+                // $(".create-area").text("hello");//단순 글자
+                // $(".create-area").html("<h1>Hello</h1>");//HTML 태그
+                //$(".create-area").html("<div class= 'celll mt-50'><h1>Hello</h1></div>");//HTML 태그
+
+                //글자로 화면을 만드는 방법 (비추천)
+                // var content = "";
+                // content += "<div class='cell mt-50'>";
+                // content += "<h1>Hello</h1>";
+                // content += "</div>";
+                // $(".create-area").html(content);
+
+                // jquery에서 태그를 생성해서 설정
+                // var div = $("<div>").addClass("cell mt-50");
+                // var h1 = $("<h1>").text("Hello");
+                // div.html(h1);
+                // $(".create-area").html(div);
+                
+                //template을 불러와서 생성
+                var template = $("#html-template").text();
+                // $(".create-area").html(template);//문자열을 화면으로 추가
+                var content = $.parseHTML(template);//문자열을 HTML로 해석하여 저장
+                $(content).find(".user").text("피카츄");
+                $(".create-area").html(content);
+            });
+
+            //목표 : 각종 추가버튼을 누르면 .add-area에 화면을 추가
+            $(".btn-before").on("click", function(){
+                $(".add-area").before("<h1>Hello~</h1>");
+                //$("<h1>Hello~</h1>").insertBefore(".add-area");
+            });
+            $(".btn-prepend").on("click", function(){
+                $(".add-area").prepend("<h1>Hello~</h1>");
+                //$("<h1>Hello~</h1>").prependTo(".add-area");
+            });
+            $(".btn-append").on("click", function(){
+                $(".add-area").append("<h1>Hello~</h1>");
+                //$("<h1>Hello~</h1>").appendTo(".add-area");
+            });
+            $(".btn-after").on("click", function(){
+                $(".add-area").after("<h1>Hello~</h1>");
+                //$("<h1>Hello~</h1>").insertAfter(".add-area");
+            });
+            $(".btn-empty").on("click", function(){
+                $(".add-area").empty();
+            });
+
+        });
+    </script>
+
+     <!-- 화면에 나오지 않으면서 언제든지 불러서 쓸 수 있는 화면 조각(템플릿) -->
+    <script type="text/template" id="html-template">
+        <div class="cell mt-50">
+            <h1>Hello! <span class="user">OOO님</span></h1>
+        </div>
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>제목</h1>
+        </div>
+
+        <div class="cell mt-50">
+            <button type="button" class="btn btn-neutral btn-create">태그 만들기</button>
+        </div>
+        <div class="cell create-area"></div>
+
+        <div class="cell mt-50">
+            <button type="button" class="btn btn-neutral btn-before">태그 추가(before)</button>
+            <button type="button" class="btn btn-neutral btn-prepend">태그 추가(prepend)</button>
+            <br><br>
+            <button type="button" class="btn btn-neutral btn-append">태그 추가(append)</button>
+            <button type="button" class="btn btn-neutral btn-after">태그 추가(after)</button>
+            <br><br>
+            <button type="button" class="btn btn-neutral btn-empty">비우기</button>
+        </div>
+        <div class="cell">
+            <!-- 여기가 before -->
+            <div class="cell add-area">
+                <!-- prepend는 앞에 append는 안에서 뒤에 -->
+            </div>
+            <!-- 여기가 after -->
+        </div>
+
+
+    </div>
+</body>
+</html>

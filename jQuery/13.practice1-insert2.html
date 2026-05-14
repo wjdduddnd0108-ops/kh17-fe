@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            //상태 객체
+            var state = {
+                practice1TitleValid : false,
+                practice1CategoryValid : false,
+                practice1TimeValid : false,
+                practice1PriceValid : false,
+                practice1CourseTypeValid : false,
+                ok : function(){
+                    return Object.values(this)
+                    .filter(v => typeof v == "boolean")
+                    .every(v => v == true);
+                }
+            }
+
+            //개별 입력창 검사
+            $("[name=practice1Title]").on("blur", function(){
+                var valid = $(this).val().length > 0;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail"); 
+                state.practice1TitleValid = valid;
+            });
+            $("[name=practice1Category]").on("input", function(){
+                var regex = /^(이론|실습|시험)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail"); 
+                state.practice1CategoryValid = valid;
+            });
+            $("[name=practice1Time]").on("blur", function(){
+                var duration = parseInt($(this).val());//NaN 나올 수 없음
+                var valid = duration % 30 == 0 && duration <= 300;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.practice1TimeValid = valid;
+            });
+            $("[name=practice1Price]").on("blur", function(){
+                var price = parseInt($(this).val());
+                var valid = price >= 0 && price <= 100000000;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.practice1PriceValid = valid;
+            });
+            $("[name=practice1CourseType]").on("input", function(){
+                var regex = /^(온라인|오프라인|혼합)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.practice1CourseTypeValid = valid;
+            });
+
+            //숫자 입력창 처리
+            $("[inputmode=numeric]").on("input", function(){
+                var value = $(this).val().replace(/[^0-9]/g, "");
+                $(this).val(value); // 숫자가 아닌 문자는 즉시 제거
+            });
+
+            //폼검사
+            $(".form-check").on("submit", function(){
+                $(this).find("select[name]").trigger("input");
+                $(this).find("input[name], textarea[name]").trigger("blur");
+                
+                return state.ok();
+            });
+        });
+     </script>
+
+     <script type="text/javascript">
+        //이미지 미리보기 처리 (개수 무관)
+        $(function(){
+            $(".preview-input").on("input", function(){
+                //미리보기를 생성하기 전에 기존에 .preview-area에 있는 이미지를 제거
+                // - 있을지 없을지 모르며 있다면 URL.revokeObjectURL()을 써서 회수까지 해줘야함
+                // - jQuery에서 제공하는 반복 함수 each를 사용 (for보다 편함)
+                $(".preview-area").find("img").each(function(){
+                    //this == 현재 순서의 이미지
+                    //이미지 주소 회수 + 이미지 태그 삭제 (or 영역 비우긴)
+                    var address = $(this).attr("src");
+                    URL.revokeObjectURL(address);//자원회수
+                    // $(this).remove();//이 태그 삭제 이미지 하나 지우기
+                });
+                $(".preview-area").empty();//영역 비우기
+
+                //미리보기 생성
+                if(this.files.length > 0) {//파일 선택
+                    for(var i=0; i < this.files.length; i++){//선택한 파일수만큼
+                    //이미지를 만들어서 .preview-area에 추가
+                        var img = $("<img>")
+                                    .addClass("image-shadow image-round")
+                                    .attr("src", URL.createObjectURL(this.files[i]))
+                                    .prop("width", 100);
+                        $(".preview-area").append(img);
+                    }
+                }
+
+                else{//파일 선택 취소 -> 미리보기 제거
+
+                }
+            });
+        });
+     </script>
+</head>
+<body>
+    <form action="./insert" method="post" enctype="multipart/form-data" autofocus="off" class="form-check">
+        <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>강좌 정보 등록</h1>
+        </div>
+        <div class="cell mt-40">
+            <label>강좌명 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" name="practice1Title" placeholder="e.g., 정보처리 산업기사" class="field w-100">
+            <div class="success-feedback">올바른 형식입니다</div>
+            <div class="fail-feedback">필수항목입니다</div>
+        </div>
+
+        <div class="cell">
+            <label>카테고리 <i class="fa-solid fa-asterisk red"></i></label>
+            <select name="practice1Category" class="field w-100">
+                <option value="">선택하세요</option>
+                <option>이론</option>
+                <option>실습</option>
+                <option>시험</option>
+            </select>
+            <div class="fail-feedback">필수 선택 항목입니다</div>
+        </div>
+        
+        <div class="cell">
+            <label>강의시간 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" inputmode="numeric" name="practice1Time" class="field w-100">
+            <div class="success-feedback">강의시간이 설정되었습니다</div>
+            <div class="fail-feedback">30시간 단위로 최대 300시간 이내에서 설정 가능합니다.</div>
+        </div>
+
+        <div class="cell">
+            <label>수강료 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" inputmode="numeric" name="practice1Price" class="field w-100">
+            <div class="success-feedback">수강료가 설정되었습니다</div>
+            <div class="fail-feedback">수강료는 0 이상으로 설정해야 합니다</div>
+        </div>
+
+        <div class="cell">
+            <label>강의형태<i class="fa-solid fa-asterisk red"></i></label>
+            <select name="practice1CourseType" class="field w-100">
+                <option value="">선택하세요</option>
+                <option>온라인</option>
+                <option>오프라인</option>
+                <option>혼합</option>
+            </select>
+            <div class="fail-feedback">필수 선택 항목입니다</div>
+        </div>
+
+        <div class="cell mt-50">
+            <label>미리보기</label>
+            <input type="file" name="attach" accept=".png, .jpg" multiple 
+            class="file w-100 preview-input">
+        </div>
+        <div class="cell preview-area">
+            
+        </div>
+
+        <div class="cell mt-50">
+            <button type="submit" class="btn btn-positive w-100">
+                <i class="fa-solid fa-plus"></i>
+                <span>신규 강좌 개설하기</span>
+            </button>
+        </div>
+        </div>    
+    </form>
+</body>
+</html>

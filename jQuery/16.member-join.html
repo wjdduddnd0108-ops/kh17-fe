@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+        .preview-area img {
+            aspect-ratio: 1/1;
+            border-radius: 50% !important;
+        }
+        
+         /* togglebox 디자인 */
+        .togglebox {
+            cursor: pointer;
+        }
+        .togglebox > [type=checkbox] , /*체크박스*/
+        .togglebox > [type=checkbox] ~ .fa-eye , /*평상시 체크박스 뒤 눈표시*/
+        .togglebox > [type=checkbox]:checked ~ .fa-eye-slash /*체크되었을 때 눈가림 표시*/
+        {
+            display: none;
+        }
+        .togglebox > [type=checkbox]:checked ~ .fa-eye , /*체크되었을 때 눈 표시*/
+        .togglebox > [type=checkbox] ~ .fa-eye-slash /*평상시 체크박스 뒤 눈가림 표시*/
+        {
+            display: inline;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./preview.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            //상태 객체
+            var state = {
+                memberIdValid : false,
+                memberEmailValid : false,
+                memberPasswordValid : false,
+                memberPasswordCheckValid : false,
+                memberNicknameValid : false,
+                memberBirthValid : true,//선택 항목
+                memberContactValid : true,//선택 항목
+                memberAddressValid : true,//선택 항목 (주소는 통합하여 계산)
+                memberMessageValid : true,//선택 항목
+                ok : function(){
+                    return Object.values(this)
+                    .filter(v => typeof v == "boolean")
+                    .every(v => v == true);
+                }
+            }
+
+            //개별 입력창 검사
+            $("[name=memberId]").on("blur", function(){
+                //this는 아이디 입력창
+                var regex = /^[a-z][a-z0-9]{4,19}$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail"); 
+                state.memberIdValid = valid;
+            });
+            $("[name=memberEmail]").on("blur", function(){
+                var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/; 
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.memberEmailValid = valid;
+            });
+            $("[name=memberPassword], .password-check").on("blur", function(){ 
+                //this가 모호해짐(둘중 하나)
+                //[1] 비밀번호 검사
+                var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{}|\\:;"'<>,.?/~`-])[A-Za-z\d!@#$%^&*()_+[\]{}|\\:;"'<>,.?/~`-]{8,16}$/; 
+                state.memberPasswordValid = regex.test($("[name=memberPassword]").val());
+                 $("[name=memberPassword]").removeClass("success fail")
+                            .addClass(state.memberPasswordValid ? "success" : "fail");
+
+                //[2] 비밀번호 확인 검사
+                state.memberPasswordCheckValid = $("[name=memberPassword]").val().length > 0 &&
+                        $("[name=memberPassword]").val() == $(".password-check").val();
+                $(".password-check").removeClass("success fail")
+                            .addClass(state.memberPasswordCheckValid ? "success" : "fail");
+            });
+            $("[name=memberNickname]").on("blur", function(){
+                var regex = /^[가-힣A-Za-z0-9]{1,10}$/; 
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.memberNicknameValid = valid;
+            });
+            $("[name=memberBirth]").on("input", function(){
+                if($(this).val().length == 0) { // 비어있으면
+                    state.memberBirthValid = true; // 통과로 간주
+                    return;
+                }
+                var regex = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/; 
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.memberBirthValid = valid;
+            });
+            $("[name=memberContact]").on("blur", function(){
+                if($(this).val().length == 0) { // 비어있으면
+                    state.memberContactValid = true; // 통과로 간주
+                    return;
+                }
+                var regex = /^010[1-9][0-9]{7}$/; 
+                var valid = regex.test($(this).val())
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.memberContactValid = valid;
+            });
+            $("[name=memberAddress2]").on("blur", function(){
+                //우편번호, 기본주소, 상세주소에 대한 전체 입력 혹은 전체 미입력을 검사
+                var memberPost = $("[name=memberPost]").val();
+                var memberAddress1 = $("[name=memberAddress1]").val();
+                var memberAddress2 = $("[name=memberAddress2]").val();
+
+                var empty = memberPost.length == 0 && memberAddress1.length == 0 && memberAddress2.length ==0;
+                var full = memberPost.length > 0 && memberAddress1.length > 0 && memberAddress2.length > 0;
+                var valid = empty || full;
+
+                $("[name=memberPost],[name=memberAddress1],[name=memberAddress2]")
+                    .removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.memberAddressValid = valid;
+            });
+            $("[name=memberMessage]").on("blur", function(){
+                var valid = $(this).val().length <= 100;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.memberMessageValid = valid;
+            });
+
+            //숫자 입력창 처리
+            $(".field.field-numberic").on("input", function(){
+                var regex = /[^0-9]/g;//양의 정수만 가능
+                var origin = $(this).val();
+                var replacement = origin.replace(regex, "");
+                $(this).val(replacement);
+            })
+            
+
+            //폼검사
+            $(".form-check").on("submit", function(){
+                $(this).find("select[name]").trigger("input");
+                $(this).find("input[name], textarea[name]").trigger("blur");
+                return state.ok();
+            });
+
+            //togglebox에 대한 제어
+            $(".togglebox").find("[type=checkbox]").on("input", function(){
+                //this는 체크된 체크박스
+                var check = $(this).prop("checked");//체크 여부를 확인해서
+                $(".togglebox").find("[type=checkbox]").prop("checked", check);//전파하세요!
+
+                $("[name=memberPassword], .password-check")
+                    .attr("type", check ? "text" : "password");//체크되면 password, 아니면 text
+            });
+        });
+
+        
+        
+     </script>
+</head>
+<body>
+    <form action="./insert" autocomplete="off" method="post" enctype="multipart/form-data" class="form-check">
+        <div class="container w-600 mt-50 mb-50">
+            <!-- 페이지 제목 -->
+            <div class="cell center">
+                <h1>회원 가입 정보 입력</h1>
+            </div>
+            
+            <!-- 아이디 입력창 -->
+            <div class="cell">
+                <label>
+                    아이디 
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="memberId" class="field w-100">
+                <div class="success-feedback">사용 가능한 아이디입니다</div>
+                <div class="fail-feedback">5~20자의 영문 소문자로 시작하며 5~20자의 영문 소문자, 숫자를 사용 가능합니다</div>
+            </div>
+
+            <!-- 이메일 입력창 -->
+            <div class="cell">
+                <label>
+                    이메일
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="memberEmail"
+                class="field w-100" inputmode="email">
+                <div class="success-feedback">사용 가능한 이메일입니다</div>
+                <div class="fail-feedback">올바른 이메일 주소 형식이 아닙니다. (예: email@example.com)</div>
+            </div>
+
+            <!-- 비밀번호 입력창 -->
+            <div class="cell">
+                <label>비밀번호<i class="fa-solid fa-asterisk red"></i></label>
+                <label class="togglebox">
+                    <input type="checkbox">
+                    <i class="fa-solid fa-eye-slash red"></i>
+                    <i class="fa-solid fa-eye blue"></i>
+                </label>
+                <input type="password" name="memberPassword" class="field w-100">
+                <div class="success-feedback">사용 가능한 비밀번호입니다</div>
+                <div class="fail-feedback">8~16자의 사이 소문자,대문자,숫자,특수문자 반드시 1개이상 포함하여 작성하세요</div>
+            </div>
+
+            <!-- 비밀번호 확인 입력창-->
+             <div class="cell">
+                <label>비밀번호 확인 <i class="fa-solid fa-asterisk red"></i></label>
+                <label class="togglebox">
+                    <input type="checkbox">
+                    <i class="fa-solid fa-eye-slash red"></i>
+                    <i class="fa-solid fa-eye blue"></i>
+                </label>
+                <input type="password" class="field w-100 password-check">
+                <div class="success-feedback">비밀번호가 일치합니다</div>
+                <div class="fail-feedback">비밀번호가 불일치합니다</div>
+             </div>
+
+            <!-- 닉네입 입력창 -->
+            <div class="cell">
+                <label>
+                    닉네임
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="memberNickname" class="field w-100">
+                <div class="success-feedback">사용 가능한 닉네임입니다</div>
+                <div class="fail-feedback">한글, 영문, 숫자만 사용 가능하며 10자 이내로 입력해 주세요.</div>
+            </div>
+
+            <!-- 생년월일 입력창 -->
+            <div class="cell">
+                <label>생년월일</label>
+                <input type="date" name="memberBirth"
+                class="field w-100">
+                <div class="fail-feedback">날짜 형식이 올바르지 않습니다. (예: 1995-05-20)</div>
+            </div>
+
+            <!-- 연락처 입력창 -->
+            <div class="cell">
+                <label>연락처</label>
+                <input type="text" name="memberContact"
+                inputmode="tel" class="field w-100 field-numberic" placeholder="하이픈(-) 없이 입력">
+                <div class="fail-feedback">하이픈(-) 없이 010으로 시작하는 숫자 11자리를 입력해 주세요.</div>
+            </div>
+
+            <!-- 주소 입력창 -->
+            <div class="cell">
+                <label>주소</label>
+            </div>
+            <div class="cell flex-area">
+                <input type="text" inputmode="numeric"
+                    name="memberPost" class="field field-numberic"
+                    size="6" maxlength="6" placeholder="우편번호">
+                    <!-- 이 버튼은 전송버튼이 아니므로 type을 명시 -->
+                    <button type="button" class="btn btn-neutral">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                 </button>
+            </div>
+            <div class="cell">
+                <input type="text" name="memberAddress1"
+                    class="field w-100" placeholder="기본주소">
+            </div>
+            <div class="cell">
+                <input type="text" name="memberAddress2"
+                    class="field w-100" placeholder="상세주소">
+            </div>
+               
+            <!-- 상태메세지 입력창 -->
+            <div class="cell">
+                <label>상태메세지</label>
+                <textarea name="memberMessage"
+                 class="field w-100" rows="5">
+                </textarea>
+            </div>  
+            <!-- 프로필이미지 선택창 -->
+            <div class="cell">
+                <label>
+                    <i class="fa-solid fa-image"></i>
+                    <span>클릭해서 프로필 이미지를 선택하세요</span>
+                    <input type="file" name="attach" accept=".png, .jpg"
+                        class="file w-100 preview-input" style="display: none;">
+                </label>
+            </div>
+            <div class="cell flex preview-area"></div>
+
+            <!-- 가입 버튼 -->
+            <div class="cell mt-40">
+                <button class="btn btn-positive w-100">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>회원가입</span>
+                </button>
+            </div>
+        </div> 
+    </form>
+</body>
+</html>
