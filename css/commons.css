@@ -499,6 +499,9 @@ width: 100%;
     - 자바스크립트와 결합하여 입력창의 피드백을 표시하기 위한 디자인
     - .field에 .success가 붙으면 뒤에 있는 .success-feedback을 출력
     - .field에 .fail이 붙으면 뒤에 있는 .fail-feedback을 출력
+        - 만약 에러상황이 여러개라면 .field에 data-error="1"과 같이 보여줄 순서를 지정
+        - .fail-feedback 내부에 div를 에러 개수만큼 배치 (data-error에 적힌 순서만 나오고 나머지는 숨김)
+        - 만약 에러가 하나뿐이라면 data-error없이 그냥 사용 가능
     - .field에 .success나 .fail이 붙으면 상황에 맞게 입력창도 디자인
     - .field에 우측 여백을 주고 상황에 맞는 이미지를 출력 (background-image)
 */
@@ -513,9 +516,21 @@ width: 100%;
 .field.success ~ .success-feedback {
     display: block;
 }
+/* 실패 피드백 */
 .field.fail ~ .fail-feedback {
     display: block;
 }
+.field ~ .fail-feedback > div{
+    display: none;
+}
+.field.fail[data-error="1"] ~ .fail-feedback > div:nth-child(1),
+.field.fail[data-error="2"] ~ .fail-feedback > div:nth-child(2),
+.field.fail[data-error="3"] ~ .fail-feedback > div:nth-child(3),
+.field.fail[data-error="4"] ~ .fail-feedback > div:nth-child(4),
+.field.fail[data-error="5"] ~ .fail-feedback > div:nth-child(5) {
+    display: block;
+}
+
 .field{
     background-size: 1em;
     background-repeat: no-repeat;
