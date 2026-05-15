@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        /* div {box-shadow: 0 0 0 1px #cccccc;} */
+    </style>
+    <!-- lightpick CDN -->
+     <link href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css" rel="stylesheet">
+     <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
+
+    <!-- jQueryCDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        // var picker = new Lightpick({ field: document.getElementById('datepicker') });
+        $(function(){
+            //lightpick 생성
+            // var picker = new Lightpick({field : document.querySelector(".picker-1")});
+            var picker1 = new Lightpick({field : $(".picker-1")[0] });
+
+            var picker2 = new Lightpick({
+                field : $(".picker-2")[0] ,
+                format : "YYYY-MM-DD"
+            });
+
+            var picker3 = new Lightpick({
+                field : $(".picker-3")[0] ,
+                format : "YYYY-MM-DD", 
+                firstDay : 7 ,
+            });
+
+            var picker4 = new Lightpick({
+                field : $(".picker-4")[0] ,
+                format : "YYYY-MM-DD", 
+                firstDay : 7 ,
+                minDate : "2026-05-21",
+                maxDate : "2026-05-24",
+            });
+
+            var picker5 = new Lightpick({
+                field : $(".picker-5")[0] ,
+                format : "YYYY-MM-DD", 
+                firstDay : 7 ,
+                // maxDate : moment(),//오늘까지
+                // maxDate : moment().subtract(1, "days"),//어제까지
+                maxDate : moment().subtract(1, "weeks"),//지난주까지   
+            });
+
+            var picker6 = new Lightpick({
+                field : $(".picker-6")[0] ,
+                format : "YYYY-MM-DD", 
+                firstDay : 7 ,
+                // minDate : moment()//오늘부터
+                // minDate : moment().add(1, "days")//내일부터
+                // minDate : moment().add(1, "weeks")//다음주부터
+                // minDate : moment().add(1, "weeks").startOf("week").add(1, "days")//다음주 월요일
+                minDate : moment().endOf("week").add(2, "days")//다음주 월요일
+            });
+
+            var picker7 = new Lightpick({
+                field : $(".picker-7")[0] ,
+                format : "YYYY-MM-DD", 
+                firstDay : 7 ,
+                minDate : moment().add(1, "M").startOf("month"),//다음달 1일
+                maxDate : moment().add(2, "M").endOf("month"),//다음달 말일
+                numberOfMonths : 2,//2달 표시
+                numberOfColumns : 2,//한 줄에 2칸 표시
+                //선택 불가능한 날짜 지정
+                disableWeekends : true,//주말 선택 금지
+                disableDates : [
+                    "2026-06-03", "2026-06-06", "2026-07-17",//단일 날짜를 지정
+                    ["2026-07-27", "2026-07-30"],//범위로 지정 
+                ], 
+            });
+
+            var picker8 = new Lightpick({
+                field : $(".picker-8-1")[0] ,
+                secondField : $(".picker-8-2")[0],
+                singleDate : false,//범위선택으로 변경
+                format : "YYYY-MM-DD", 
+                firstDay : 7 ,
+                numberOfMonths : 2,//2달 표시
+                numberOfColumns : 2,//한 줄에 2칸 표시
+                selectForward : true,//최초 선택날짜 이후로만 선택가능
+                minDays : 3, //최소 선택기간(일)
+                maxDays : 7, //최대 선택기간(일)
+            });
+
+
+        });
+     </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>날짜 선택기(DatePicker)</h1>
+        </div>
+
+        <div class="cell mt-50">
+            <h2>기본형태</h2>
+        </div>
+        <div class="cell">
+            <input type="text" class="field w-100 picker-1">
+        </div>
+
+        <div class="cell mt-50">
+            <h2>날짜형식변경</h2>
+        </div>
+        <div class="cell">
+            <input type="text" class="field w-100 picker-2">
+        </div>
+
+        <div class="cell mt-50">
+            <h2>시작요일변경(일요일부터 시작)</h2>
+        </div>
+        <div class="cell">
+            <input type="text" class="field w-100 picker-3">
+        </div>
+
+        <div class="cell mt-50">
+            <h2>선택 가능 범위 설정(문자열로)</h2>
+        </div>
+        <div class="cell">
+            <input type="text" class="field w-100 picker-4">
+        </div>
+
+        <div class="cell mt-50">
+            <h2>과거만 선택 가능 (momentjs 이용)</h2>
+        </div>
+        <div class="cell">
+            <input type="text" class="field w-100 picker-5">
+        </div>
+
+        <div class="cell mt-50">
+            <h2>미래만 선택 가능 (momentjs 이용)</h2>
+        </div>
+        <div class="cell">
+            <input type="text" class="field w-100 picker-6">
+        </div>
+
+        <div class="cell mt-50">
+            <h2>다음달만 가능 (momentjs 이용)</h2>
+        </div>
+        <div class="cell">
+            <input type="text" class="field w-100 picker-7">
+        </div>
+
+        <div class="cell mt-50">
+            <h2>날짜를 범위로 선택 (DateRangePicker)</h2>
+        </div>
+        <div class="cell flex-area" style="align-items: center;">
+            <input type="text" class="field w-100 picker-8-1">
+            <i class="fa-solid fa-minus ms-10 me-10"></i>
+            <input type="text" class="field w-100 picker-8-2">
+        </div>
+
+    </div>
+</body>
+</html>
