@@ -98,6 +98,7 @@
                     }
                 }); 
             });
+
             $("[name=memberEmail]").on("blur", function(){
                 var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/; 
                 var memberEmail = $(this).val();
@@ -117,6 +118,7 @@
                         if(response) {
                             $("[name=memberEmail]").removeClass("success fail").addClass("success");
                             state.memberEmailValid = true;
+                            $(".btn-cert-send").fadeIn();//인증메일 전송버튼 표시
                         }
                         else {
                             $("[name=memberEmail]").removeClass("success fail")
@@ -126,11 +128,9 @@
 
                     }
                 });
-
-
-
-               
+    
             });
+
             $("[name=memberPassword], .password-check").on("blur", function(){ 
                 //this가 모호해짐(둘중 하나)
                 //[1] 비밀번호 검사
@@ -145,34 +145,38 @@
                 $(".password-check").removeClass("success fail")
                             .addClass(state.memberPasswordCheckValid ? "success" : "fail");
             });
+
             $("[name=memberNickname]").on("blur", function(){
                 var regex = /^[가-힣A-Za-z0-9]{1,10}$/; 
                 var memberNickname = $(this).val();
                 var valid = regex.test(memberNickname);
-                if(valid == false){
+                if(valid == false){//형식 오류
                     $("[name=memberNickname]").removeClass("success fail")
-                    .addClass("fail").attr("data-error", "1");
+                        .addClass("fail").attr("data-error", "1");//실패(에러1번)
                     state.memberNicknameValid = false;
                     return;
                 }
                 $.ajax({
-                    url:"http://localhost:8080/rest/member/validNickname",
-                    method:"post",
+                    url:"http://localhost:8080/rest/member/validNickname",//통신이 이어질 주소
+                    method:"post",//메소드 종류
                     data:{ memberNickname : memberNickname},
-                    success:function(response){
-                        if(response){
-                            $("[name=memberNickname]").removeClass("success fail").addClass("success");
+                    success:function(response){//true(사용가능), false(사용중)
+                        // if(response){//자바스크립트는 이것을 긍정적인 값으로 해석(1, 'hello' 등도 가능)
+                        if(response === true){
+                            $("[name=memberNickname]").removeClass("success fail")
+                                .addClass("success");
                             state.memberNicknameValid = true;
                         }
                         else {
                             $("[name=memberNickname]").removeClass("success fail")
-                            .addClass("fail").attr("data-error", "2");
+                                .addClass("fail").attr("data-error", "2");//실패(에러2번)
                             state.memberNicknameValid = false;
                         }
                     }
                 });
                 
             });
+
             $("[name=memberBirth]").on("input", function(){
                 if($(this).val().length == 0) { // 비어있으면
                     state.memberBirthValid = true; // 통과로 간주
@@ -313,25 +317,32 @@
                     <i class="fa-solid fa-asterisk red"></i>
                 </label>
                 <input type="text" name="memberId" class="field w-100">
-                <div class="success-feedback">사용 가능한 아이디입니다</div>
+                <div class="success-feedback">사용 가능한 아이디입니다.</div>
                 <div class="fail-feedback">
-                    <div>영문 소문자로 시작하며 숫자를 포함해 5~20글자로 작성하세요</div>
-                    <div>아이디가 이미 사용중입니다</div>
+                    <div>영문 소문자로 시작하며 숫자를 포함해 5~20글자로 작성하세요.</div>
+                    <div>아이디가 이미 사용중입니다.</div>
                 </div>
             </div>
 
             <!-- 이메일 입력창 -->
-            <div class="cell">
+            <div class="cell mb-0">
                 <label>
                     이메일
                     <i class="fa-solid fa-asterisk red"></i>
                 </label>
+            </div>
+            <div class="cell mt-0 flex-area" style="flex-wrap: wrap;">
                 <input type="text" name="memberEmail"
-                class="field w-100" inputmode="email">
-                <div class="success-feedback">사용 가능한 이메일입니다</div>
-                <div class="fail-feedback">
+                class="field" inputmode="email">
+                <button type="button" class="btn btn-neutral btn-cert-send ms-10"
+                        style="display: none;">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>인증메일 보내기</span>
+                </button>
+                <div class="success-feedback w-100">사용 가능한 이메일입니다.</div>
+                <div class="fail-feedback w-100">
                     <div>올바른 이메일 주소 형식이 아닙니다. (예: email@example.com)</div>
-                    <div>이메일이 이미 사용중입니다</div>
+                    <div>이메일이 이미 사용중입니다.</div>
                 </div>
             </div>
 
@@ -344,8 +355,8 @@
                     <i class="fa-solid fa-eye blue"></i>
                 </label>
                 <input type="password" name="memberPassword" class="field w-100">
-                <div class="success-feedback">사용 가능한 비밀번호입니다</div>
-                <div class="fail-feedback">8~16자의 사이 소문자,대문자,숫자,특수문자 반드시 1개이상 포함하여 작성하세요</div>
+                <div class="success-feedback">사용 가능한 비밀번호입니다.</div>
+                <div class="fail-feedback">8~16자의 사이 소문자,대문자,숫자,특수문자 반드시 1개이상 포함하여 작성하세요.</div>
             </div>
 
             <!-- 비밀번호 확인 입력창-->
@@ -357,8 +368,8 @@
                     <i class="fa-solid fa-eye blue"></i>
                 </label>
                 <input type="password" class="field w-100 password-check">
-                <div class="success-feedback">비밀번호가 일치합니다</div>
-                <div class="fail-feedback">비밀번호가 불일치합니다</div>
+                <div class="success-feedback">비밀번호가 일치합니다.</div>
+                <div class="fail-feedback">비밀번호가 불일치합니다.</div>
              </div>
 
             <!-- 닉네입 입력창 -->
@@ -368,10 +379,10 @@
                     <i class="fa-solid fa-asterisk red"></i>
                 </label>
                 <input type="text" name="memberNickname" class="field w-100">
-                <div class="success-feedback">사용 가능한 닉네임입니다</div>
+                <div class="success-feedback">사용 가능한 닉네임입니다.</div>
                 <div class="fail-feedback">
                     <div>한글, 영문, 숫자만 사용 가능하며 10자 이내로 입력해 주세요.</div>
-                    <div>닉네임이 이미 사용중입니다</div>
+                    <div>닉네임이 이미 사용중입니다.</div>
                 </div>
             </div>
 
