@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            $("btn-reply-insert").on("click", function(){
+                var content = $("[name = replyContent]").val();
+
+                var params = new URLSearchParams(window.location.search);
+                var replyOrigin = params.get("boardNo");
+            });
+        });
+     </script>
+</head>
+<body>
+   <div class="container w-950 mt-50 mb-50">
+	<!-- 제목 및 작성자 영역 -->
+	<div class="cell">
+		<div class="flex-area" style="align-items:end">
+			<div>
+				<h1 class="mt-0 mb-0">
+					<!-- 말머리가 있으면 표시 -->
+					<c:if test="${boardDto.boardHead != null}">
+					(${boardDto.boardHead})
+					</c:if>
+					<!-- 제목 -->
+					${boardDto.boardTitle}
+					<!-- 수정되었다면 추가 표시 -->
+					<c:if test="${boardDto.boardEtime != null}">
+					(수정됨)
+					</c:if>	
+				</h1>
+			</div>
+			<div class="ms-40">
+				<!-- 사용자 아이디 출력 -->
+				<c:if test="${boardDto.boardWriter == null}">
+					(탈퇴한사용자)
+				</c:if>
+				<c:if test="${boardDto.boardWriter != null}">
+					<a href="/member/detail?memberId=${boardDto.boardWriter}" class="link">
+						${boardDto.boardWriter}
+					</a>
+				</c:if>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 작성일, 수정일, 조회수 영역 -->
+	<div class="cell mt-20 flex-area">
+		<div>작성일 : <fmt:formatDate value="${boardDto.boardWtime}" pattern="yyyy-MM-dd HH:mm"></fmt:formatDate></div>
+		<c:if test="${boardDto.boardEtime != null}">
+			<div class="ms-20">수정일 : <fmt:formatDate value="${boardDto.boardEtime}" pattern="yyyy-MM-dd HH:mm"></fmt:formatDate></div>
+		</c:if>
+		<div class="ms-20">조회수 ${boardDto.boardReadCount}</div>
+	</div>
+	
+	<hr>
+	
+	<!-- 본문 내용 -->
+	<div class="cell" style="min-height:300px">
+		<pre style="font-size:16px;">${boardDto.boardContent}</pre>
+	</div>
+	
+	<!-- 좋아요 및 댓글 개수 -->
+	<div class="cell mt-20 flex-area">
+		<div>
+			좋아요 
+			<i class="fa-solid fa-heart red"></i>
+			<span class="heart-count">?</span>
+		</div>
+		<div class="ms-20">댓글 ${boardDto.boardReplyCount}</div>
+	</div>
+
+    <div class="cell">
+        <ul class="list-group">
+            <li>
+                <div class="flex-area">
+                    <img src="https://picsum.photos/500" class="image-round" style="width: 50px; height: 50px; margin-right: 20px;">
+                    <div class="flex-vertical flex-fill w-100" >
+                        <span style="margin-bottom: 10px;">
+                           testuser1 
+                        </span>
+                        <div class="cell">
+                            내용
+                        </div>
+                        <div class="cell">
+                            2026-05-18
+                        </div>
+
+                    </div>
+                    
+                </div>
+
+            </li>
+        </ul>
+    </div>
+    <div class="cell">
+            <input type="text" name="replyContent" class="field w-100">
+            <div class="cell mt-0 right">
+            <button type="submit" class="btn btn-positive btn-reply-insert">
+                <span>등록</span>
+            </button>
+            </div>
+    </div>
+	
+	<hr>
+	
+	<!-- 이전글/다음글 출력 -->
+	<div class="cell">
+		<span class="badge blue me-20">이전글</span> 
+		<a href="./detail?boardNo=${prevBoardDto.boardNo}" class="link">${prevBoardDto.boardTitle}</a>	
+	</div>
+	<div class="cell">
+		<span class="badge blue me-20">다음글</span>
+		<a href="./detail?boardNo=${nextBoardDto.boardNo}" class="link">${nextBoardDto.boardTitle}</a>	
+	</div>
+	
+	<hr>
+	
+	<!-- 하단 버튼 메뉴 (권한별 처리) -->
+	<div class="cell right">
+		<!-- 로그인한 사용자가 사용 가능한 버튼 -->
+		<c:if test="${sessionScope.loginId != null}">
+			<a class="btn btn-positive" href="./write">글쓰기</a>
+			<a class="btn btn-positive" href="./write?boardParent=${boardDto.boardNo}">답글쓰기</a>
+		</c:if>
+		
+		<!-- 작성자 본인일 때만 사용 가능한 버튼 -->
+		<c:if test="${boardDto.boardWriter != null && boardDto.boardWriter == sessionScope.loginId}">
+			<a class="btn btn-negative" href="./edit?boardNo=${boardDto.boardNo}">수정하기</a>
+			<a class="btn btn-negative" href="./delete?boardNo=${boardDto.boardNo}">삭제하기</a>
+		</c:if>
+		
+		<!-- 항상 보이는 버튼 -->
+		<a class="btn btn-neutral" href="./list">목록으로</a>
+	</div>
+</div>
+</body>
+</html>
