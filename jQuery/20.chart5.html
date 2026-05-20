@@ -85,8 +85,68 @@
           });
         }
       });
+
+      $.ajax({
+        url: "http://localhost:8080/rest/stat/practice1-category",
+        method: "post",
+        success: function (response) {//response에 titles와 values가 담겨있음
+          // const ctx = document.querySelector(".custom-chart");//js
+          const ctx = $(".custom-chart2")[0];//jqeury
+
+          //차트 생성 - new Chart(태그, {옵션});
+          new Chart(ctx, {
+
+            //type은 차트의 유형 (bar/line/pie/doughnut)
+            type: response.type,
+            //data는 차트를 그리기 위한 값의 정보
+            data: {
+              //labels가 x축에 표시될 이름
+              labels: response.titles,
+              //datasets은 차트에 그릴 데이터 집합들 (복수개 가능)
+              datasets: [
+                {
+                  label: '강좌 수',//범례
+                  data: response.values,//표시될 값
+                  borderWidth: 1,//테두리두께
+                  backgroundColor:[
+                  "rgba(214, 48, 49,0.5)",
+                  "rgba(225, 112, 85,0.5)",
+                  "rgba(253, 203, 110,0.5)",
+                  "rgba(0, 184, 148,0.5)",
+                  "rgba(9, 132, 227,0.5)",
+                  "rgba(116, 185, 255,0.5)",
+                  "rgba(108, 92, 231,0.5)"
+                  ],
+                  borderColor:[
+                    "rgba(214, 48, 49,1.0)",
+                    "rgba(225, 112, 85,1.0)",
+                    "rgba(253, 203, 110,1.0)",
+                    "rgba(0, 184, 148,1.0)",
+                    "rgba(9, 132, 227,1.0)",
+                    "rgba(116, 185, 255,1.0)",
+                    "rgba(108, 92, 231,1.0)"
+                  ]
+                },
+              ]
+            },
+            //차트를 표시하기 위한 옵션
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true//y축을 무조건 0부터 시작하도록 처리
+                }
+              },
+              plugins:{
+                legend: { display: false}//범례제거
+              }
+            }
+          });
+        }
+      });
     });
   </script>
+
+
 </head>
 
 <body>
@@ -95,8 +155,18 @@
       <h1>차트 다루기</h1>
     </div>
 
+    <div class="cell center">
+      <h2>대륙별 국가 현황</h2>
+    </div>
     <div class="cell">
       <canvas class="custom-chart"></canvas>
+    </div>
+
+    <div class="cell center">
+      <h2>카테고리별 강좌 현황</h2>
+    </div>
+    <div class="cell">
+      <canvas class="custom-chart2"></canvas>
     </div>
   </div>
 </body>
