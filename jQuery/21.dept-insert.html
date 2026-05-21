@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            var state = {
+                deptIdValid : false,
+                deptNameValid : false,
+                ok : function(){
+                    return Object.values(this)
+                    .filter(v => typeof v == "boolean")
+                    .every(v => v == true);
+                }
+            }
+
+                //개별 입력창 검사
+                $("[name=deptId]").on("blur", function(){
+                var regex = /^[0-9]{1,10}$/;//10글자 넘으면 안됨
+                var deptId = $(this).val();
+                var valid = regex.test(deptId);
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.deptIdValid = valid;
+                return;
+                
+
+                //형식 검사 통과했으면 서버에 deptId 중복되는지 확인
+                // $.ajax({
+                //     url:"http://localhost:8080/rest/dept/validId",
+                //     method:"post",
+                //     data:{ deptId : deptId},
+                //     success:function(response){//true : 사용가능 , false : 사용중
+                //         if(response) {//사용 가능한 아이디
+                //             $("[name=deptId]").removeClass("success fail").addClass("success");
+                //             state.deptIdValid = true;
+                //         }
+                //         else {
+                //             $("[name=deptId]").removeClass("success fail")
+                //             .addClass("fail").attr("data-error", "2");//실패 표시(2번 에러)
+                //             state.deptIdValid = false;
+                //         }
+                //     }
+                // }); 
+            });
+
+            //부서명
+            $("[name=deptName]").on("blur", function(){
+                var deptName = $(this).val();
+                var valid = $(this).val().length > 0 && $(this).val().length<=20;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.deptNameValid = valid;
+                return;
+                
+
+            //형식 검사 통과했으면 서버에 deptName 중복되는지 확인
+                // $.ajax({
+                //     url:"http://localhost:8080/rest/dept/validName",
+                //     method:"post",
+                //     data:{ deptName : deptName},
+                //     success:function(response){//true : 사용가능 , false : 사용중
+                //         if(response) {//사용 가능한 이름
+                //             $("[name=deptName]").removeClass("success fail").addClass("success");
+                //             state.deptNameValid = true;
+                //         }
+                //         else {
+                //             $("[name=deptName]").removeClass("success fail")
+                //             .addClass("fail").attr("data-error", "2");//실패 표시(2번 에러)
+                //             state.deptNameValid = false;
+                //         }
+                //     }
+                // }); 
+            });
+
+            //숫자 입력창 처리
+            $(".field.field-numberic").on("input", function(){
+                var regex = /[^0-9]/g;//양의 정수만 가능
+                var origin = $(this).val();
+                var replacement = origin.replace(regex, "");
+                $(this).val(replacement);
+            });
+
+            //폼검사
+            $(".form-check").on("submit", function(){
+                $(this).find("input[name]").trigger("blur");
+                return state.ok();
+            });
+
+        });
+     </script>
+</head>
+<body>
+    <form action="./add" autocomplete="off" method="post" class="form-check">
+        <div class="container w-600 mt-50 mb-50">
+            <!-- 페이지 제목 -->
+            <div class="cell center">
+                <h1>부서 등록</h1>
+            </div>
+
+            <!-- 부서코드 입력창 -->
+            <div class="cell">
+                <label>
+                    부서코드 
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="deptId" class="field w-100 field-numberic" inputmode="numeric">
+                <div class="fail-feedback">필수 항목이며 10글자 내외로 작성해주세요</div>
+            </div>
+
+            <!-- 부서명 입력창 -->
+            <div class="cell">
+                <label>
+                    부서명
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="deptName" class="field w-100">
+                <div class="fail-feedback">필수 항목이며 20자내외로 작성해주세요</div>
+            </div>
+ 
+
+            <!-- 부서 사용여부 -->
+            <div class="cell">
+                <label class="togglebox">
+                    <input type="checkbox" name="deptUseYn" value="Y">
+                    <span>부서가 사용중이면 체크해주세요</span>
+                </label>
+            </div>
+
+            <!-- 가입 버튼 -->
+            <div class="cell mt-40">
+                <button class="btn btn-positive w-100">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>등록하기</span>
+                </button>
+            </div>
+        </div> 
+    </form>
+</body>
+</html>

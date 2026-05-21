@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            var state = {
+                empNameValid : false,
+                empEmailValid : false,
+                empPhoneValid : false,
+                empPositionValid : false,
+                empHireDateValid : true,
+                ok : function(){
+                    return Object.values(this)
+                    .filter(v => typeof v == "boolean")
+                    .every(v => v == true);
+                }
+            }
+
+            //개별 입력창 검사
+            $("[name=empName]").on("blur", function(){
+                var regex = /^[가-힣]{2,7}$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.empNameValid = valid;
+                return;
+            });
+
+            $("[name=empEmail]").on("blur", function(){
+                var regex = /^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+\.[A-Za-z0-9-.]+$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.empEmailValid = valid;
+                return;
+            });
+
+            $("[name=empPhone]").on("blur", function(){
+                var regex = /^010[1-9][0-9]{7}$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.empPhoneValid = valid;
+                return;
+            });
+
+            $("[name=empPosition]").on("input", function(){
+                var regex = /^(사원|대리|과장|차장|부장)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.empPositionValid = valid;
+                return;
+            });
+            
+            $("[name=empHireDate]").on("input", function(){
+                if($(this).val().length == 0) { // 비어있으면
+                    state.empHireDateValid = true; // 통과로 간주
+                    return;
+                }
+                var regex = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/; 
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.empHireDateValid = valid;
+            });
+
+            //숫자 입력창 처리
+            $(".field.field-numberic").on("input", function(){
+                var regex = /[^0-9]/g;//양의 정수만 가능
+                var origin = $(this).val();
+                var replacement = origin.replace(regex, "");
+                $(this).val(replacement);
+            });
+
+            //폼검사
+            $(".form-check").on("submit", function(){
+                $(this).find("select[name]").trigger("input");
+                $(this).find("input[name]").trigger("blur");
+                return state.ok();
+            });
+
+
+        
+        });
+     </script>
+</head>
+<body>
+    <form action="./create" autocomplete="off" method="post" class="form-check">
+        <div class="container w-600 mt-50 mb-50">
+            <!-- 페이지 제목 -->
+            <div class="cell center">
+                <h1>사원 등록</h1>
+            </div>
+
+            <!-- 부서명 선택창 -->
+            <div class="cell">
+                <label>
+                    부서명 
+                </label>
+                <select class="field w-100" name="empDept">
+                    <option value="">선택하세요</option>
+                    <option>db에 존재하는거</option>
+                </select>
+            </div>
+
+            <!-- 사원명 입력창 -->
+            <div class="cell">
+                <label>
+                    사원명
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="empName" class="field w-100">
+                <div class="fail-feedback">한글로 입력해주세요 </div>
+            </div>
+ 
+
+            <!-- 사원이메일 입력창 -->
+            <div class="cell">
+                <label>
+                    이메일
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="empEmail" class="field w-100">
+                <div class="fail-feedback">알맞은 이메일 형식을 입력해주세요</div>
+            </div>
+
+            <!-- 연락처 입력창 -->
+            <div class="cell">
+                <label>
+                    연락처
+                    <i class="fa-solid fa-asterisk red"></i>
+                </label>
+                <input type="text" name="empPhone"
+                inputmode="tel" class="field w-100 field-numberic" placeholder="하이픈(-) 없이 입력">
+                <div class="fail-feedback">하이픈(-) 없이 010으로 시작하는 숫자 11자리를 입력해 주세요.</div>
+            </div>
+
+            <!-- 사원 지급 선택창 -->
+            <div class="cell">
+                <label>
+                    직급
+                    <i class="fa-solid fa-asterisk red"></i> 
+                </label>
+                <select class="field w-100" name="empPosition">
+                    <option value="">선택하세요</option>
+                    <option>사원</option>
+                    <option>대리</option>
+                    <option>과장</option>
+                    <option>차장</option>
+                    <option>부장</option>
+                </select>
+            </div>
+
+             <!-- 사원 입사일 입력창 -->
+            <div class="cell">
+                <label>입사일</label>
+                <input type="date" name="empHireDate" class="field w-100">
+                <div class="fail-feedback">날짜 형식이 올바르지 않습니다. (예: 1995-05-20)</div>
+            </div>
+
+            <!-- 사원 사용여부 -->
+            <div class="cell">
+                <label class="togglebox">
+                    <input type="checkbox" name="deptUseYn" value="Y">
+                    <span>사원이 현재 직장에 있다면 체크해주세요</span>
+                </label>
+            </div>
+
+            <!-- 가입 버튼 -->
+            <div class="cell mt-40">
+                <button class="btn btn-positive w-100">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>등록하기</span>
+                </button>
+            </div>
+        </div> 
+    </form>
+</body>
+</html>
