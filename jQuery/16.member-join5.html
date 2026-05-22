@@ -118,7 +118,6 @@
                         if(response) {
                             $("[name=memberEmail]").removeClass("success fail").addClass("success");
                             state.memberEmailValid = true;
-                            $(".btn-cert-send").fadeIn();//인증메일 전송버튼 표시
                         }
                         else {
                             $("[name=memberEmail]").removeClass("success fail")
@@ -307,7 +306,10 @@
                     method:"post",
                     data: { certEmail : memberEmail },
                     success: function(){//성공 시 실행될 함수
-                        console.log("이메일 발송 완료");
+                        // console.log("이메일 발송 완료");
+                        var template = $("#cert-template").text();
+                        var content = $.parseHTML(template);
+                        $(".cert-area").html(content);
                     },
                     error:function(){//실패 시 실행될 함수
                         window.alert("이메일 발송에 실패했습니다.\n잠시 후 다시 시도해보세요");
@@ -332,6 +334,19 @@
                 });
             });
         });
+     </script>
+
+     <!-- 인증번호 입력창 템플릿 -->
+     <script type="text/template" id="cert-template">
+        <div class="cert-wrapper flex-area" style="flex-wrap: wrap;">
+            <input type="text" inputmode="numeric" class="field field-cert" placeholder="인증번호 입력" 
+                    size="6" maxlength="6">
+            <button type="button" class="btn btn-positive ms-10">
+                <i class="fa-solid fa-lock"></i>
+                <span>인증번호 확인</span>
+            </button>
+            <div class="fail-feedback w-100">인증번호를 다시 확인해주세요</div>
+        </div>
      </script>
 </head>
 <body>
@@ -366,8 +381,7 @@
             <div class="cell mt-0 flex-area" style="flex-wrap: wrap;">
                 <input type="text" name="memberEmail"
                 class="field" inputmode="email">
-                <button type="button" class="btn btn-neutral btn-cert-send ms-10"
-                        style="display: none;">
+                <button type="button" class="btn btn-neutral btn-cert-send ms-10">
                     <i class="fa-solid fa-envelope"></i>
                     <span>인증메일 보내기</span>
                 </button>
@@ -377,6 +391,8 @@
                     <div>이메일이 이미 사용중입니다.</div>
                 </div>
             </div>
+            <!-- 인증번호 입력 영역 -->
+            <div class="cell cert-area"></div>
 
             <!-- 비밀번호 입력창 -->
             <div class="cell">
