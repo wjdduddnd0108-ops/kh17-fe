@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <!-- favicon -->
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet">
+    <style>
+        div { box-shadow: 0 0 1px 0 gray; }
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./preview.js"></script>
+
+    <script>
+        $(function(){
+            //상태 객체
+            var state = {
+                countryRegionValid : false,
+                countryNameValid : false,
+                countryCapitalValid : false,
+                countryPopulationValid : false,
+                ok : function(){
+                    return Object.values(this)//이 객체의 모든 이름에 대한 값을 반환
+                            .filter(v => typeof v == "boolean")//boolean값만 추출해서
+
+                    .every(v => v == true);//모두 true인지 확인해서 반환해라!
+                }
+            };
+            //개별 입력창 검사
+            $("[name=countryRegion]").on("input", function(){
+                var regex = /^(아시아|아프리카|[남북]아메리카|유럽|오세아니아)$/;
+                var valid = regex.test($(this).val());//jquery
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.countryRegionValid = valid;//외부 state에 보관
+            });
+            $("[name=countryName]").on("blur", function(){
+                var regex = /^[가-힣]{1,10}$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.countryNameValid = valid;//외부 변수에 보관(set)
+            });
+            $("[name=countryCapital]").on("blur", function(){
+                var valid = $(this).val().length > 0;
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.countryCapitalValid = valid;//state에 보관
+            });
+            $("[name=countryPopulation]").on("blur", function(){
+                var value = $(this).val();
+                var valid = value.length > 0 && parseInt(value) > 0;
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.countryPopulationValid = valid;//외부 state에 결과 저장
+            });
+    
+            //숫자 입력창 처리
+            $("[inputmode=numeric]").on("input", function(){
+                var originValue = $(this).val();
+                var replaceValue = originValue.replace(/[^0-9]/g, "");
+                $(this).val(parseInt(replaceValue || 1));
+            });
+
+            //폼 검사
+            //document.querySelector(".form-check").addEventListener("submit")
+            $(".form-check").on("submit", function(){
+                $(this).find("select[name]").trigger("input");
+                $(this).find("input[name], textarea[name]").trigger("blur");
+
+                return state.ok();//state.ok() 상태에 따라 전송해!
+            });
+        });
+     </script>
+
+  </head>
+  <body>
+     <form action="./insert" method="post" autocomplete="off" class="form-check">
+        <div class="container my-5">
+           <!-- 제목 부분을 점보트론(jumbotron)이라고 부른다 -->
+            <div class="row">
+                <div class="col">
+                    <div class="p-4 bg-dark text-light rounded">
+                    <h1>국가 등록</h1>
+                    </div>
+                </div>   
+            </div>
+     
+         <!-- 실제로 구현할 내용들 -->
+            <div class="row mt-4">
+                <label class="col-sm-3 col-form-label">
+                    대륙명<i class="fa-solid fa-asterisk text-danger"></i>
+                </label>
+                <div class="col-sm-9">
+                    <select name="countryRegion" class="form-select">
+                        <option value="">선택하세요</option>
+                        <option>아시아</option>
+                        <option>아프리카</option>
+                        <option>북아메리카</option>
+                        <option>남아메리카</option>
+                        <option>유럽</option>
+                        <option>오세아니아</option>
+                    </select>
+                    <div class="invalid-feedback">필수항목입니다</div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <label class="col-sm-3 col-form-label">
+                    국가명<i class="fa-solid fa-asterisk text-danger"></i>
+                </label>
+                <div class="col-sm-9"> 
+                    <input type="text" name="countryName" class="form-control">
+                    <div class="valid-feedback">올바른 형식입니다</div>
+                    <div class="invalid-feedback">한글로만 작성 가능합니다</div>
+                </div>
+            </div>  
+
+            <div class="row mt-4">
+                <label class="col-sm-3 col-form-label">
+                    수도명<i class="fa-solid fa-asterisk text-danger"></i>
+                </label>
+                <div class="col-sm-9"> 
+                    <input type="text" name="countryCapital" class="form-control">
+                    <div class="invalid-feedback">한글로만 작성 가능합니다</div>
+                </div>
+            </div>  
+            
+            <div class="row mt-4">
+                <label class="col-sm-3 col-form-label">
+                    인구수<i class="fa-solid fa-asterisk text-danger"></i>
+                </label>
+                <div class="col-sm-9"> 
+                    <input type="text" inputmode="numeric" name="countryPopulation" class="form-control">
+                    <div class="invalid-feedback">0 이상의 숫자를 입력해주세요</div>
+                </div>
+            </div> 
+            
+            <div class="row mt-4">
+                <div class="col text-end">
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>신규 국가 등록하기</button>
+                </div>
+            </div>
+        </div>
+     </form>
+    <!--JS Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+    </script>
+  </body>
+</html>
