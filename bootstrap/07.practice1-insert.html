@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <!-- favicon -->
+    <link rel="icon" href="/kh.png" type="image/png">
+
+     <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet">
+    <style>
+        div { box-shadow: 0 0 1px 0 gray; }
+    </style>
+    <script>
+      $(function(){
+            //상태 객체
+            var state = {
+                practice1TitleValid : false,
+                practice1CategoryValid : false,
+                practice1TimeValid : false,
+                practice1PriceValid : false,
+                practice1CourseTypeValid : false,
+                ok : function(){
+                    return Object.values(this)
+                    .filter(v => typeof v == "boolean")
+                    .every(v => v == true);
+                }
+            }
+
+            //개별 입력창 검사
+            $("[name=practice1Title]").on("blur", function(){
+                var valid = $(this).val().length > 0;
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid"); 
+                state.practice1TitleValid = valid;
+            });
+            $("[name=practice1Category]").on("input", function(){
+                var regex = /^(이론|실습|시험)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid"); 
+                state.practice1CategoryValid = valid;
+            });
+            $("[name=practice1Time]").on("blur", function(){
+                var duration = parseInt($(this).val());//NaN 나올 수 없음
+                var valid = duration % 30 == 0 && duration <= 300;
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.practice1TimeValid = valid;
+            });
+            $("[name=practice1Price]").on("blur", function(){
+                var price = parseInt($(this).val());
+                var valid = price >= 0 && price <= 100000000;
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.practice1PriceValid = valid;
+            });
+            $("[name=practice1CourseType]").on("input", function(){
+                var regex = /^(온라인|오프라인|혼합)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.practice1CourseTypeValid = valid;
+            });
+
+            //숫자 입력창 처리
+            $("[inputmode=numeric]").on("input", function(){
+                var value = $(this).val().replace(/[^0-9]/g, "");
+                $(this).val(value); // 숫자가 아닌 문자는 즉시 제거
+            });
+
+            //폼검사
+            $(".form-check").on("submit", function(){
+                $(this).find("select[name]").trigger("input");
+                $(this).find("input[name], textarea[name]").trigger("blur");
+                
+                return state.ok();
+            });
+        });
+    </script>
+  </head>
+  <body>
+  <form action="./insert" method="post" enctype="multipart/form-data" autofocus="off" class="form-check">
+    <div class="container my-5">
+      <!-- 제목 부분을 점보트론(jumbotron)이라고 부른다 -->
+      <div class="row">
+          <div class="col">
+              <div class="p-4 bg-dark text-light rounded">
+              <h1>강좌 정보 등록</h1>
+              </div>
+          </div>   
+      </div>
+  
+      <!-- 실제로 구현할 내용들 -->
+      <div class="row mt-4">
+        <label class="col-sm-3 col-form-label">
+            강좌명<i class="fa-solid fa-asterisk text-danger"></i>
+        </label>
+        <div class="col-sm-9"> 
+            <input type="text" name="practice1Title" class="form-control">
+            <div class="valid-feedback">올바른 형식입니다</div>
+            <div class="invalid-feedback">필수항목입니다</div>
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <label class="col-sm-3 col-form-label">
+            카테고리<i class="fa-solid fa-asterisk text-danger"></i>
+        </label>
+        <div class="col-sm-9">
+            <select name="practice1Category" class="form-control">
+              <option value="">선택하세요</option>
+              <option>이론</option>
+              <option>실습</option>
+              <option>시험</option>
+            </select>
+            <div class="invalid-feedback">필수항목입니다</div>
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <label class="col-sm-3 col-form-label">
+            강의시간<i class="fa-solid fa-asterisk text-danger"></i>
+        </label>
+        <div class="col-sm-9">
+            <input type="text" inputmode="numeric" name="practice1Time" class="form-control">
+            <div class="valid-feedback">강의시간이 설정되었습니다</div>
+            <div class="invalid-feedback">30시간 단위로 최대 300시간 이내에서 설정 가능합니다.</div>
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <label class="col-sm-3 col-form-label">
+            수강료<i class="fa-solid fa-asterisk text-danger"></i>
+        </label>
+        <div class="col-sm-9">
+            <input type="text" inputmode="numeric" name="practice1Price" class="form-control">
+            <div class="valid-feedback">수강료가 설정되었습니다</div>
+            <div class="invalid-feedback">수강료는 0 이상으로 설정해야 합니다</div>
+        </div>
+      </div>
+  
+       <div class="row mt-4">
+        <label class="col-sm-3 col-form-label">
+            강의형태<i class="fa-solid fa-asterisk text-danger"></i>
+        </label>
+        <div class="col-sm-9">
+            <select name="practice1CourseType" class="form-control">
+              <option value="">선택하세요</option>
+              <option>온라인</option>
+              <option>오프라인</option>
+              <option>혼합</option>
+            </select>
+            <div class="invalid-feedback">필수항목입니다</div>
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <label class="col-sm-3 col-form-label">
+            미리보기
+        </label>
+        <input type="file" name="attach" accept=".png, .jpg">
+      </div>
+  
+      <div class="row mt-4">
+        <div class="col text-end">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>신규 강좌 개설하기</button>
+        </div>
+      </div>
+    </div>
+  </form>
+    <!--JS Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+    </script>
+  </body>
+</html>
