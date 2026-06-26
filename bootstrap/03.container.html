@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <!-- favicon -->
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        div { box-shadow: 0 0 1px 0 gray; }
+    </style>
+  </head>
+  <body>
+    <!-- 
+      부트스트랩도 화면의 기본 단위를 container라고 부른다
+      - container : 폭에 따라 일정한 크기 단계를 가지는 컨테이너
+      - container-fluid : 화면(영역)을 가득 채우는 컨테이너
+
+      여백 관련 디자인 클래스들이 존재 (유틸리티 클래스)
+      - 과거(픽셀) : mt-10, mt-20, ...
+      - 현재(단계) : mt-1, mt-2, mt-3, mt-4, mt-5
+      - m(margin), t(top), b(bottom), s(start), e(end) : 1~5단계
+      - x(start+end), t(top+bottom)도 존재
+      - p(padding)도 동일하게 1~5단계가 존재
+      - (중요) 폭 설정은 하면 안됨 (기기에 따라 반응)
+    -->
+    <div class="container mt-5">
+      <!-- 
+        컨테이너 화면 내부의 영역 배치
+        - 과거 : cell, flex-box, float-box 등을 사용
+        - 현재 : row + col 방식
+      -->
+      <div class="row">
+        <div class="col-">
+          <div class="p-4">
+            <h1>Bootstrap 기본 배치 방법</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col">hello</div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col">2단</div>
+        <div class="col">2단</div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col">3단</div>
+        <div class="col">3단</div>
+        <div class="col">3단</div>
+      </div>
+
+      <!-- 
+        폭을 다르게 지정해서 col을 생성할 수 있다
+        부트스트랩은 1줄을 12칸으로 본다 (나누기가 가장 많이 되는 수)
+        col을 배치할 때 숫자를 붙여서 합이 12가 되게 배치하면 한줄을 원하는대로 분배가능
+      -->
+      <div class="row mt-4">
+        <div class="col-4">왼쪽</div>
+        <div class="col-8">왼쪽</div>
+      </div>
+
+      <!-- 
+        breakpoint를 지정해서 폭을 설정하면 해당 지점이 되었을 때 폭이 100%가 된다 
+      -->
+      <div class="row mt-4">
+        <div class="col-sm-4">왼쪽</div>
+        <div class="col-sm-8">왼쪽</div>
+      </div>
+
+    </div>
+    <!--JS Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+    </script>
+  </body>
+</html>
