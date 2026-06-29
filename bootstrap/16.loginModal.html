@@ -113,12 +113,32 @@
             //목표 : btn-modal03-open을 클릭하면 #modal03을 표시
             $(".btn-modal03-open").click(function(){
                 //bootstrap js에서 jquery에 modal과 같은 신규 명령을 자동으로 추가(플러그인 방식)
-                $("#modal03").modal("show");
+
+                //jQuery 버전
+                // $("#modal03").modal("show");
+
+                //VanillaJS 버전
+                var target = document.querySelector("#modal03");
+                //2. Bootstrap 객체로 획득
+                var modal = bootstrap.Modal.getOrCreateInstance(target);
+                //3. 명령 실행
+                modal.show();
+
+
             });
 
             //목표 : 참여버튼을 누르면 #modal03을 닫기
             $(".btn-close").click(function(){
-                $("#modal03").modal("hide");
+                
+                //VanillaJS 버전
+                var target = document.querySelector("#modal03");
+                //2. Bootstrap 객체로 획득
+                var modal = bootstrap.Modal.getInstance(target);
+                //3. 명령 실행
+                modal.hide();
+
+                //jquery 버전
+                // $("#modal03").modal("hide");
                 $("[name=ID], [name=PW]").val("");
             });
 

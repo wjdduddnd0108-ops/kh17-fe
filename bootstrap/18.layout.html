@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <!-- favicon -->
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력 -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* div { box-shadow: 0 0 1px 0 gray; } */
+        body {
+            height: 50000px;
+        }
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./preview.js"></script>
+
+</head>
+
+<body>
+    <div class="row mt-4 align-items-center">
+        <div class="col-sm-3 text-center">
+            <img src="https://www.dummyimage.com/200x50" width="100%">
+        </div>
+        <div class="col-sm-6 text-center">
+            <h1>KH정보교육원 홈페이지</h1>
+        </div>
+        <div class="col-sm-3 text-center">
+            <h2>
+                24시간 상담
+                <i class="fa-solid fa-phone"></i>
+            </h2>
+            <span>1588-0000</span>
+        </div>
+    </div>
+
+    <!-- 로그인 완료 상태 -->
+    <nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
+        <div class="container-fluid">
+
+            <!-- Brand 영역 : 메뉴의 가장 좌측에 나오는 글자 혹은 이미지 영역 -->
+            <a class="navbar-brand" href="#">KH정보교육원</a>
+
+            <!-- 
+                toggler(토글러) 버튼 : 폭이 좁은 경우 메뉴를 접었다 펼쳤다 하도록 만드는 버튼
+                - aria 관련 속성은 리더기를 이용하여 읽어낼 수 있는 접근성 향상을 위한 속성
+                - data-bs-toggle은 이 버튼으로 유발시킬 작업의 종류를 의미
+                - data-bs-target은 제어 대상을 지정하기 위한 속성
+            -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- 
+                collapse(콜랩스) 영역 : 좁은 화면에서 토글러 버튼에 의해서 접힘/펼침 처리되는 영역
+            -->
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <!-- 좌측 메뉴 -->
+                <ul class="navbar-nav me-auto menu">
+
+                    <!-- 하위 항목이 없는 메뉴 (Menu Item) -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fa-solid fa-home"></i>
+                            홈
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fa-solid fa-database"></i>
+                            데이터
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/country/list">
+                                <i class="fa-solid fa-flag"></i>
+                                <span>국가정보</span>
+                            </a>
+                            <a class="dropdown-item" href="/practice1/list">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                                강좌정보
+                            </a>
+                            <a class="dropdown-item" href="/book/list">
+                                <i class="fa-solid fa-book"></i>
+                                도서정보
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/board/list">
+                            <i class="fa-solid fa-comments"></i>
+                            게시판
+                        </a>
+                    </li>
+                </ul>
+                <!-- 우측 메뉴 -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>관리 메뉴</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/admin/member/">
+                                <i class="fa-solid fa-users-gear"></i>
+                                <span>회원관리</span>
+                            </a>
+                            <a class="dropdown-item" href="/admin/stat/">
+                                <i class="fa-solid fa-chart-line"></i>
+                                <span>데이터 현황</span>
+                            </a>
+                            <a class="dropdown-item" href="/member/logout">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                로그아웃
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 비로그인 상태-->
+    <nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
+        <div class="container-fluid">
+
+            <!-- Brand 영역 : 메뉴의 가장 좌측에 나오는 글자 혹은 이미지 영역 -->
+            <a class="navbar-brand" href="#">KH정보교육원</a>
+
+
+            <!-- 
+                toggler(토글러) 버튼 : 폭이 좁은 경우 메뉴를 접었다 펼쳤다 하도록 만드는 버튼
+                - aria 관련 속성은 리더기를 이용하여 읽어낼 수 있는 접근성 향상을 위한 속성
+                - data-bs-toggle은 이 버튼으로 유발시킬 작업의 종류를 의미
+                - data-bs-target은 제어 대상을 지정하기 위한 속성
+            -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- 
+                collapse(콜랩스) 영역 : 좁은 화면에서 토글러 버튼에 의해서 접힘/펼침 처리되는 영역
+            -->
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <!-- 좌측 메뉴 -->
+                <ul class="navbar-nav me-auto menu">
+
+                    <!-- 하위 항목이 없는 메뉴 (Menu Item) -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fa-solid fa-home"></i>
+                            홈
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fa-solid fa-database"></i>
+                            데이터
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/country/list">
+                                <i class="fa-solid fa-flag"></i>
+                                <span>국가정보</span>
+                            </a>
+                            <a class="dropdown-item" href="/practice1/list">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                                강좌정보
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/board/list">
+                            <i class="fa-solid fa-comments"></i>
+                            게시판
+                        </a>
+                    </li>
+                </ul>
+                <!-- 우측 메뉴 -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/member/login">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            로그인
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/member/join">
+                            <i class="fa-solid fa-user-plus"></i>
+                            회원가입
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <!-- 제목 부분을 점보트론(jumbotron)이라고 부른다 -->
+        <div class="row">
+            <div class="col">
+                <div class="p-4 bg-dark text-light rounded">
+                    <h1>제목 샘플</h1>
+                    <p>설명 샘플</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 실제로 구현할 내용들 -->
+        <div id="carouselExample" class="carousel slide mt-4">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://picsum.photos/id/10/800/400" class="d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://picsum.photos/id/11/800/400" class="d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://picsum.photos/id/12/800/400" class="d-block w-100">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <!--JS Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+    </script>
+</body>
+
+</html>

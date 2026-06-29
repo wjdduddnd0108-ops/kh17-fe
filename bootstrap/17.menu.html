@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <!-- favicon -->
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력 -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* div { box-shadow: 0 0 1px 0 gray; } */
+        body {
+            height : 50000px;
+        }
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./preview.js"></script>
+
+</head>
+
+<body class="pt-5">
+    <!-- 메뉴 : 레이아웃과 관계없이 가정 먼저 로딩되도록 처음에 배치 -->
+    <nav class="navbar navbar-expand-lg bg-primary fixed-top" data-bs-theme="dark">
+        <div class="container-fluid">
+
+            <!-- Brand 영역 : 메뉴의 가장 좌측에 나오는 글자 혹은 이미지 영역 -->
+            <a class="navbar-brand" href="#">KH정보교육원</a>
+
+            <!-- 
+                toggler(토글러) 버튼 : 폭이 좁은 경우 메뉴를 접었다 펼쳤다 하도록 만드는 버튼
+                - aria 관련 속성은 리더기를 이용하여 읽어낼 수 있는 접근성 향상을 위한 속성
+                - data-bs-toggle은 이 버튼으로 유발시킬 작업의 종류를 의미
+                - data-bs-target은 제어 대상을 지정하기 위한 속성
+            -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- 
+                collapse(콜랩스) 영역 : 좁은 화면에서 토글러 버튼에 의해서 접힘/펼침 처리되는 영역
+            -->
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <!-- 좌측 메뉴 -->
+                <ul class="navbar-nav me-auto">
+
+                    <!-- 하위 항목이 없는 메뉴 (Menu Item) -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home       
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+            
+
+                    <!-- 드롭다운(dropdown) 메뉴 (Menu) -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">Database</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </li>
+                </ul>
+                <!-- 우측 메뉴 -->
+                <ul class="navbar_nav">
+                    <li class="nav-item">
+                        <a class="nav-link">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Sign In</a>
+                    </li>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5 pt-5">
+        <!-- 제목 부분을 점보트론(jumbotron)이라고 부른다 -->
+        <div class="row">
+            <div class="col">
+                <div class="p-4 bg-dark text-light rounded">
+                    <h1>메뉴(Navbar)</h1>
+                    <p>상단 메뉴를 배치하고 컨트롤하는 법을 다룹니다</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 실제로 구현할 내용들 -->
+
+    </div>
+    <!--JS Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+    </script>
+</body>
+
+</html>
