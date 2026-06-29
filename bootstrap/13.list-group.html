@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <!-- favicon -->
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet">
+    <!-- 국기 제작 CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.5.0/css/flag-icons.min.css">
+
+    <style>
+        /* div { box-shadow: 0 0 1px 0 gray; } */
+        .w-sm-25 { width: 25% !important; }
+        .w-sm-75 { width: 100% !important; }
+        @media (min-width:576px) {
+            .w-sm-25 { width: 25% !important; }
+            .w-sm-75 { width: 75% !important; }
+        }
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./preview.js"></script>
+    
+  </head>
+  <body>
+    <div class="container my-5">
+      <!-- 제목 부분을 점보트론(jumbotron)이라고 부른다 -->
+        <div class="row">
+            <div class="col">
+                <div class="p-4 bg-dark text-light rounded">
+                <h1>List Group</h1>
+                <p>테이블을 대체할 수 있는 최고의 수단</p>
+                </div>
+            </div>   
+        </div>
+
+    <!-- 리스트 그룹은 ul과 li로 구현 -->
+    <div class="row mt-4">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item">첫 번째 항목</li>
+                <li class="list-group-item">두 번째 항목</li>
+                <li class="list-group-item">세 번째 항목</li>
+                <li class="list-group-item">네 번째 항목</li>
+                <li class="list-group-item">다섯 번째 항목</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 메뉴 형태일 때 뱃지를 추가 -->
+    <div class="row mt-4">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>오늘 일정</div>
+                    <span class="badge text-bg-danger">10</span>
+                </li>
+                <li class="list-group-item d-flex align-items-center">
+                    <div class="flex-grow-1">오늘 일정</div>
+                    <span class="badge text-bg-danger">10</span>
+                </li>
+            </ul>       
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex align-items-center">
+                    <div>오늘 일정</div>
+                    <span class="badge text-bg-danger ms-2">10</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex align-items-center">
+                    <div>오늘 일정</div>
+                    <span class="badge text-bg-primary ms-2">10</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="fi fi-kr fs-1"></span>
+                    <h3 class="mt-2">대한민국</h3>
+                    <p>수도 : 서울 <br>인구수 5500만</p>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex flex-column">
+                        <span class="fi fi-kr fs-1"></span>
+                        <h3 class="mt-2">대한민국</h3>
+                        <p>수도 : 서울 <br>인구수 5500만</p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex">
+                        <div class="w-25 d-flex justify-content-center align-items-center">
+                            <span class="fi fi-kr fs-1"></span>
+                        </div>
+                        <div class="w-75">
+                            <h3 class="mt-2">대한민국</h3>
+                            <p>수도 : 서울 <br>인구수 5500만</p>
+                        </div>   
+                    </div>
+                </li>
+                <!-- 폭의 변화를 감지하여 가로 세로를 설정 -->
+                <li class="list-group-item">
+                    <div class="d-flex flex-column flex-sm-row">
+                        <div class="w-100 w-sm-25 d-flex justify-content-start justify-content-sm-center align-items-center">
+                            <span class="fi fi-kr fs-1"></span>
+                        </div> 
+                        <div class="w-100 w-sm-75 mt-4 mt-sm-2">
+                            <h3>대한민국</h3>
+                            <p>수도 : 서울 <br>인구수 5500만</p>
+                        </div>   
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    
+
+    </div>
+    <!--JS Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+    </script>
+  </body>
+</html>

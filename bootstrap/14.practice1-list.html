@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <!-- favicon -->
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* div { box-shadow: 0 0 1px 0 gray; } */
+        .w-sm-25 { width: 25% !important; }
+        .w-sm-75 { width: 100% !important; }
+        @media (min-width:576px) {
+            .w-sm-25 { width: 25% !important; }
+            .w-sm-75 { width: 75% !important; }
+        }
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./preview.js"></script>
+    
+  </head>
+  <body>
+    <div class="container my-5">
+      <!-- 제목 부분을 점보트론(jumbotron)이라고 부른다 -->
+        <div class="row">
+            <div class="col">
+                <div class="p-4 bg-dark text-light rounded">
+                <h1>강좌 목록</h1>
+                </div>
+            </div>   
+        </div>
+
+        <div class="row mt-4">
+            <div class="col d-flex justify-content-center">
+                <div class="input-group" style="max-width: 500px;">
+                    <select name="column" class="form-select w-auto flex-grow-0">
+                        <option value="country_name">강좌명</option>
+                        <option value="country_region">카테고리</option>
+                        <option value="country_capital">강의 유형</option>
+                    </select>
+                    
+                    <input type="text" name="keyword" class="form-control">
+                    
+                    <button type="submit" class="btn btn-success text-nowrap">
+                        <span class="d-none d-sm-inline">검색</span>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item border-0">
+                        <div class="d-flex flex-column flex-sm-row text-nowrap shadow p-2">
+                            <div class="w-sm-25 p-2">
+                                <img src="https://picsum.photos/id/1/500/500" class="w-100">
+                            </div>
+                            <div class="w-sm-75 p-2">
+                                <h3>정처기 필기</h3>
+                                <div>
+                                    <span class="badge text-bg-success">이론</span>
+                                    <span class="badge text-bg-success">온라인</span>
+                                </div>
+                                <div class="mt-4">수강시간 : 60</div>
+                                <div>
+                                    수강료 : 500,000 KRW
+                                </div>
+                            </div>   
+                        </div>   
+                    </li>
+                    <li class="list-group-item border-0">
+                        <div class="d-flex flex-column flex-sm-row text-nowrap shadow p-2">
+                            <div class="w-sm-25 p-2">
+                                <img src="https://picsum.photos/id/2/500/500" class="w-100">
+                            </div>
+                            <div class="w-sm-75 p-2">
+                                <h3>정처기 필기</h3>
+                                <div>
+                                    <span class="badge text-bg-success">이론</span>
+                                    <span class="badge text-bg-success">온라인</span>
+                                </div>
+                                <div class="mt-4">수강시간 : 60</div>
+                                <div>
+                                    수강료 : 500,000 KRW
+                                </div>
+                            </div>   
+                        </div>   
+                    </li>
+                    <li class="list-group-item border-0">
+                        <div class="d-flex flex-column flex-sm-row text-nowrap shadow p-2">
+                            <div class="w-sm-25 p-2">
+                                <img src="https://picsum.photos/id/1/500/500" class="w-100">
+                            </div>
+                            <div class="w-sm-75 p-2">
+                                <h3>정처기 필기</h3>
+                                <div>
+                                    <span class="badge text-bg-success">이론</span>
+                                    <span class="badge text-bg-success">온라인</span>
+                                </div>
+                                <div class="mt-4">수강시간 : 60</div>
+                                <div>
+                                    수강료 : 500,000 KRW
+                                </div>
+                            </div>   
+                        </div>   
+                    </li>
+                    <li class="list-group-item border-0">
+                        <div class="d-flex flex-column flex-sm-row text-nowrap shadow p-2">
+                            <div class="w-sm-25 p-2">
+                                <img src="https://picsum.photos/id/1/500/500" class="w-100">
+                            </div>
+                            <div class="w-sm-75 p-2">
+                                <h3>정처기 필기</h3>
+                                <div>
+                                    <span class="badge text-bg-success">이론</span>
+                                    <span class="badge text-bg-success">온라인</span>
+                                </div>
+                                <div class="mt-4">수강시간 : 60</div>
+                                <div>
+                                    수강료 : 500,000 KRW
+                                </div>
+                            </div>   
+                        </div>   
+                    </li>
+                    <li class="list-group-item border-0">
+                        <div class="d-flex flex-column flex-sm-row text-nowrap shadow p-2">
+                            <div class="w-sm-25 p-2">
+                                <img src="https://picsum.photos/id/1/500/500" class="w-100">
+                            </div>
+                            <div class="w-sm-75 p-2">
+                                <h3>정처기 필기</h3>
+                                <div>
+                                    <span class="badge text-bg-success">이론</span>
+                                    <span class="badge text-bg-success">온라인</span>
+                                </div>
+                                <div class="mt-4">수강시간 : 60</div>
+                                <div>
+                                    수강료 : 500,000 KRW
+                                </div>
+                            </div>   
+                        </div>   
+                    </li>
+                </ul>
+                <div class="row mt-4">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 md-3 mb-4">
+                        <div class="card">
+                            <img src="https://picsum.photos/id/1/500/500" class="card-img-top">
+                            <div class="card-body">
+                                <h3 class="card-title">정처기 필기</h3>
+                                <div>
+                                    <span class="badge text-bg-success">이론</span>
+                                    <span class="badge text-bg-success">온라인</span>
+                                </div>
+                                <p class="card-text">
+                                    수강시간 : 60<br>
+                                    수강료 : 500,000 KRW
+                                </p>
+                                <a href="#" class="btn btn-primary">상세 정보</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 md-3 mb-4">
+                        <div class="card">
+                            <img src="https://picsum.photos/id/1/500/500" class="card-img-top">
+                            <div class="card-body">
+                                <h3 class="card-title">정처기 필기</h3>
+                                <div>
+                                    <span class="badge text-bg-success">이론</span>
+                                    <span class="badge text-bg-success">온라인</span>
+                                </div>
+                                <p class="card-text">
+                                    수강시간 : 60<br>
+                                    수강료 : 500,000 KRW
+                                </p>
+                                <a href="#" class="btn btn-primary">상세 정보</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 md-3 mb-4">
+                        <div class="card">
+                            <img src="https://picsum.photos/id/1/500/500" class="card-img-top">
+                            <div class="card-body">
+                                <h3 class="card-title">정처기 필기</h3>
+                                <div>
+                                    <span class="badge text-bg-success">이론</span>
+                                    <span class="badge text-bg-success">온라인</span>
+                                </div>
+                                <p class="card-text">
+                                    수강시간 : 60<br>
+                                    수강료 : 500,000 KRW
+                                </p>
+                                <a href="#" class="btn btn-primary">상세 정보</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 md-3 mb-4 ms-2">
+                        <div class="card">
+                            <img src="https://picsum.photos/id/1/500/500" class="card-img-top">
+                            <div class="card-body">
+                                <h3 class="card-title">정처기 필기</h3>
+                                <div>
+                                    <span class="badge text-bg-success">이론</span>
+                                    <span class="badge text-bg-success">온라인</span>
+                                </div>
+                                <p class="card-text">
+                                    수강시간 : 60<br>
+                                    수강료 : 500,000 KRW
+                                </p>
+                                <a href="#" class="btn btn-primary">상세 정보</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col d-none d-sm-block">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">6</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">7</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">8</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">8</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">9</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">10</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col d-block d-sm-none">
+                <button class="btn btn-primary w-100">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <span>더보기</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--JS Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+    </script>
+  </body>
+</html>
