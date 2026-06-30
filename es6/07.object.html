@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    //구조 분해 할당 (Destructuring Assignment)
+    //- 배열이나 객체를 쉽게 해체하기 위한 기법
+    //- 배열과 객체 중심으로 구문을 작성
+
+    const a = [10, 20, 30, 40, 50];
+
+    //a에서 2개만 뽑아서 a1, a2라고 저장하려면?
+    // const a1 = a[0];
+    // const a2 = a[1];
+    const [a1, a2] = a;
+    console.log(a1, a2);
+
+    //응용하면 이런것도 가능
+    let b = 10, c=20;
+    [b, c] = [c, b];//swap 코드
+    console.log(b,c);
+
+    //그럼 혹시 객체도...?
+    const d = {
+        no : 1,
+        name : "대한민국",
+        capital : "서울",
+        region : "아시아",
+        population : 55000000
+    };
+
+    //(Q) d의 이름과 수도만 꺼내서 name, capital이란 변수에 저장해보세요
+    //const name = d.name;
+    //const capital = d.capital;
+    const {name, capital} = d;//객체 중심
+    console.log(name, capital);
+
+    //(Q) d에서 수도를 "부산"으로 바꿔보세요
+    // d.capital = "부산";
+    // console.log(d);
+    const e = {
+        ...d,//d의 모든 항목을 그대로 복사하고
+        capital : "부산"//capital만 부산으로 재설정해라!
+    };
+    console.log(e);
+
+</script>
