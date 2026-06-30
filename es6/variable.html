@@ -1,0 +1,55 @@
+<script type="text/javascript">
+
+    //모던 자바스크립트로의 변화
+    //1. 변수 생성 방식의 변화
+    //2. 람다(Lamda) 함수 등장 (=화살표 함수, Arrow function)
+    //3. 클래스(class) 등장
+    //4. 모듈(module) 등장
+    //5. 백틱 구문 등장
+    //6. 구조 분해 할당 등장
+    //----------------------------------------------------
+
+    //변수 생성 방식의 변화
+    //- 'var'에서 'const'/'let'으로 변함
+    //- var 방식은 변수를 함수 범위로 제한하여 생성함 (function scope) -> 클래식 C언어의 영향
+    //- 모던 자바스크리븥에서는 블록 범위로 제한하여 변수를 생성함 (block scope)
+    //- 가변일 경우 'let'을 사용하고, 불변일 경우 'const'를 사용
+    //- 현대 프로그래밍은 불변 변수를 자주 사용하는 형태로 문법이 진화함
+
+    // var number = 5;
+    // var result;
+    // if(number % 2 == 0) {
+    //     result = "짝수";
+    // }
+    // else{
+    //     result = "홀수";
+    // }
+    // console.log("결과 : " + result);
+
+    // if(number % 2 == 0) {
+    //     let result = "짝수";
+    // }
+    // else{
+    //     let result2 = "홀수";
+    // }
+    // // console.log("결과2 : " + result2);
+
+    // const text = "Hello";
+    // // text = "goodbye";//error(변경불가)
+    // console.log(text);
+
+    //(Q) 1부터 100까지 더해서 출력 + 홀짝 판정하여 출력
+    //모던 자바스크립트
+    let number = 0;
+
+    for(let i = 1; i<=100; i++ ){
+        number += i;
+    }
+    
+
+    const judge = number % 2 == 0 ? "짝수" : "홀수";
+
+    console.log("합계 : " + number);
+    console.log("판정 : " + judge);
+
+</script>
