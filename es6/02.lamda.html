@@ -1,0 +1,84 @@
+<script type="text/javascript">
+
+    //모던 자바스크립트로의 변화
+    //1. 변수 생성 방식의 변화
+    //2. 람다(Lamda) 함수 등장 (=화살표 함수, Arrow function)
+    //3. 클래스(class) 등장
+    //4. 모듈(module) 등장
+    //5. 백틱 구문 등장
+    //6. 구조 분해 할당 등장
+    //----------------------------------------------------
+
+    //람다 함수의 등장
+    //- 함수를 최소한의 코드로 작성하고 이를 변수처럼 쓰는것
+    //- 추론을 통해 완성되는 축약식(함수)
+
+    //ES5
+    //- 함수 선언 방식은 호이스팅이 발생해서 다른 함수와 충돌 가능성이 높고 아무데서나 호출이 가능하다
+    function plus(a, b) {
+        return a + b;
+    }
+
+    //plus라는 함수를 호출하며 10과 20을 인자로 전달하고 결과를 v1에 저장합니다
+    var v1 = plus(10, 20); 
+    console.log("v1 = " + v1);
+
+    //ES6
+    //- 함수 표현식은 함수를 변수에 할당하여 변수와 동일한 범위를 가지도록 제한하는 방법
+    // const add = function(a, b) {
+    //     return a + b;
+    // };
+
+    // const add = (a, b)=>{ return a + b;};
+
+    const add = (a, b) => a+b; //중괄호와 return을 삭제해도 추론에 지장이 없음
+
+    const v2 = add(10, 20);
+    console.log("v2 = " + v2);
+    
+    //람다가 빛을 발하는 곳이 배열 처리과정이다
+
+    console.log("-------------");
+    //(ex) 다음 배열 30 이하인 데이터만 추출하여 새로운 배열에 담은 뒤 출력하세요
+
+    const data = [10, 20, 30, 40, 50];
+    const data2 = [];
+
+    for(let i=0; i<data.length; i++){
+        if(data[i]<=30){
+            data2.push(data[i]);
+        }
+    }
+
+    for(var i=0; i < data2.length; i++) {
+        console.log(data2[i]);
+    }
+
+    //1단계 - filter라는 함수를 이용해서 데이터를 필터링하도록 처리
+    //const step1 = data.filter(필터링함수);
+
+    // const step1 = data.filter(function(number){
+    //     if(number <= 30) {
+    //         return true;
+    //     }
+    //     else{
+    //         return false;
+    //     }
+    // });
+    const step1 = data.filter( (number) => number <=30 );
+    
+    //모든 항목에 반복 실행
+    // step1.forEach(함수);
+    // step1.forEach(function(number){
+    //     console.log(number);
+    // });
+    step1.forEach((number)=>console.log(number));
+
+    console.log("--------------");
+
+    //2단계 : 체이닝 형태로 호출 (ES6)
+    data.filter( number=>number<=30 )
+    .forEach( number=>console.log(number) );
+
+
+</script>

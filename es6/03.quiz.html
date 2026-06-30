@@ -1,0 +1,53 @@
+<script type="text/javascript">
+
+    //(Q) data에 들어 있는 값을 이용해서 다음 결과를 만들어 내세요
+    //1. 홀수만 필터링
+    //2. 1번에서 필터링된 결과 데이터를 각각 제곱
+    //3. 2번의 결과에서 20 이하만 필터링
+    //4. 3번의 결과를 출력
+    //추가로 알아야 할 함수 : map(검색해보세요)
+    const data = [5, 3, 2, 7, 8, 1, 6];
+
+    let data2 = [];
+
+    for(let i=0; i<data.length; i++){
+        if(data[i]%2 != 0){
+            data2.push(data[i]);
+        }
+    }
+
+    for(let j=0; j<data2.length; j++){
+        data2[j] = data2[j] * data2[j];
+    }
+
+    console.log(data2);
+
+    for(let k=0; k<data2.length; k++){
+        if(data2[k]<=20){
+            console.log(data2[k]);
+        }
+    }
+
+
+    //map 사용
+    const result = data
+        .filter(function(num){
+            return num%2 !== 0;
+        })
+        .map(function(num){
+            return num*num
+        })
+        .filter(function(num){
+            return num<=20;
+        });
+
+    console.log(result);
+
+    //ES6
+    data.filter(n=>n%2!=0)
+        .map(n=>n*n)
+        .filter(n=>n<=20)
+        .sort((a,b)=>a-b)
+        .forEach(n=>console.log(n));
+
+</script>
