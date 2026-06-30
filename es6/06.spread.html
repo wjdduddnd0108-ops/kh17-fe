@@ -1,0 +1,49 @@
+<script type="text/javascript">
+
+    //(Q) 다음 두 배열을 합쳐서 새로운 배열을 만들어보세요
+    const a = [10, 20, 40];
+    const b = [30, 50, 60];
+
+    //ES5
+    const c = [];
+
+    for(let i=0; i < a.length; i++) {//a -> c
+        c.push(a[i]);
+    }
+    for(let i=0; i < b.length; i++){//b -> c
+        c.push(b[i]);
+    }
+    for(let i=0; i < c.length; i++){
+        console.log(c[i]);
+    }
+
+    console.log("-------------");
+    //ES6
+    //- concat 함수 사용
+    a.concat(b).forEach(n=>console.log(n));
+    //- 전개연산(spread operator) 사용 : '...a'는 'a의 모든 데이터를 풀어헤쳐라'라는 뜻
+    [...a, ...b].forEach(n=>console.log(n));
+
+
+    console.log("-------------");
+
+    //(Q) d1 데이터는 두배로, d2 데이터는 제곱해서 두배열을 합치고 3의 배수만 정렬해서 출력
+    const d1 = [10, 20, 30, 40, 50];
+    const d2 = [1, 2, 3, 4, 5];
+
+    //전개 연산 사용 시
+    [...d1.map(n=>n*2), ...d2.map(n=>n*n)]
+        .filter(n=>n%3 == 0)
+        .sort((a,b)=>a-b)
+        .forEach(n=>console.log(n));
+
+    //concat 사용 시
+    // d1을두배로만든결과.concat(d2를제곱한결과).filter(3의배수).sort(오름차순).forEach(출력);
+    d1.map(n=>n*2)
+        .concat(d2.map(n=>n*n))
+        .filter(n=>n%3 == 0)
+        .sort((a,b)=>a-b)
+        .forEach(n=>console.log(n));
+
+
+</script>
