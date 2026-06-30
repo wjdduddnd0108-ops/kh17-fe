@@ -1,0 +1,10 @@
+<script src="./test3.js" type="module"></script>
+<script src="./test4.js" type="module"></script>
+<script type="module">
+    //import로 어느 대상에서 어느 항목을 가져올지 결정하여 작성
+    import {a} from "./test3.js";
+    // import {b} from "./test4.js";
+    import {a as b} from "./test4.js";//a를 B로 바꿔서 불러오겠다
+
+    console.log(a, b);
+</script>
