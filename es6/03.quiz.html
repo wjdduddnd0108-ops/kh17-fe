@@ -50,4 +50,22 @@
         .sort((a,b)=>a-b)
         .forEach(n=>console.log(n));
 
+    console.log("--------------------------");
+    //(Q) 만약 다음 배열에서 20을 지우려면?
+    const numbers = [10, 20, 30, 40, 50];
+
+    //원본이 변경되는 좋지 않은 방식
+    //const index = numbers.indexOf(20);//20의 위치를 찾아 index에 저장
+    //numbers.splice(index, 1);//index부터 1칸을 지워라
+    //console.log(numbers);
+
+    //사본을 만드는 방식
+    //- slice는 원본 변경 없이 원하는 구간을 잘라서 사본을 만들어냄
+    //- filter로 원하는 데이터만 빼고 검색하면 삭제 효과가 발생
+
+    numbers.filter(n=>n !== 20)
+            .forEach(n=>console.log(n));
+    
+    
+
 </script>
