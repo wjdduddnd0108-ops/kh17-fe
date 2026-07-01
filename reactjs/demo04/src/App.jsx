@@ -11,8 +11,18 @@ const [size, setSize] = useState(300);
     <button onClick={()=>setSize(150)}>작게</button>
     <button onClick={()=>setSize(300)}>보통</button>
     <button onClick={()=>setSize(450)}>크게</button>
+
+    <div>
+      현재 크기 : {size}px
+      &nbsp;&nbsp;
+      <button onClick={()=>setSize(size+10)}>+</button>
+      <button onClick={()=>setSize(size-10)}>-</button>
+    </div>
+
     <hr/>
-    <img src="https://picsum.photos/500" width={size}></img>
+    <img src="https://picsum.photos/300" 
+      className="target"
+      width={size}></img>
 
     </>
   )

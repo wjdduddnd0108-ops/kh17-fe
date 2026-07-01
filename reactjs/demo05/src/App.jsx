@@ -8,7 +8,9 @@ const [money, setMoney] = useState(0);
     <h1>은행 이체</h1>
     <h3>이체하실 금액을 입력하세요</h3>
     <div>{money}</div>
-    <button onClick={()=>setMoney(Math.floor(money/10))}>삭제</button>
+    <input value={money} readOnly/>
+
+    <button onClick={()=>setMoney(parseInt(money/10))}>삭제</button>
     <button onClick={()=>setMoney(0)}>전체 삭제</button>
     <hr/>
     <button onClick={()=>setMoney(money+10000000)}>천만</button>
