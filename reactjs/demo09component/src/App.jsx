@@ -5,6 +5,12 @@ import Exam01 from "./components/Exam01"
 import Exam02 from "./components/Exam02"
 import Exam02_1 from "./components/Exam02_1"
 import Exam03 from "./components/Exam03"
+import Exam03_1 from "./components/Exam03_1"
+import Exam04 from "./components/Exam04"
+import Exam05 from "./components/Exam05"
+
+import { Bounce, ToastContainer } from "react-toastify";
+
 
 function App() {
 
@@ -24,9 +30,33 @@ function App() {
 
     <hr/>
 
-    <Exam03/>
+    {/* <Exam03/> */}
 
+    <hr/>
 
+    {/* <Exam03_1/> */}
+
+    <hr/>
+
+    <Exam04/>
+
+    <hr/>
+
+    <Exam05/>
+
+    <ToastContainer
+      position="bottom-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+      transition={Bounce}
+    />
   </div>
   )
 }
