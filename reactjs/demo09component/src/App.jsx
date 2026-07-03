@@ -13,6 +13,8 @@ import { Bounce, ToastContainer } from "react-toastify";
 import Exam06 from "./components/Exam06"
 import Exam07 from "./components/Exam07"
 import Exam07_1 from "./components/Exam07_1"
+import Exam08 from "./components/Exam08"
+import Exam09 from "./components/Exam09"
 
 
 function App() {
@@ -58,6 +60,14 @@ function App() {
     <hr/>
 
     <Exam07_1/>
+
+    <hr/>
+
+    <Exam08/>
+
+    <hr/>
+
+    <Exam09/>
 
     <ToastContainer
       position="bottom-right"
