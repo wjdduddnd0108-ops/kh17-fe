@@ -10,6 +10,9 @@ import Exam04 from "./components/Exam04"
 import Exam05 from "./components/Exam05"
 
 import { Bounce, ToastContainer } from "react-toastify";
+import Exam06 from "./components/Exam06"
+import Exam07 from "./components/Exam07"
+import Exam07_1 from "./components/Exam07_1"
 
 
 function App() {
@@ -43,6 +46,18 @@ function App() {
     <hr/>
 
     <Exam05/>
+
+    <hr/>
+
+    <Exam06/>
+
+    <hr/>
+
+    <Exam07/>
+
+    <hr/>
+
+    <Exam07_1/>
 
     <ToastContainer
       position="bottom-right"
