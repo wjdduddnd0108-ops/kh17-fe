@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import Jumbotron from "../../templates/Jumbotron";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
 import axios from "axios";
-import { FaChevronDown } from "react-icons/fa6";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Table from 'react-bootstrap/Table';
+import { FaChevronDown, FaPlus } from "react-icons/fa6";
+// import Row from "react-bootstrap/esm/Row";
+// import Col from "react-bootstrap/esm/Col";
+// import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';
+// import Table from 'react-bootstrap/Table';
+import { Row, Col, Form, Table, Button} from "react-bootstrap"
+import { Link } from "react-router-dom";
 
 export default function CountryList(){
     //state
@@ -44,13 +46,24 @@ export default function CountryList(){
         <Jumbotron title="국가 목록" content="등록된 국가들의 목록을 확인하세요"/>
 
         <Row className="mt-4">
-            <Col>
+            <Col xs={6}>
                 <Form.Select value={size} onChange={e=>setSize(parseInt(e.target.value))}>
                     <option value="5">5개씩 보기</option>
                     <option value="10">10개씩 보기</option>
                     <option value="20">20개씩 보기</option>
                     <option value="50">50개씩 보기</option>
                 </Form.Select>
+            </Col>
+            <Col xs={6} className="text-end">
+                {/* <Link to="/country/add" className="btn btn-success">
+                    <FaPlus/>
+                    <span className="ms-2">신규등록</span>
+                </Link> */}
+
+                <Button as={Link} to="/country/add" variant="success">
+                    <FaPlus/>
+                    <span className="ms-2">신규 등록</span>
+                </Button>
             </Col>
         </Row>
 
@@ -68,7 +81,11 @@ export default function CountryList(){
                     <tbody>
                         {countryList.map(country => (
                             <tr key={country.countryNo}>
-                                <td>{country.countryName}</td>
+                                <td>
+                                    <Link to={`/country/detail/${country.countryNo}`}>
+                                        {country.countryName}
+                                    </Link>
+                                    </td>
                                 <td>{country.countryRegion}</td>
                                 <td>{country.countryCapital}</td>
                                 <td className="text-end">{country.countryPopulation}</td> 
