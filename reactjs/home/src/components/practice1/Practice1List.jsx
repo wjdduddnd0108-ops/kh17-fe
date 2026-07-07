@@ -21,27 +21,45 @@ export default function Practice1List() {
     }, []);
 
     //callback
-    const loadMoreList = useCallback(() => {
+    // const loadMoreList = useCallback(() => {
+    //     const dataSize = practice1List.length;
+    //     const lastPractice1No = dataSize === 0 ? 0 : practice1List[dataSize - 1].practice1No;
+
+    //     setLoading(true);
+
+    //     axios({
+    //         url: "http://localhost:8080/api/practice1/listForReact",
+    //         method: "get",
+    //         params: {
+    //             lastPractice1No: lastPractice1No,
+    //             size: size
+    //         }
+    //     })
+    //         .then(response => {
+    //             setPractice1List([...practice1List, ...response.data.list]);
+    //             setLast(response.data.last);
+    //         })
+    //         .finally(() => {
+    //             setLoading(false);
+    //         });
+    // }, [practice1List, size]);
+
+    const loadMoreList = useCallback(async () => {
         const dataSize = practice1List.length;
         const lastPractice1No = dataSize === 0 ? 0 : practice1List[dataSize - 1].practice1No;
 
         setLoading(true);
-
-        axios({
-            url: "http://localhost:8080/api/practice1/listForReact",
-            method: "get",
+        
+        const response = await axios.get("http://localhost:8080/api/practice1/listForReact", {
             params: {
                 lastPractice1No: lastPractice1No,
                 size: size
             }
-        })
-            .then(response => {
-                setPractice1List([...practice1List, ...response.data.list]);
-                setLast(response.data.last);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        });
+        setPractice1List([...practice1List, ...response.data.list]);
+        setLast(response.data.last);
+
+        setLoading(false);
     }, [practice1List, size]);
 
     return (<>

@@ -50,8 +50,9 @@ export default function Practice1Detail(){
         setPractice1(response.data);
     }, [])
 
-    const deletePractice1 = useCallback(() => {
-        Swal.fire({
+    //삭제 함수 (async+await)
+    const deletePractice1 = useCallback(async () => {
+        const result= await Swal.fire({
             title: "정말 삭제하시겠습니까?",
             text: "삭제 후에는 복구할 수 없습니다",
             icon: "warning",
@@ -60,21 +61,40 @@ export default function Practice1Detail(){
             cancelButtonText: "취소",
             confirmButtonColor: "#d63031",
             cancelButtonColor: "#b2bec3"
-        })
-            .then(result => {
-                if (result.isConfirmed) {
-                    axios({
-                        url: "http://localhost:8080/api/practice1/delete",
-                        method: "get",
-                        params: { practice1No: practice1No }
-                    })
-                    .then(response => {
-                        toast.error("강좌 삭제가 완료되었습니다");
-                        navigate("/practice1/list");
-                    });
-                }
-            })
-    }, [practice1No]);
+        });
+        if(result.isConfirmed === false)return
+
+        const response = await axios.get(`http://localhost:8080/api/practice1/delete/${practice1No}`);
+        toast.error("강좌 삭제가 완료되었습니다");
+        navigate("/practice1/list");
+
+    },[practice1No]);
+
+    // const deletePractice1 = useCallback(() => {
+    //     Swal.fire({
+    //         title: "정말 삭제하시겠습니까?",
+    //         text: "삭제 후에는 복구할 수 없습니다",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonText: "삭제",
+    //         cancelButtonText: "취소",
+    //         confirmButtonColor: "#d63031",
+    //         cancelButtonColor: "#b2bec3"
+    //     })
+    //         .then(result => {
+    //             if (result.isConfirmed) {
+    //                 axios({
+    //                     url: "http://localhost:8080/api/practice1/delete",
+    //                     method: "get",
+    //                     params: { practice1No: practice1No }
+    //                 })
+    //                 .then(response => {
+    //                     toast.error("강좌 삭제가 완료되었습니다");
+    //                     navigate("/practice1/list");
+    //                 });
+    //             }
+    //         })
+    // }, [practice1No]);
 
     return(<>
         <Jumbotron title="강좌 상세 정보"/>

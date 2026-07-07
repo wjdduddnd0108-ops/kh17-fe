@@ -106,17 +106,23 @@ export default function Practice1Add(){
     }, [practice1.practice1CourseType, result]);
 
     //- 데이터 전송(등록)
-    const send = useCallback(()=>{
-        axios({
-            url:"http://localhost:8080/api/practice1/insert",
-            method:"post",
-            data: practice1,
-        })
-        .then(response=>{ 
-            toast.success("강좌 등록이 완료되었습니다");
-            navigate(`/practice1/detail/${response.data.practice1No}`);
-        });
+    // const send = useCallback(()=>{
+    //     axios({
+    //         url:"http://localhost:8080/api/practice1/insert",
+    //         method:"post",
+    //         data: practice1,
+    //     })
+    //     .then(response=>{ 
+    //         toast.success("강좌 등록이 완료되었습니다");
+    //         navigate(`/practice1/detail/${response.data.practice1No}`);
+    //     });
         
+    // },[practice1]);
+
+    const send = useCallback(async ()=>{
+        const response = await axios.post("http://localhost:8080/api/practice1/insert", practice1);
+        toast.success("강좌 등록이 완료되었습니다");
+        navigate(`/practice1/detail/${response.data.practice1No}`);
     },[practice1]);
 
     //memo
