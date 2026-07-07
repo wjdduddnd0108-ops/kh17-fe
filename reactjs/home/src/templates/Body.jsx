@@ -8,6 +8,7 @@ import CountryAdd from "../components/country/CountryAdd";
 import CountryDetail from "../components/country/CountryDetail";
 import Practice1Add from "../components/practice1/Practice1Add";
 import Practice1Detail from "../components/practice1/Practice1Detail";
+import BookAdd from "../components/book/BookAdd";
 
 export default function Body(){
     return(<>
@@ -25,6 +26,7 @@ export default function Body(){
             <Route path="/practice1/detail/:practice1No" element={<Practice1Detail/>}/> 
 
             <Route path="/book/list" element={<BookList/>}/>   
+            <Route path="/book/add" element={<BookAdd/>}/>   
 
             {/* fallback route */}
             <Route path="*" element={<NotFound/>}/>

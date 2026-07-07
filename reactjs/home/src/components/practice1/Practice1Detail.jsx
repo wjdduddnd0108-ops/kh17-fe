@@ -20,15 +20,35 @@ export default function Practice1Detail(){
     //정상적인 숫자인 경우 처리내용 작성
     const [practice1, setPractice1] = useState(null);
     useEffect(()=>{
-        axios({
-            url: "http://localhost:8080/api/practice1/detail",
-            method: "get",
-            params: { practice1No: practice1No }
-        })
-            .then(response=>{
-                setPractice1(response.data);
-            })
+        loadData();
+        
     }, []);
+
+    //[1] 일반 함수에서 비동기 작업을 호출 : .then() 으로 후속작업을 지정
+    // const loadData = useCallback(()=>{
+    //     axios({
+    //         url: "http://localhost:8080/api/practice1/detail",
+    //         method: "get",
+    //         params: { practice1No: practice1No }
+    //     })
+    //     .then(response=>{
+    //         setPractice1(response.data);
+    //     })
+    // }, []);
+
+    //[2] 비동기 함수를 사용
+    // - 함수 앞에 async 키워드를 추가
+    // - then 대시 await 키워드 사용 가능
+    // async+await 사용시 
+    const loadData = useCallback(async ()=>{
+        // const response = await axios({
+        //     url: `http://localhost:8080/api/practice1/detail/${practice1No}`,
+        //     method: "get",
+
+        // });
+        const response = await axios.get(`http://localhost:8080/api/practice1/detail/${practice1No}`);
+        setPractice1(response.data);
+    }, [])
 
     const deletePractice1 = useCallback(() => {
         Swal.fire({
@@ -59,9 +79,9 @@ export default function Practice1Detail(){
     return(<>
         <Jumbotron title="강좌 상세 정보"/>
 
-        {practice1 === null ? (
+        {practice1 === null ? (<>
             <h1>로딩중입니다...</h1>
-        ) : (<>
+        </>) : (<>
             <Row className="mt-4 fs-3">
                 <Col sm={3} className="text-info fw-bold">
                     강좌명

@@ -12,7 +12,7 @@ export default function Practice1List() {
     //state
     const [practice1List, setPractice1List] = useState([]);
     const [last, setLast] = useState(false);
-    const [size, setSize] = useState(10);
+    const [size, setSize] = useState(6);
     const [loading, setLoading] = useState(false);
 
     //effect
@@ -50,8 +50,8 @@ export default function Practice1List() {
         <Row className="mt-4">
             <Col xs={6}>
                 <Form.Select value={size} onChange={e => setSize(parseInt(e.target.value))}>
-                    <option value="5">5개씩 보기</option>
-                    <option value="10">10개씩 보기</option>
+                    <option value="6">6개씩 보기</option>
+                    <option value="12">12개씩 보기</option>
                     <option value="20">20개씩 보기</option>
                     <option value="50">50개씩 보기</option>
                 </Form.Select>

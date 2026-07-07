@@ -113,8 +113,8 @@ export default function Practice1Add(){
             data: practice1,
         })
         .then(response=>{ 
-            toast.success("국가 등록이 완료되었습니다");
-            navigate("/practice1/list");
+            toast.success("강좌 등록이 완료되었습니다");
+            navigate(`/practice1/detail/${response.data.practice1No}`);
         });
         
     },[practice1]);
