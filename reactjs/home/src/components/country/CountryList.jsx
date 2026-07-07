@@ -22,24 +22,22 @@ export default function CountryList(){
     }, []);
 
     //callback
-    const loadMoreList = useCallback(()=>{
+    const loadMoreList = useCallback(async ()=>{
         const dataSize = countryList.length;
         const lastCountryNo = dataSize === 0 ? 0 : countryList[dataSize-1].countryNo;
 
-        axios({
-            url:"http://localhost:8080/api/country/listForReact",
-            method: "get",
-            params: {
-                lastCountryNo : lastCountryNo,
-                size : size
-            }
-        })
-        .then(response=>{
-            //덮어쓰기가 아니라 추가(이어쓰기)가 필요
-            //setCountryList(response.data.list);//덮어쓰기
-            setCountryList([...countryList, ...response.data.list]);//이어쓰기
-            setLast(response.data.last);
-        });
+
+        // const response = await axios.get(
+        //     `http://localhost:8080/api/country/lastCountryNo/${lastCountryNo}/size/${size}`
+        // );
+
+        const response = await axios.post(
+            "http://localhost:8080/api/country/list-more",
+            { lastNo : lastCountryNo, size : size}
+        )
+        setCountryList([...countryList, ...response.data.list]);//이어쓰기
+        setLast(response.data.last);
+
     }, [countryList, size]);
 
     return(<>

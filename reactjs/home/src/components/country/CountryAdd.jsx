@@ -102,25 +102,10 @@ export default function CountryAdd() {
     }, [country.countryRegion, result.countryRegion]);
 
     //데이터 전송 함수
-    const send = useCallback(()=>{
-        axios({
-            url:"http://localhost:8080/api/country/insert",
-            method:"post",
-            data: country
-        })
-        .then(response=>{
-            //과거 예제에서는 등록이 완료되면 알림창 + 입력 데이터 및 클래스 청소를 했었다
-            //지금은 페이지가 분할되어 있기 때문에 알림창 + 페이지 이동을 하면 된다
+    const send = useCallback(async ()=>{
+        const response = await axios.post("http://localhost:8080/api/country/", country);
             toast.success("국가 등록이 완료되었습니다");
-
-            //리액트에서는 이동을 location.href로 할 수 없다(되는데 안하는게 좋음)
-            //상단에 useNavigate()를 이용해서 도구를 생성하고 그 도구를 사용하여 이동
-            //navigate("이동할 페이지")
-            //location.href = "/country/list";
             navigate("/country/list");
-        })
-        //.catch(err=>{})
-        //.finally(()=>{})
     }, [country]);
 
     return (<>
