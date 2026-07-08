@@ -8,6 +8,12 @@ import "bootswatch/dist/flatly/bootstrap.min.css";
 
 import './index.css'
 import App from './App.jsx'
+import axios from "axios";
+
+//axios 개조 코드 작성 (만약 너무 길어지면 별도의 모듈로 분리할 예정)
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;
+axios.defaults.timeout = 10000;//통신의 최대 대기 시간(ms), 상황에 따라 조절 가능
+
 
 /* 
   React Router v6의 라우팅 방식 종류 및 특징

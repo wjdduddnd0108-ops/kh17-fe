@@ -120,7 +120,7 @@ export default function Practice1Add(){
     // },[practice1]);
 
     const send = useCallback(async ()=>{
-        const response = await axios.post("http://localhost:8080/api/practice1/insert", practice1);
+        const response = await axios.post("/api/practice1/insert", practice1);
         toast.success("강좌 등록이 완료되었습니다");
         navigate(`/practice1/detail/${response.data.practice1No}`);
     },[practice1]);

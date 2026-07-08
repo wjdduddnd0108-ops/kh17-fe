@@ -46,7 +46,7 @@ export default function Practice1Detail(){
         //     method: "get",
 
         // });
-        const response = await axios.get(`http://localhost:8080/api/practice1/detail/${practice1No}`);
+        const response = await axios.get(`/api/practice1/detail/${practice1No}`);
         setPractice1(response.data);
     }, [])
 
@@ -64,7 +64,7 @@ export default function Practice1Detail(){
         });
         if(result.isConfirmed === false)return
 
-        const response = await axios.get(`http://localhost:8080/api/practice1/delete/${practice1No}`);
+        const response = await axios.get(`/api/practice1/delete/${practice1No}`);
         toast.error("강좌 삭제가 완료되었습니다");
         navigate("/practice1/list");
 

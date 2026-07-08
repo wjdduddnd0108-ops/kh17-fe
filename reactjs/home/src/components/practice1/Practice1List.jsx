@@ -50,7 +50,7 @@ export default function Practice1List() {
 
         setLoading(true);
         
-        const response = await axios.get("http://localhost:8080/api/practice1/listForReact", {
+        const response = await axios.get("/api/practice1/listForReact", {
             params: {
                 lastPractice1No: lastPractice1No,
                 size: size

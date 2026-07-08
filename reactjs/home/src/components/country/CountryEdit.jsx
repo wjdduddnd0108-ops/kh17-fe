@@ -1,29 +1,46 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Jumbotron from "../../templates/Jumbotron";
 import { Button, Col, Row, Form } from "react-bootstrap";
-import { FaAsterisk } from "react-icons/fa6";
+import { FaAsterisk, FaList, FaSquarePen, FaXmark } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
-export default function CountryAdd() {
-    //state - 역동적인 화면을 만들기 위한 핵심데이터
-    const [country, setCountry] = useState({//입력데이터를 관리하는 state
+export default function CountryEdit(){
+
+    const { countryNo } = useParams();
+
+    if (/^[0-9]+$/.test(countryNo) === false) {//숫자가 아니면
+        toast.error("없는 국가입니다.");
+        return <Navigate to="/country/list" replace />;
+    }
+
+    const navigate = useNavigate();
+
+    //countryNo가 정상적인 숫자인 경우의 처리내용 작성
+    const [country, setCountry] = useState({
         countryRegion: "",
         countryName: "",
         countryCapital: "",
         countryPopulation: 0
     });
+    useEffect(() => {
+       loadData();
+    }, []);
 
-    const [result, setResult] = useState({//판정결과를 관리하는 state
+    const loadData = useCallback(async ()=>{
+        const response = await axios.get(`/api/country/${countryNo}`)
+        setCountry(response.data);
+        setBackup(response.data);
+    }, []);
+
+        const [result, setResult] = useState({//판정결과를 관리하는 state
         countryRegion: "",
         countryName: "",
         countryCapital: "",
         countryPopulation: ""
     });
 
-    //페이지 이동도구
-    const navigate = useNavigate();
 
     //callback - 호출 가능한 함수 (연관항목을 적어 갱신 최소화)
     const changeStringValue = useCallback(e => {
@@ -89,27 +106,23 @@ export default function CountryAdd() {
         return true;
     }, [result]);
 
-    //effect - 특정항목이 변경될 때마다 자동 실행되는 코드블럭 (낭비의 끝판왕)
-    //사용법 : useEffect(함수, [연관항목]);
-
-    //country에서 countryRegion이 변경되자마자 checkCountryRegion 함수 실행하세요!
     useEffect(() => {
-        //처음에는 검사하지 마세요
         if (country.countryRegion === "" && result.countryRegion === "") return;
 
-        //검사함수를 실행하세요
         checkCountryRegion();
     }, [country.countryRegion, result.countryRegion]);
 
     //데이터 전송 함수
     const send = useCallback(async ()=>{
-        const response = await axios.post("/api/country/", country);
-            toast.success("국가 등록이 완료되었습니다");
-            navigate("/country/list");
+        const response = await axios.put(`/api/country/${countryNo}`, country);
+            toast.success("국가 정보 변경이 완료되었습니다");
+            //navigate("/country/list");
+            navigate(`/country/detail/${countryNo}`);
     }, [country]);
 
-    return (<>
-        <Jumbotron title="신규 국가 등록" />
+
+    return(<>
+        <Jumbotron title="국가 정보 수정" />
 
         <Row className="mt-4">
             <Form.Label column sm={3}>
@@ -171,11 +184,20 @@ export default function CountryAdd() {
 
             <Row className="mt-4">
                 <Col className="text-end">
-                    <Button type="button" variant="success" className="w-100"
+                    <Button as={Link} to={"/country/list"} variant="secondary">
+                        <FaList className="me-2"/>
+                        <span>목록으로</span>
+                    </Button>
+                    <Button as={Link} to={`/country/detail/${countryNo}`} variant="danger" className="ms-2">
+                        <FaXmark className="me-2"/>
+                        <span>취소하기</span>
+                    </Button>
+                    <Button type="button" variant="success" className="ms-2"
                         disabled={valid === false} onClick={send}>
-                        신규 국가 등록하기
+                        <FaSquarePen className="me-2"/>
+                        <span>수정하기</span>
                     </Button>
                 </Col>
             </Row>
-        </>)
+    </>)
 }

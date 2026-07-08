@@ -9,6 +9,7 @@ import CountryDetail from "../components/country/CountryDetail";
 import Practice1Add from "../components/practice1/Practice1Add";
 import Practice1Detail from "../components/practice1/Practice1Detail";
 import BookAdd from "../components/book/BookAdd";
+import CountryEdit from "../components/country/CountryEdit";
 
 export default function Body(){
     return(<>
@@ -19,6 +20,7 @@ export default function Body(){
             <Route path="/country/add" element={<CountryAdd/>}/>
             {/* 제일 마지막에 적혀있는 값을 countryNo라는 이름으로 관리하겠다 */}
             <Route path="/country/detail/:countryNo" element={<CountryDetail/>}/>
+            <Route path="/country/edit/:countryNo" element={<CountryEdit/>}/>
             
 
             <Route path="/practice1/list" element={<Practice1List/>}/> 
