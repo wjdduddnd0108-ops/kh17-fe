@@ -17,22 +17,17 @@ export default function BookList() {
     }, []);
 
     //callback
-    const loadMoreList = useCallback(() => {
+    const loadMoreList = useCallback(async() => {
         const dataSize = bookList.length;
-        const lastBookId = dataSize === 0 ? 0 : bookList[dataSize - 1].bookId;
+        const lastBookId = dataSize === 0 ? 2147483647 : bookList[dataSize - 1].bookId;
 
-        axios({
-            url: "/api/book/listForReact",
-            method: "get",
-            params: {
-                lastBookId: lastBookId,
-                size: size
-            }
-        })
-            .then(response => {
-                setBookList([...bookList, ...response.data.list]);
-                setLast(response.data.last);
-            });
+        const response = await axios.post(
+            `/api/book/list-more`, 
+            { lastNo : lastBookId, size : size}
+        )
+        setBookList([...bookList, ...response.data.list]);
+        setLast(response.data.last);
+
     }, [bookList, size]);
 
     return (<>

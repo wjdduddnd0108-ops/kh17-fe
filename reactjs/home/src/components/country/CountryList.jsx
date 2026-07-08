@@ -31,6 +31,7 @@ export default function CountryList(){
             `/api/country/list-more`,
             { lastNo : lastCountryNo, size : size}
         )
+        
         setCountryList([...countryList, ...response.data.list]);//이어쓰기
         setLast(response.data.last);
 

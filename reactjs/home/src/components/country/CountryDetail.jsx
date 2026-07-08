@@ -69,7 +69,7 @@ export default function CountryDetail() {
             ...country,
             [name] : value
         });
-    })
+    },[country]);
     const changeNumericValue = useCallback(e=>{
         const {name, value} = e.target;
         const regex = /[^0-9]+/g;
@@ -116,7 +116,7 @@ export default function CountryDetail() {
         {country === null ? (
             <h1>로딩중입니다...</h1>
         ) : (<>
-            <Row className="mt-4 fs-3">
+            <Row className="mt-4 fs-5">
                 <Col sm={3} className="text-info fw-bold">
                     국가명
                 </Col>
