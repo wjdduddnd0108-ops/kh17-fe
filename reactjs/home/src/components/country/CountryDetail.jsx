@@ -70,19 +70,44 @@ export default function CountryDetail() {
             [name] : value
         });
     })
+    const changeNumericValue = useCallback(e=>{
+        const {name, value} = e.target;
+        const regex = /[^0-9]+/g;
+        const replacement = value.replace(regex, "");
+        const number = parseInt(replacement || 0);
+        setCountry({
+            ...country,
+            [name]:number
+        });
+    }, [country]);
 
     //국가명만 변경하는 함수
-    const updateCountryName = useCallback(async ()=>{
+    const updateCountry = useCallback(async (field)=>{
         const response = await axios.patch(
             `http://localhost:8080/api/country/${countryNo}`, 
-            {countryName : country.countryName}
+            // {countryName : country.countryName}
+            {[field] : country[field]}
         );
         //백업을 갱신
-        setBackup({...backup, countryName:country.countryName});
+        //setBackup({...backup, countryName:country.countryName});
+        setBackup({...backup, [field]:country[field]});
+
         //수정모드를 취소
-        setEditMode({...editMode, countryName:false});
-        toast.success("국가 변경이 완료되었습니다");
+        // setEditMode({...editMode, countryName:false});
+        setEditMode({...editMode, [field]:false});
+        toast.success("국가정보가 변경되었습니다");
     }, [country, backup, editMode]);
+
+    const cancleUpdate = useCallback((field)=>{
+        setCountry({...country, [field]: backup[field]})
+        setEditMode({...editMode, [field] : false})
+
+        toast.error("정보 변경이 취소되었습니다")
+    }, [country, backup, editMode]);
+
+    const startUpdate = useCallback((field)=>{
+        setEditMode({...editMode, [field] : true})
+    },[editMode])
 
     return (<>
         <Jumbotron title="국가 상세 정보" content={`${countryNo}번 국가의 상세 정보 화면입니다`} />
@@ -97,23 +122,19 @@ export default function CountryDetail() {
                 </Col>
                 <Col sm={9}>
                     {editMode.countryName !== true ? (<>
-
                         <span>{country.countryName}</span>
                         <FaSquarePen className="text-warning ms-2"
-                                onClick={e=>{
-                                    setEditMode({...editMode, countryName : true})
-                                }}/>
+                                onClick={e=>startUpdate("countryName")}/>
                     </>) : (<>
                         <Form.Control type="text" className="w-auto d-inline-block"
                             name="countryName" value={country.countryName}
                             onChange={changeStringValue}/>
+                        {/* <FaCheck className="text-success ms-2"
+                                onClick={updateCountryName}/> */}
                         <FaCheck className="text-success ms-2"
-                                onClick={updateCountryName}/>
+                                onClick={e=>updateCountry("countryName")}/>
                         <FaXmark className="text-danger ms-2" 
-                                onClick={e=>{
-                                    setCountry({...country, countryName: backup.countryName})
-                                    setEditMode({...editMode, countryName : false})
-                                }}/>
+                                onClick={e=>cancleUpdate("countryName")}/>
                     </>)}
                     
                 </Col>
@@ -121,19 +142,62 @@ export default function CountryDetail() {
                     대륙
                 </Col>
                 <Col sm={9}>
-                    {country.countryRegion}
+                    {editMode.countryRegion !== true ? (<>
+                        <span>{country.countryRegion}</span>
+                        <FaSquarePen className="text-warning ms-2"
+                                onClick={e=>startUpdate("countryRegion")}/>
+                    </>) : (<>
+                        <Form.Select className="w-auto d-inline-block"
+                            name="countryRegion" value={country.countryRegion}
+                            onChange={changeStringValue}>
+                            <option>아시아</option>
+                            <option>아프리카</option>
+                            <option>북아메리카</option>
+                            <option>남아메리카</option>
+                            <option>유럽</option>
+                            <option>오세아니아</option>
+                        </Form.Select>
+                        <FaCheck className="text-success ms-2"
+                                onClick={e=>updateCountry("countryRegion")}/>
+                        <FaXmark className="text-danger ms-2" 
+                                onClick={e=>cancleUpdate("countryRegion")}/>
+                    </>)}
                 </Col>
                 <Col sm={3} className="text-info fw-bold">
                     수도
                 </Col>
                 <Col sm={9}>
-                    {country.countryCapital}
+                    {editMode.countryCapital !== true ? (<>
+                        <span>{country.countryCapital}</span>
+                        <FaSquarePen className="text-warning ms-2"
+                                onClick={e=>startUpdate("countryCapital")}/>
+                    </>) : (<>
+                        <Form.Control type="text" className="w-auto d-inline-block"
+                            name="countryCapital" value={country.countryCapital}
+                            onChange={changeStringValue}/>
+                        <FaCheck className="text-success ms-2"
+                                onClick={e=>updateCountry("countryCapital")}/>
+                        <FaXmark className="text-danger ms-2" 
+                                onClick={e=>cancleUpdate("countryCapital")}/>
+                    </>)}
                 </Col>
                 <Col sm={3} className="text-info fw-bold">
                     인구수
                 </Col>
                 <Col sm={9}>
-                    {country.countryPopulation.toLocaleString()} 명
+                     {editMode.countryPopulation !== true ? (<>
+                        <span>{country.countryPopulation.toLocaleString()} 명</span>
+                        <FaSquarePen className="text-warning ms-2"
+                                onClick={e=>startUpdate("countryPopulation")}/>
+                    </>) : (<>
+                        <Form.Control type="text" className="w-auto d-inline-block"
+                            name="countryPopulation" value={country.countryPopulation}
+                            onChange={changeNumericValue}/>
+                        <FaCheck className="text-success ms-2"
+                                onClick={e=>updateCountry("countryPopulation")}/>
+                        <FaXmark className="text-danger ms-2" 
+                                onClick={e=>cancleUpdate("countryPopulation")}/>
+                    </>)}
                 </Col>
             </Row>
 
