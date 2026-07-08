@@ -176,7 +176,7 @@ export default function BookEdit() {
                 <span>지은이</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="text" name="bookAuthor" className={result.bookAuthor} value={book.bookAuthor|| ""}
+                <Form.Control type="text" name="bookAuthor" className={result.bookAuthor} value={book.bookAuthor || ""}
                     onChange={changeStringValue} onBlur={checkBookAuthor} />
             </Col>
         </Row>
