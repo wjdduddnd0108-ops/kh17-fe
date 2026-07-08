@@ -29,9 +29,8 @@ export default function CountryEdit(){
     }, []);
 
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`/api/country/${countryNo}`)
+        const response = await axios.get(`/api/country/${countryNo}`);
         setCountry(response.data);
-        setBackup(response.data);
     }, []);
 
         const [result, setResult] = useState({//판정결과를 관리하는 state
@@ -39,7 +38,7 @@ export default function CountryEdit(){
         countryName: "",
         countryCapital: "",
         countryPopulation: ""
-    });
+    }, []);
 
 
     //callback - 호출 가능한 함수 (연관항목을 적어 갱신 최소화)

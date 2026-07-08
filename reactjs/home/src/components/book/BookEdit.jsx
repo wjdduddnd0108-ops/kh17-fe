@@ -1,11 +1,31 @@
-import { useNavigate } from "react-router-dom";
-import Jumbotron from "../../templates/Jumbotron";
-import axios from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { FaAsterisk, FaPlus } from "react-icons/fa6";
-import { Form, Col, Row, Button } from "react-bootstrap";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import Jumbotron from "../../templates/Jumbotron";
+import { Button, Col, Row, Form } from "react-bootstrap";
+import { FaAsterisk, FaList, FaSquarePen, FaXmark } from "react-icons/fa6";
+import axios from "axios";
 import { toast } from "react-toastify";
-export default function BookAdd() {
+
+export default function BookEdit() {
+    const { bookId } = useParams();
+
+    if (/^[0-9]+$/.test(bookId) === false) {//숫자가 아니면
+        toast.error("없는 도서입니다.");
+        return <Navigate to="/book/list" replace />;
+    }
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        loadData();
+        console.log(loadData());
+    }, []);
+
+    const loadData = useCallback(async () => {
+        const response = await axios.get(`/api/book/${bookId}`)
+        setBook(response.data);
+    }, []);
+
     //state
     const [book, setBook] = useState({
         bookTitle: "",
@@ -14,8 +34,9 @@ export default function BookAdd() {
         bookPublisher: "",
         bookPrice: 0,
         bookPageCount: 0,
-        bookGenre: "",
-    });
+        bookGenre: ""
+    }, []);
+
     const [result, setResult] = useState({
         bookTitle: null,
         bookAuthor: null,
@@ -24,11 +45,10 @@ export default function BookAdd() {
         bookPrice: null,
         bookPageCount: null,
         bookGenre: null,
-    });
+    }, []);
     const [loading, setLoading] = useState(false);
 
-    //페이지 이동도구
-    const navigate = useNavigate();
+
 
     //callback
     const changeStringValue = useCallback(e => {
@@ -111,16 +131,6 @@ export default function BookAdd() {
         });
     }, [book.bookGenre, result]);
 
-    //- 데이터 전송(등록)
-
-    const send = useCallback(async () => {
-        const response = await axios.post("/api/book/", book);
-        
-        navigate("/book/list");
-        toast.success("도서 등록이 완료되었습니다"); 
-        
-    }, [book, navigate]);
-
     //memo
     const valid = useMemo(() => {
         if (result.bookTitle !== "is-valid") return false;
@@ -140,17 +150,25 @@ export default function BookAdd() {
 
         checkBookGenre();
     }, [book.bookGenre, result.bookGenre]);
+
+    //데이터 전송 함수
+    const send = useCallback(async () => {
+        const response = await axios.put(`/api/book/${bookId}`, book);
+        navigate(`/book/detail/${bookId}`);
+        toast.success("도서 수정이 완료되었습니다");
+    }, [bookId, book, navigate]);
+
     return (<>
-        <Jumbotron title="신규 도서 등록" />
+        <Jumbotron title="도서 정보 수정" />
 
         <Row className="mt-4">
             <Form.Label column sm={3}>
                 도서명
-                <FaAsterisk className="text-danger"/>
+                <FaAsterisk className="text-danger" />
             </Form.Label>
             <Col sm={9}>
-                 <Form.Control type="text" name="bookTitle" className={result.bookTitle} value={book.bookTitle}
-                        onChange={changeStringValue} onBlur={checkBookTitle} />
+                <Form.Control type="text" name="bookTitle" className={result.bookTitle} value={book.bookTitle}
+                    onChange={changeStringValue} onBlur={checkBookTitle} />
                 <div className="invalid-feedback">필수항목입니다</div>
             </Col>
         </Row>
@@ -161,7 +179,7 @@ export default function BookAdd() {
             </Form.Label>
             <Col sm={9}>
                 <Form.Control type="text" name="bookAuthor" className={result.bookAuthor} value={book.bookAuthor}
-                        onChange={changeStringValue} onBlur={checkBookAuthor} />
+                    onChange={changeStringValue} onBlur={checkBookAuthor} />
             </Col>
         </Row>
 
@@ -172,7 +190,7 @@ export default function BookAdd() {
             </Form.Label>
             <Col sm={9}>
                 <Form.Control type="date" name="bookPublicationDate" className={result.bookPublicationDate} value={book.bookPublicationDate}
-                        onChange={changeStringValue} onBlur={checkBookPublicationDate} />
+                    onChange={changeStringValue} onBlur={checkBookPublicationDate} />
                 <div className="invalid-feedback">올바르지 않은 년도입니다</div>
             </Col>
         </Row>
@@ -181,11 +199,11 @@ export default function BookAdd() {
         <Row className="mt-4">
             <Form.Label column sm={3}>
                 <span>판매가</span>
-                <FaAsterisk className="text-danger"/>
+                <FaAsterisk className="text-danger" />
             </Form.Label>
             <Col sm={9}>
-                 <Form.Control inputMode="numeric" type="text" name="bookPrice" className={result.bookPrice} value={book.bookPrice}
-                        onChange={changeNumericValue} onBlur={checkBookPrice} />
+                <Form.Control inputMode="numeric" type="text" name="bookPrice" className={result.bookPrice} value={book.bookPrice}
+                    onChange={changeNumericValue} onBlur={checkBookPrice} />
                 <div className="invalid-feedback">0 이상의 숫자를 입력해주세요</div>
             </Col>
         </Row>
@@ -197,18 +215,18 @@ export default function BookAdd() {
             </Form.Label>
             <Col sm={9}>
                 <Form.Control type="text" name="bookPublisher" className={result.bookPublisher} value={book.bookPublisher}
-                        onChange={changeStringValue} onBlur={checkBookPublisher} />
+                    onChange={changeStringValue} onBlur={checkBookPublisher} />
             </Col>
         </Row>
 
         <Row className="mt-4">
             <Form.Label column sm={3}>
                 <span>페이지 수</span>
-                <FaAsterisk className="text-danger"/>
+                <FaAsterisk className="text-danger" />
             </Form.Label>
             <Col sm={9}>
-                 <Form.Control inputMode="numeric" type="text" name="bookPageCount" className={result.bookPageCount} value={book.bookPageCount}
-                        onChange={changeNumericValue} onBlur={checkBookPageCount} />
+                <Form.Control inputMode="numeric" type="text" name="bookPageCount" className={result.bookPageCount} value={book.bookPageCount}
+                    onChange={changeNumericValue} onBlur={checkBookPageCount} />
                 <div className="invalid-feedback">0 이상의 숫자를 입력해주세요</div>
             </Col>
         </Row>
@@ -216,7 +234,7 @@ export default function BookAdd() {
         <Row className="mt-4">
             <Form.Label column sm={3}>
                 <span>장르</span>
-                <FaAsterisk className="text-danger"/>
+                <FaAsterisk className="text-danger" />
             </Form.Label>
             <Col sm={9}>
                 <Form.Select name="bookGenre" value={book.bookGenre} onChange={changeStringValue}
@@ -238,12 +256,20 @@ export default function BookAdd() {
 
         <Row className="mt-4">
             <Col className="text-end">
-                <Button type="button" variant="success" className="w-100"
+                <Button as={Link} to={"/book/list"} variant="secondary">
+                    <FaList className="me-2" />
+                    <span>목록으로</span>
+                </Button>
+                <Button as={Link} to={`/book/detail/${bookId}`} variant="danger" className="ms-2">
+                    <FaXmark className="me-2" />
+                    <span>취소하기</span>
+                </Button>
+                <Button type="button" variant="success" className="ms-2"
                     disabled={valid === false} onClick={send}>
-                    <FaPlus className="me-2"/>
-                    <span>신규 도서 등록하기</span>
+                    <FaSquarePen className="me-2" />
+                    <span>수정하기</span>
                 </Button>
             </Col>
         </Row>
-    </>);
+    </>)
 }

@@ -11,6 +11,7 @@ import Practice1Detail from "@components/practice1/Practice1Detail";
 import BookAdd from "@components/book/BookAdd";
 import CountryEdit from "@components/country/CountryEdit";
 import BookDetail from "../components/book/BookDetail";
+import BookEdit from "../components/book/BookEdit";
 
 export default function Body(){
     return(<>
@@ -31,6 +32,7 @@ export default function Body(){
             <Route path="/book/list" element={<BookList/>}/>   
             <Route path="/book/add" element={<BookAdd/>}/>  
             <Route path="/book/detail/:bookId" element={<BookDetail/>}/>  
+            <Route path="/book/edit/:bookId" element={<BookEdit/>}/>  
 
 
             {/* fallback route */}
