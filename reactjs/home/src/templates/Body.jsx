@@ -12,6 +12,7 @@ import BookAdd from "@components/book/BookAdd";
 import CountryEdit from "@components/country/CountryEdit";
 import BookDetail from "../components/book/BookDetail";
 import BookEdit from "../components/book/BookEdit";
+import Practice1Edit from "../components/practice1/Practice1Edit";
 
 export default function Body(){
     return(<>
@@ -28,6 +29,7 @@ export default function Body(){
             <Route path="/practice1/list" element={<Practice1List/>}/> 
             <Route path="/practice1/add" element={<Practice1Add/>}/> 
             <Route path="/practice1/detail/:practice1No" element={<Practice1Detail/>}/> 
+            <Route path="/practice1/edit/:practice1No" element={<Practice1Edit/>}/> 
 
             <Route path="/book/list" element={<BookList/>}/>   
             <Route path="/book/add" element={<BookAdd/>}/>  

@@ -3,8 +3,8 @@ import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Button, Col, Row } from "react-bootstrap";
-import { FaList, FaPenToSquare, FaTrash } from "react-icons/fa6";
+import {Form, Button, Col, Row } from "react-bootstrap";
+import { FaCheck, FaList, FaPenToSquare, FaSquarePen, FaTrash, FaXmark } from "react-icons/fa6";
 import Swal from "sweetalert2";
 
 export default function Practice1Detail(){
@@ -24,31 +24,10 @@ export default function Practice1Detail(){
         
     }, []);
 
-    //[1] 일반 함수에서 비동기 작업을 호출 : .then() 으로 후속작업을 지정
-    // const loadData = useCallback(()=>{
-    //     axios({
-    //         url: "http://localhost:8080/api/practice1/detail",
-    //         method: "get",
-    //         params: { practice1No: practice1No }
-    //     })
-    //     .then(response=>{
-    //         setPractice1(response.data);
-    //     })
-    // }, []);
-
-    //[2] 비동기 함수를 사용
-    // - 함수 앞에 async 키워드를 추가
-    // - then 대시 await 키워드 사용 가능
-    // async+await 사용시 
     const loadData = useCallback(async ()=>{
-        // const response = await axios({
-        //     url: `http://localhost:8080/api/practice1/detail/${practice1No}`,
-        //     method: "get",
-
-        // });
-        const response = await axios.get(`/api/practice1/detail/${practice1No}`);
+        const response = await axios.get(`/api/practice1/${practice1No}`);
         setPractice1(response.data);
-    }, [])
+    }, []);
 
     //삭제 함수 (async+await)
     const deletePractice1 = useCallback(async () => {
@@ -64,37 +43,66 @@ export default function Practice1Detail(){
         });
         if(result.isConfirmed === false)return
 
-        const response = await axios.get(`/api/practice1/delete/${practice1No}`);
+        const response = await axios.delete(`/api/practice1/${practice1No}`);
         toast.error("강좌 삭제가 완료되었습니다");
         navigate("/practice1/list");
 
     },[practice1No]);
 
-    // const deletePractice1 = useCallback(() => {
-    //     Swal.fire({
-    //         title: "정말 삭제하시겠습니까?",
-    //         text: "삭제 후에는 복구할 수 없습니다",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonText: "삭제",
-    //         cancelButtonText: "취소",
-    //         confirmButtonColor: "#d63031",
-    //         cancelButtonColor: "#b2bec3"
-    //     })
-    //         .then(result => {
-    //             if (result.isConfirmed) {
-    //                 axios({
-    //                     url: "http://localhost:8080/api/practice1/delete",
-    //                     method: "get",
-    //                     params: { practice1No: practice1No }
-    //                 })
-    //                 .then(response => {
-    //                     toast.error("강좌 삭제가 완료되었습니다");
-    //                     navigate("/practice1/list");
-    //                 });
-    //             }
-    //         })
-    // }, [practice1No]);
+    const [backup, setBackup] = useState(null);
+    const [editMode, setEditMode] = useState({
+        practice1Name:false,
+        practice1Category:false,
+        practice1Time:false,
+        practice1Price:false,
+        practice1CourseType:false,
+    },[practice1]);
+    
+    const changeStringValue = useCallback(e=>{
+        const {name, value} = e.target;
+        setPractice1({
+            ...practice1,
+            [name] : value
+        });
+    }, [practice1]);
+
+    const changeNumericValue = useCallback(e=>{
+        const {name, value} = e.target;
+        const regex = /[^0-9]+/g;
+        const replacement = value.replace(regex, "");
+        const number = parseInt(replacement || 0);
+        setPractice1({
+            ...practice1,
+            [name] : number
+        });
+    }, [practice1]);
+
+    const updatePractice1 = useCallback(async (field)=>{
+        const response = await axios.patch(
+            `/api/practice1/${practice1No}`,
+            {[field] : practice1[field]}
+        );
+        //백업 갱신
+        setBackup({...backup, [field]:practice1[field]});
+        
+        //수정모드 취소
+        setEditMode({...editMode, [field]:false});
+        toast.success("강좌정보가 변경되었습니다");
+    }, [practice1, backup, editMode]);
+
+    const cancleUpdate = useCallback((field)=>{
+        //취소 버튼 눌렀을때 백업 해둔 값으로 변경
+        setPractice1({...practice1, [field]: backup[field]});
+        //수정모드 취소
+        setEditMode({...editMode, [field]: false});
+
+        toast.error("정보 변경이 취소되었습니다")
+    }, [practice1, backup, editMode]);
+
+    const startUpdate = useCallback((field)=>{
+        //수정모드 실행
+        setEditMode({...editMode, [field]: true})
+    }, [editMode]);
 
     return(<>
         <Jumbotron title="강좌 상세 정보"/>
@@ -107,31 +115,103 @@ export default function Practice1Detail(){
                     강좌명
                 </Col>
                 <Col sm={9}>
-                    {practice1.practice1Name}
+                    {editMode.practice1Name !== true ? (<>
+                        <span>{practice1.practice1Name}</span>
+                        <FaSquarePen className="text-warning ms-2"
+                                onClick={e=>startUpdate("practice1Name")}/>
+                    </>) : (<>
+                        <Form.Control type="text" className="w-auto d-inline-block"
+                            name="practice1Name" value={practice1.practice1Name}
+                            onChange={changeStringValue}/>
+                        <FaCheck className="text-success ms-2"
+                                onClick={e=>updatePractice1("practice1Name")}/>
+                        <FaXmark className="text-danger ms-2" 
+                                onClick={e=>cancleUpdate("practice1Name")}/>
+                    </>)}
                 </Col>
+
                 <Col sm={3} className="text-info fw-bold">
                     카테고리  
                 </Col>
                 <Col sm={9}>
-                    {practice1.practice1Category}
+                    {editMode.practice1Category !== true ? (<>
+                        <span>{practice1.practice1Category}</span>
+                        <FaSquarePen className="text-warning ms-2"
+                                onClick={e=>startUpdate("practice1Category")}/>
+                    </>) : (<>
+                        <Form.Select className="w-auto d-inline-block"
+                            name="practice1Category" value={practice1.practice1Category}
+                            onChange={changeStringValue}>
+                            <option>이론</option>
+                            <option>실습</option>
+                            <option>시험</option>
+                        </Form.Select>
+                        <FaCheck className="text-success ms-2"
+                                onClick={e=>updatePractice1("practice1Category")}/>
+                        <FaXmark className="text-danger ms-2" 
+                                onClick={e=>cancleUpdate("practice1Category")}/>
+                    </>)}
                 </Col>
+
                 <Col sm={3} className="text-info fw-bold">
                     강의시간  
                 </Col>
                 <Col sm={9}>
-                    {practice1.practice1Time}
+                    {editMode.practice1Time !== true ? (<>
+                        <span>{practice1.practice1Time}</span>
+                        <FaSquarePen className="text-warning ms-2"
+                                onClick={e=>startUpdate("practice1Time")}/>
+                    </>) : (<>
+                        <Form.Control type="text" inputMode="numeric" className="w-auto d-inline-block"
+                            name="practice1Time" value={practice1.practice1Time}
+                            onChange={changeNumericValue}/>
+                        <FaCheck className="text-success ms-2"
+                                onClick={e=>updatePractice1("practice1Time")}/>
+                        <FaXmark className="text-danger ms-2" 
+                                onClick={e=>cancleUpdate("practice1Time")}/>
+                    </>)}
                 </Col>
+
                 <Col sm={3} className="text-info fw-bold">
                     수강료  
                 </Col>
                 <Col sm={9}>
-                    {practice1.practice1Price}
+                    {editMode.practice1Price !== true ? (<>
+                        <span>{practice1.practice1Price }</span>
+                        <FaSquarePen className="text-warning ms-2"
+                                onClick={e=>startUpdate("practice1Price ")}/>
+                    </>) : (<>
+                        <Form.Control type="text" inputMode="numeric" className="w-auto d-inline-block"
+                            name="practice1Price " value={practice1.practice1Price }
+                            onChange={changeNumericValue}/>
+                        <FaCheck className="text-success ms-2"
+                                onClick={e=>updatePractice1("practice1Price ")}/>
+                        <FaXmark className="text-danger ms-2" 
+                                onClick={e=>cancleUpdate("practice1Price ")}/>
+                    </>)}
                 </Col>
+
                 <Col sm={3} className="text-info fw-bold">
                     강의형태  
                 </Col>
                 <Col sm={9}>
-                    {practice1.practice1CourseType}
+                    {editMode.practice1CourseType !== true ? (<>
+                        <span>{practice1.practice1CourseType}</span>
+                        <FaSquarePen className="text-warning ms-2"
+                                onClick={e=>startUpdate("practice1CourseType")}/>
+                    </>) : (<>
+                        <Form.Select className="w-auto d-inline-block"
+                            name="practice1CourseType" value={practice1.practice1CourseType}
+                            onChange={changeStringValue}>
+                            <option>온라인</option>
+                            <option>오프라인</option>
+                            <option>혼합</option>
+                        </Form.Select>
+                        <FaCheck className="text-success ms-2"
+                                onClick={e=>updatePractice1("practice1CourseType")}/>
+                        <FaXmark className="text-danger ms-2" 
+                                onClick={e=>cancleUpdate("practice1CourseType")}/>
+                    </>)}
                 </Col>
             </Row>
 
@@ -142,7 +222,8 @@ export default function Practice1Detail(){
                         <FaList />
                         목록으로
                     </Button>
-                    <Button className="ms-2" variant="warning">
+                    <Button className="ms-2" variant="warning"
+                        as={Link} to={`/practice1/edit/${practice1No}`}>
                         <FaPenToSquare />
                         수정하기
                     </Button>

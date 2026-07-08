@@ -13,53 +13,22 @@ export default function Practice1List() {
     const [practice1List, setPractice1List] = useState([]);
     const [last, setLast] = useState(false);
     const [size, setSize] = useState(6);
-    const [loading, setLoading] = useState(false);
 
     //effect
     useEffect(() => {
         loadMoreList();
     }, []);
 
-    //callback
-    // const loadMoreList = useCallback(() => {
-    //     const dataSize = practice1List.length;
-    //     const lastPractice1No = dataSize === 0 ? 0 : practice1List[dataSize - 1].practice1No;
-
-    //     setLoading(true);
-
-    //     axios({
-    //         url: "http://localhost:8080/api/practice1/listForReact",
-    //         method: "get",
-    //         params: {
-    //             lastPractice1No: lastPractice1No,
-    //             size: size
-    //         }
-    //     })
-    //         .then(response => {
-    //             setPractice1List([...practice1List, ...response.data.list]);
-    //             setLast(response.data.last);
-    //         })
-    //         .finally(() => {
-    //             setLoading(false);
-    //         });
-    // }, [practice1List, size]);
-
     const loadMoreList = useCallback(async () => {
         const dataSize = practice1List.length;
-        const lastPractice1No = dataSize === 0 ? 0 : practice1List[dataSize - 1].practice1No;
+        const lastPractice1No = dataSize === 0 ? 2147483647 : practice1List[dataSize - 1].practice1No;
 
-        setLoading(true);
         
-        const response = await axios.get("/api/practice1/listForReact", {
-            params: {
-                lastPractice1No: lastPractice1No,
-                size: size
-            }
-        });
+        const response = await axios.post(`/api/practice1/list-more`,
+            { lastNo: lastPractice1No, size: size});
         setPractice1List([...practice1List, ...response.data.list]);
         setLast(response.data.last);
 
-        setLoading(false);
     }, [practice1List, size]);
 
     return (<>
@@ -136,17 +105,6 @@ export default function Practice1List() {
                     </Button>
                 </Col>
             </Row>
-        )}
-
-        {loading === true && (
-            <div className="position-fixed top-0 start-0 
-                        w-100 h-100 bg-dark bg-opacity-25
-                        d-flex justify-content-center align-items-center">
-                <div className="d-flex flex-column text-center">
-                    <ClockLoader size={75} loading={loading} />
-                    <p className="mt-2">불러오는중</p>
-                </div>
-            </div>
         )}
     </>)
 }

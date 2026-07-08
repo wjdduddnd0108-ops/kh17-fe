@@ -105,7 +105,7 @@ export default function CountryAdd() {
     const send = useCallback(async ()=>{
         const response = await axios.post("/api/country/", country);
             toast.success("국가 등록이 완료되었습니다");
-            navigate("/country/list");
+            navigate(`/country/detail/${response.data.countryNo}`);
     }, [country]);
 
     return (<>

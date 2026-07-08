@@ -16,17 +16,6 @@ export default function BookEdit() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        loadData();
-        console.log(loadData());
-    }, []);
-
-    const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/book/${bookId}`)
-        setBook(response.data);
-    }, []);
-
-    //state
     const [book, setBook] = useState({
         bookTitle: "",
         bookAuthor: "",
@@ -35,8 +24,19 @@ export default function BookEdit() {
         bookPrice: 0,
         bookPageCount: 0,
         bookGenre: ""
+    });
+
+    useEffect(() => {
+        loadData();
     }, []);
 
+    const loadData = useCallback(async () => {
+        const response = await axios.get(`/api/book/${bookId}`)
+        setBook(response.data);
+    }, []);
+
+    //state
+    
     const [result, setResult] = useState({
         bookTitle: null,
         bookAuthor: null,
@@ -45,10 +45,8 @@ export default function BookEdit() {
         bookPrice: null,
         bookPageCount: null,
         bookGenre: null,
-    }, []);
+    });
     const [loading, setLoading] = useState(false);
-
-
 
     //callback
     const changeStringValue = useCallback(e => {
@@ -178,7 +176,7 @@ export default function BookEdit() {
                 <span>지은이</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="text" name="bookAuthor" className={result.bookAuthor} value={book.bookAuthor}
+                <Form.Control type="text" name="bookAuthor" className={result.bookAuthor} value={book.bookAuthor|| ""}
                     onChange={changeStringValue} onBlur={checkBookAuthor} />
             </Col>
         </Row>
@@ -189,7 +187,7 @@ export default function BookEdit() {
                 <span>출간일</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="date" name="bookPublicationDate" className={result.bookPublicationDate} value={book.bookPublicationDate}
+                <Form.Control type="date" name="bookPublicationDate" className={result.bookPublicationDate} value={book.bookPublicationDate|| ""}
                     onChange={changeStringValue} onBlur={checkBookPublicationDate} />
                 <div className="invalid-feedback">올바르지 않은 년도입니다</div>
             </Col>
@@ -214,7 +212,7 @@ export default function BookEdit() {
                 <span>출판사</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="text" name="bookPublisher" className={result.bookPublisher} value={book.bookPublisher}
+                <Form.Control type="text" name="bookPublisher" className={result.bookPublisher} value={book.bookPublisher|| ""}
                     onChange={changeStringValue} onBlur={checkBookPublisher} />
             </Col>
         </Row>

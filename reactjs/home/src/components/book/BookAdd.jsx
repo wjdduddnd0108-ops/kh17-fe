@@ -115,10 +115,9 @@ export default function BookAdd() {
 
     const send = useCallback(async () => {
         const response = await axios.post("/api/book/", book);
-        
-        navigate("/book/list");
+
         toast.success("도서 등록이 완료되었습니다"); 
-        
+        navigate(`/book/detail/${response.data.bookId}`);
     }, [book, navigate]);
 
     //memo
