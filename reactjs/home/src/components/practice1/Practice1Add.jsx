@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useState } from "react"
 import axios from "axios";

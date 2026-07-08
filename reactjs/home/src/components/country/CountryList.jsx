@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import axios from "axios";
 import { FaChevronDown, FaPlus } from "react-icons/fa6";
-// import Row from "react-bootstrap/esm/Row";
-// import Col from "react-bootstrap/esm/Col";
-// import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
-// import Table from 'react-bootstrap/Table';
 import { Row, Col, Form, Table, Button} from "react-bootstrap"
 import { Link } from "react-router-dom";
 

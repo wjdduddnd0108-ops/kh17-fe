@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import axios from "axios";
 import { FaChevronDown, FaPlus } from "react-icons/fa6";
 import { ClockLoader } from "react-spinners";
