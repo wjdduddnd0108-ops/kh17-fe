@@ -17,20 +17,23 @@ export default function Menu() {
                 {/* 접이식 영역(좁은 화면에서만 보임) */}
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
+                        {/* 
                         <Nav.Link as={Link} to="/country/list">국가정보</Nav.Link>
+                        <Nav.Link as={Link} to="/country/search">국가명검색</Nav.Link>
                         <Nav.Link as={Link} to="/practice1/list">강좌정보</Nav.Link>
                         <Nav.Link as={Link} to="/book/list">도서정보</Nav.Link>
-                        {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                        <Nav.Link as={Link} to="/book/spa">도서정보2</Nav.Link>
+                        */}
+                
+                        <NavDropdown title="데이터베이스" id="basic-nav-dropdown">
+                            <NavDropdown.Item as={Link} to="/country/list">국가정보</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/country/search">국가명검색</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
-                                Separated link
-                            </NavDropdown.Item>
-                        </NavDropdown> */}
+                            <NavDropdown.Item as={Link} to="/practice1/list">강좌정보</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item as={Link} to="/book/list">도서정보</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/book/spa">도서정보2</NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                     <Nav>
                         <Nav.Link as={Link} to="/member/join">회원가입</Nav.Link>
