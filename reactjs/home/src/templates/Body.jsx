@@ -8,12 +8,13 @@ import CountryList from "@components/country/CountryList";
 import CountryAdd from "@components/country/CountryAdd";
 import CountryDetail from "@components/country/CountryDetail";
 import CountryEdit from "@components/country/CountryEdit";
-import CountrySearch from "../components/country/CountrySearch";
+import CountrySearch from "@components/country/CountrySearch";
+import CountryComplexSearch from "@components/country/CountryComplexSearch";
 
 import Practice1Add from "@components/practice1/Practice1Add";
 import Practice1Detail from "@components/practice1/Practice1Detail";
 import Practice1List from "@components/practice1/Practice1List";
-import Practice1Edit from "../components/practice1/Practice1Edit";
+import Practice1Edit from "@components/practice1/Practice1Edit";
 
 import BookAdd from "@components/book/BookAdd";
 import BookDetail from "../components/book/BookDetail";
@@ -32,6 +33,7 @@ export default function Body(){
             <Route path="/country/detail/:countryNo" element={<CountryDetail/>}/>
             <Route path="/country/edit/:countryNo" element={<CountryEdit/>}/>
             <Route path="/country/search" element={<CountrySearch/>}/>
+            <Route path="/country/Complex" element={<CountryComplexSearch/>}/>
             
 
             <Route path="/practice1/list" element={<Practice1List/>}/> 

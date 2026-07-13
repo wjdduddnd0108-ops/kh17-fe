@@ -28,6 +28,7 @@ export default function Menu() {
                         <NavDropdown title="데이터베이스" id="basic-nav-dropdown">
                             <NavDropdown.Item as={Link} to="/country/list">국가정보</NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/country/search">국가명검색</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/country/complex">국가복합검색</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item as={Link} to="/practice1/list">강좌정보</NavDropdown.Item>
                             <NavDropdown.Divider />
