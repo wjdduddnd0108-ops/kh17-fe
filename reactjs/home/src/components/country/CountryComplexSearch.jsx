@@ -41,7 +41,7 @@ export default function CountryComplexSearch() {
             [name]: replacement
         }));
     }, []);
-
+    
     const send = useCallback(async () => {
         const response = await axios.post("/api/country/complexSearch", condition);
         //console.log(response.data);
