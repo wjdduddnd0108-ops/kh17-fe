@@ -20,6 +20,7 @@ import BookAdd from "@components/book/BookAdd";
 import BookDetail from "../components/book/BookDetail";
 import BookEdit from "../components/book/BookEdit";
 import BookSpa from "../components/book/BookSpa";
+import AccountJoin from "../components/account/AccountJoin";
 
 
 export default function Body(){
@@ -45,8 +46,9 @@ export default function Body(){
             <Route path="/book/add" element={<BookAdd/>}/>  
             <Route path="/book/detail/:bookId" element={<BookDetail/>}/>  
             <Route path="/book/edit/:bookId" element={<BookEdit/>}/>  
-
             <Route path="/book/spa" element={<BookSpa/>}/>  
+
+            <Route path="/account/join" element={<AccountJoin/>}/>
 
 
             {/* fallback route */}

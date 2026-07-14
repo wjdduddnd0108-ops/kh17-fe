@@ -37,8 +37,8 @@ export default function Menu() {
                         </NavDropdown>
                     </Nav>
                     <Nav>
-                        <Nav.Link as={Link} to="/member/join">회원가입</Nav.Link>
-                        <Nav.Link as={Link} to="/member/login">로그인</Nav.Link>
+                        <Nav.Link as={Link} to="/account/join">회원가입</Nav.Link>
+                        <Nav.Link as={Link} to="/account/login">로그인</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
