@@ -2,7 +2,7 @@ import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useMemo } from "react";
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { FaAsterisk, FaMagnifyingGlass, FaUserPlus, FaXmark } from "react-icons/fa6";
+import { FaAsterisk, FaEye, FaEyeSlash, FaMagnifyingGlass, FaUserPlus, FaXmark } from "react-icons/fa6";
 import axios from "axios";
 
 export default function AccountJoin() {
@@ -27,13 +27,18 @@ export default function AccountJoin() {
         accountPassword: null,
         accountPassword2: null,
         accountEmail: null,
-        accountNickname: null,
+        accountNickname: { clazz : null, code : null },
         accountBirth: null,
         accountContact: null,
         accountPost: null,
         accountAddress1: null,
         accountAddress2: null,
         accountMessage: null
+    });
+
+    const [visible, setVisible] = useState({
+        accountPassword : false,
+        accountPassword2 : false,
     });
 
     //callback
@@ -96,13 +101,23 @@ export default function AccountJoin() {
         }));
     }, [account]);
 
-    const checkAccountNickname = useCallback(e=>{
+    const checkAccountNickname = useCallback(async e=>{
         const regex = /^[가-힣A-Za-z0-9]{1,10}$/;
         const valid = regex.test(account.accountNickname);
-        const clazz = valid ? "is-valid" : "is-invalid";
+        if(valid === false){//형식위반
+            setResult(prev=>({
+                ...prev,
+                accountNickname : { clazz : "is-invalid", code : "format"}
+            }));
+            return
+        }
+        //형식 통과 -> 중복 검사
+        const { data } = await axios.get(`/api/account/check-nickname/${account.accountNickname}`);
+        const clazz = data === true ? "is-valid" : "is-invalid";
+        const code = data === true ? null : "duplicate";
         setResult(prev=>({
             ...prev,
-            accountNickname : clazz
+            accountNickname : { clazz : clazz, code : code }
         }));
     }, [account]);
 
@@ -151,7 +166,7 @@ export default function AccountJoin() {
         if(result.accountId.clazz !== "is-valid") return false;//필수
         if(result.accountPassword !== "is-valid") return false;//필수
         if(result.accountPassword2 !== "is-valid") return false;//필수
-        if(result.accountNickname !== "is-valid") return false;//필수
+        if(result.accountNickname.clazz !== "is-valid") return false;//필수
         if(result.accountEmail !== "is-valid") return false;//필수
         
         if(result.accountBirth === "is-invalid") return false;//선택
@@ -185,7 +200,7 @@ export default function AccountJoin() {
                         영문소문자로 시작하며 숫자 포함 5~20글자로 작성해야 합니다.
                     </>) }
                     {result.accountId.code === "duplicate" && (<>
-                        이미 사용중입니다. 다른 아이디를 작성하세요.
+                        이미 사용중인 아이디입니다.
                     </>) }
                 </div>
             </Col>
@@ -195,9 +210,21 @@ export default function AccountJoin() {
             <Form.Label column sm={3}>
                 <span>비밀번호</span>
                 <FaAsterisk className="text-danger"/>
+
+                { visible.accountPassword === true ? (
+                    <FaEye className="text-danger ms-4" onClick={e=>{
+                        setVisible(prev=>({...prev, accountPassword : false}))
+                    }}/>
+                ):(
+                    <FaEyeSlash className="text-info ms-4" onClick={e=>{
+                        setVisible(prev=>({...prev, accountPassword : true}))
+                    }}/>
+                )}
+
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="password" name="accountPassword"
+                <Form.Control type={visible.accountPassword ? "text" : "password"} 
+                    name="accountPassword"
                     value={account.accountPassword} onChange={changeStringValue}
                     placeholder="대문자,소문자,숫자,특수문자 포함 8-16자 이내"
                     onBlur={checkAccountPassword}
@@ -211,9 +238,19 @@ export default function AccountJoin() {
             <Form.Label column sm={3}>
                 <span>비밀번호 확인</span>
                 <FaAsterisk className="text-danger"/>
+                { visible.accountPassword2 === true ? (
+                    <FaEye className="text-danger ms-4" onClick={e=>{
+                        setVisible(prev=>({...prev, accountPassword2 : false}))
+                    }}/>
+                ):(
+                    <FaEyeSlash className="text-info ms-4" onClick={e=>{
+                        setVisible(prev=>({...prev, accountPassword2 : true}))
+                    }}/>
+                )}
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="password" name="accountPassword2"
+                <Form.Control type={visible.accountPassword2 ? "text" : "password"} 
+                    name="accountPassword2"
                     value={account.accountPassword2} onChange={changeStringValue}
                     placeholder="비밀번호를 한 번 더 입력하세요"
                     onBlur={checkAccountPassword}
@@ -247,11 +284,18 @@ export default function AccountJoin() {
             <Col sm={9}>
                 <Form.Control type="text" name="accountNickname"
                     value={account.accountNickname} onChange={changeStringValue}
-                    placeholder="한글 또는 숫자 10자 이내"
+                    placeholder="한글, 영문, 숫자 10자 이내"
                     onBlur={checkAccountNickname}
-                    className={result.accountNickname}/>
+                    className={result.accountNickname.clazz}/>
                 <div className="valid-feedback">닉네임 설정이 완료되었습니다</div>
-                <div className="invalid-feedback">올바르지 않거나 사용중인 닉네임</div>
+                <div className="invalid-feedback">
+                    {result.accountNickname.code === "format" &&(<>
+                        한글, 영문, 숫자 10글자 이내로 작성해야 합니다.
+                    </>)}
+                    {result.accountNickname.code === "duplicate" &&(<>
+                        이미 사용중인 닉네임입니다.
+                    </>)}
+                </div>
             </Col>
         </Row>
 
