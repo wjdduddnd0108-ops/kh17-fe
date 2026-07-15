@@ -17,12 +17,15 @@ import Practice1List from "@components/practice1/Practice1List";
 import Practice1Edit from "@components/practice1/Practice1Edit";
 
 import BookAdd from "@components/book/BookAdd";
-import BookDetail from "../components/book/BookDetail";
-import BookEdit from "../components/book/BookEdit";
-import BookSpa from "../components/book/BookSpa";
-import AccountJoin from "../components/account/AccountJoin";
-import AccountJoinFail from "../components/account/AccountJoinFail";
-import AccountJoinSuccess from "../components/account/AccountJoinSuccess";
+import BookDetail from "@components/book/BookDetail";
+import BookEdit from "@components/book/BookEdit";
+import BookSpa from "@components/book/BookSpa";
+
+import AccountJoin from "@components/account/AccountJoin";
+import AccountJoinFail from "@components/account/AccountJoinFail";
+import AccountJoinSuccess from "@components/account/AccountJoinSuccess";
+
+import TestMain from "@components/session/TestMain";
 
 
 export default function Body(){
@@ -50,9 +53,13 @@ export default function Body(){
             <Route path="/book/edit/:bookId" element={<BookEdit/>}/>  
             <Route path="/book/spa" element={<BookSpa/>}/>  
 
+            {/* 회원 관련 */}
             <Route path="/account/join" element={<AccountJoin/>}/>
             <Route path="/account/joinSuccess" element={<AccountJoinSuccess/>}/>
             <Route path="/account/joinfail" element={<AccountJoinFail/>}/>
+
+            {/* 세션테스트 */}
+            <Route path="/session/test" element={<TestMain/>}/>
 
 
             {/* fallback route */}

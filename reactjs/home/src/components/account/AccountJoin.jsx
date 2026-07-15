@@ -481,7 +481,7 @@ export default function AccountJoin() {
         </Row>
 
         {/* 인증번호 입력화면은 발송이 완료된 경우만 나와야 함 */}
-        { (sending === false && certNumberResult !== "is-valid" && account.accountEmail !== "") && (
+        { (sending === false && certNumberResult !== "is-valid") && (
             <Row className="mt-2">
                 <Col sm={ {span:9, offset:3} }>
                     <div className="d-flex flex-wrap">

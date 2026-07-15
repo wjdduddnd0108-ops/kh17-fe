@@ -35,6 +35,7 @@ export default function Menu() {
                             <NavDropdown.Item as={Link} to="/book/list">도서정보</NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/book/spa">도서정보2</NavDropdown.Item>
                         </NavDropdown>
+                        <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link>
                     </Nav>
                     <Nav>
                         <Nav.Link as={Link} to="/account/join">회원가입</Nav.Link>
