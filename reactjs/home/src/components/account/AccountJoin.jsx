@@ -342,12 +342,12 @@ export default function AccountJoin() {
             // delete copy.accountPassword2;
             const { accountPassword2, ...copy } = account;
             const response = await axios.post("/api/account/", copy);
+            navigate("/account/joinSuccess");
             toast.success("회원 가입이 완료되었습니다");
-            // navigate(성공페이지);
         }
         catch(e) {
             toast.error("회원 가입 과정에서 오류가 발생했습니다");
-            // navigate(실패페이지)
+            navigate("/account/joinFail");
         }
     }, [account])
 
@@ -481,7 +481,7 @@ export default function AccountJoin() {
         </Row>
 
         {/* 인증번호 입력화면은 발송이 완료된 경우만 나와야 함 */}
-        { (sending === false && result.accountEmail.clazz !== "is-valid" && account.accountEmail !== "") && (
+        { (sending === false && certNumberResult !== "is-valid" && account.accountEmail !== "") && (
             <Row className="mt-2">
                 <Col sm={ {span:9, offset:3} }>
                     <div className="d-flex flex-wrap">

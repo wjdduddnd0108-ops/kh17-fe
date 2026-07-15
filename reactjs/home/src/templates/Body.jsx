@@ -21,6 +21,8 @@ import BookDetail from "../components/book/BookDetail";
 import BookEdit from "../components/book/BookEdit";
 import BookSpa from "../components/book/BookSpa";
 import AccountJoin from "../components/account/AccountJoin";
+import AccountJoinFail from "../components/account/AccountJoinFail";
+import AccountJoinSuccess from "../components/account/AccountJoinSuccess";
 
 
 export default function Body(){
@@ -49,6 +51,8 @@ export default function Body(){
             <Route path="/book/spa" element={<BookSpa/>}/>  
 
             <Route path="/account/join" element={<AccountJoin/>}/>
+            <Route path="/account/joinSuccess" element={<AccountJoinSuccess/>}/>
+            <Route path="/account/joinfail" element={<AccountJoinFail/>}/>
 
 
             {/* fallback route */}
