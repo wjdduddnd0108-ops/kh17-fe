@@ -36,16 +36,20 @@ axios.defaults.timeout = 10000;//통신의 최대 대기 시간(ms), 상황에 �
 //jotai에서 제공하는 개발도구(jotai-devtools)를 적용하기 위한 코드
 import { DevTools } from "jotai-devtools";
 import "jotai-devtools/styles.css";
+import { Provider } from "jotai";
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
   <BrowserRouter>
-    <App />
+  {/* jotai 적용 범위 설정 */}
+    <Provider>
+      <App />
 
-    {/* 개발 모드일 때만 표시되도록 조건 설정 */}
-    { import.meta.env.DEV &&(
-      <DevTools position="bottom-right"/>
-    )}
+      {/* 개발 모드일 때만 표시되도록 조건 설정 */}
+      { import.meta.env.DEV &&(
+        <DevTools position="bottom-right"/>
+      )}
+    </Provider>
   </BrowserRouter>
   // </StrictMode>,
 )

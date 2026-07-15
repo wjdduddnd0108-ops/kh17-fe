@@ -25,7 +25,7 @@ export default function App() {
 
       {/* 본문 */}
       <Row className="my-4" style={ { minHeight: 450} }>
-        <Col>
+        <Col sm={ {span:10, offset:1} } md={ {span:8, offset:2} }>
           <Body/>
         </Col>
       </Row>
