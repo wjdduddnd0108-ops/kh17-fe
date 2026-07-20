@@ -5,8 +5,9 @@ import { FaRightToBracket } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAtom } from "jotai";
-import { loginState } from "@utils/storage";
+import { useAtom, useSetAtom } from "jotai";
+import { loginUserState } from "@utils/storage";
+import { loginActionState } from "../../utils/storage";
 
 export default function AccountLogin(){
     //state
@@ -15,7 +16,11 @@ export default function AccountLogin(){
         accountPassword : ""
     });
     //jotai state
-    const [login, setLogin] =useAtom(loginState)
+    // const [loginUser, setLoginUser] =useAtom(loginUserState)
+
+    //쓰기 전용 atom
+    // const [_, loginAction] = useAtom(loginActionState);
+    const loginAction = useSetAtom(loginActionState);
 
     //입력
     const changeStringValue = useCallback(e=>{
@@ -40,7 +45,8 @@ export default function AccountLogin(){
             const {data} = await axios.post("/service/auth/login", account);
             //로그인 성공
             // console.log(data);
-            setLogin(data);//jotai storage에 저장 완료
+            // setLoginUser(data);//jotai storage에 저장 완료
+            loginAction(data);//jotai setter atom사용
             navigate("/");
         }
         catch(e){

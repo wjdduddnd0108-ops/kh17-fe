@@ -1,0 +1,7 @@
+
+export default function NeedPermission(){
+
+    return (<>
+        <h1>권한이 부족합니다</h1>
+    </>);
+}
