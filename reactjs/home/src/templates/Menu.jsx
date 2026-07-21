@@ -10,6 +10,7 @@ import { RESET } from "jotai/utils";
 import { isLoginState, isAdminState } from "@utils/storage";
 import { logoutActionState } from "@utils/storage";
 import axios from "axios";
+import { loginActionState } from "../utils/storage";
 
 export default function Menu() {
     //메뉴에서는 로그인 상태 데이터가 필요하다
@@ -20,6 +21,7 @@ export default function Menu() {
     const isLogin = useAtomValue( isLoginState);
     const isAdmin = useAtomValue(isAdminState);
 
+    const loginAction = useSetAtom(loginActionState);
     const logoutAction = useSetAtom(logoutActionState);
 
     //서버에 로그아웃 요청 및 Jotai 저장소 초기화 요청을 수행하는 함수
@@ -35,6 +37,18 @@ export default function Menu() {
         }
     },[]);
 
+    //토큰 갱신 요청을 보내는 연습용 함수
+    const refresh = useCallback(async ()=>{
+        try{
+            const {data} = await axios.post("/service/auth/refresh");
+            //갱신이 된 경우(200 ok)
+            loginAction(data);
+        }
+        catch(e){
+            //갱신이 안된 경우(401 unauthorized)
+            logoutAction();
+        }
+    }, []);
     return (<>
         <Navbar expand="md" className="bg-body-tertiary sticky-top"
                     bg="dark" data-bs-theme="dark">
@@ -81,6 +95,9 @@ export default function Menu() {
                         <Nav.Link as={Link} to="/account/join">회원가입</Nav.Link>
                         <Nav.Link as={Link} to="/account/login">로그인</Nav.Link>
                         </>) }
+
+                        {/* 연습용 Refresh 버튼 (향후 삭제가 필요) */}
+                        <Nav.Link onClick={refresh}>갱신(Refresh)</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
