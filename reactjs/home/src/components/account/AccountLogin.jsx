@@ -7,7 +7,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAtom, useSetAtom } from "jotai";
 import { loginUserState } from "@utils/storage";
-import { loginActionState } from "../../utils/storage";
+import { loginActionState } from "@utils/storage";
+import { authClient } from "@utils/reaxios";
 
 export default function AccountLogin(){
     //state
@@ -44,7 +45,8 @@ export default function AccountLogin(){
             return;
         }
         try{
-            const {data} = await axios.post("/service/auth/login", account);
+            // const {data} = await axios.post("/service/auth/login", account);
+            const {data} =await authClient.post("/login", account);
             //로그인 성공
             // console.log(data);
             // setLoginUser(data);//jotai storage에 저장 완료
