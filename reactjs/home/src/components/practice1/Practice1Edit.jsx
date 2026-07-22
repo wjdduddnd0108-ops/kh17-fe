@@ -125,7 +125,7 @@ export default function Practice1Edit() {
         const response = await apiClient.put(`/practice1/${practice1No}`, practice1);
         navigate(`/practice1/detail/${practice1No}`);
         toast.success("강좌 수정이 완료되었습니다");
-    }, [practice1, practice1, navigate]);
+    }, [practice1, navigate]);
 
     //memo
     const valid = useMemo(() => {

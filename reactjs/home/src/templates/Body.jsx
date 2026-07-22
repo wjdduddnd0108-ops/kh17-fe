@@ -29,6 +29,7 @@ import MyPage from "@components/account/MyPage";
 
 import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
+import AccountEdit from "@components/account/AccountEdit";
 
 
 export default function Body(){
@@ -62,6 +63,8 @@ export default function Body(){
             <Route path="/account/joinfail" element={<AccountJoinFail/>}/>
             <Route path="/account/login" element={<AccountLogin/>}/>
             <Route path="/account/mypage" element={<Private><MyPage/></Private>}/>
+            <Route path="/account/edit" element={<Private><AccountEdit/></Private>}/>
+
 
 
             {/* 세션테스트 */}
