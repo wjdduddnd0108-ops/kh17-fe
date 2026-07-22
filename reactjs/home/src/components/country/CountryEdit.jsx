@@ -5,6 +5,7 @@ import { Button, Col, Row, Form } from "react-bootstrap";
 import { FaAsterisk, FaList, FaSquarePen, FaXmark } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { apiClient } from "../../utils/reaxios";
 
 export default function CountryEdit(){
 
@@ -29,7 +30,7 @@ export default function CountryEdit(){
     }, []);
 
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`/api/country/${countryNo}`);
+        const response = await apiClient.get(`/country/${countryNo}`);
         setCountry(response.data);
     }, []);
 
@@ -113,7 +114,7 @@ export default function CountryEdit(){
 
     //데이터 전송 함수
     const send = useCallback(async ()=>{
-        const response = await axios.put(`/api/country/${countryNo}`, country);
+        const response = await apiClient.put(`/country/${countryNo}`, country);
             toast.success("국가 정보 변경이 완료되었습니다");
             //navigate("/country/list");
             navigate(`/country/detail/${countryNo}`);

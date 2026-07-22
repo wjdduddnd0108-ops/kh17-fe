@@ -7,6 +7,7 @@ import { FaChevronDown, FaPlus } from "react-icons/fa6";
 import { ClockLoader } from "react-spinners";
 import { Col, Row, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { apiClient } from "../../utils/reaxios";
 
 export default function Practice1List() {
     //state
@@ -24,7 +25,7 @@ export default function Practice1List() {
         const lastPractice1No = dataSize === 0 ? 2147483647 : practice1List[dataSize - 1].practice1No;
 
         
-        const response = await axios.post(`/api/practice1/list-more`,
+        const response = await apiClient.post(`/practice1/list-more`,
             { lastNo: lastPractice1No, size: size});
         setPractice1List([...practice1List, ...response.data.list]);
         setLast(response.data.last);

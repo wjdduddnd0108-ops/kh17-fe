@@ -5,6 +5,7 @@ import { Badge, Button, Col, Container, Form, ListGroup, Modal, Row } from "reac
 import { FaAsterisk, FaChevronDown, FaPen, FaPlus, FaSquarePen, FaTrash, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { apiClient } from "../../utils/reaxios";
 
 export default function BookSpa() {
     //모달을 띄우기 위한 state
@@ -31,8 +32,8 @@ export default function BookSpa() {
         const dataSize = bookList.length;
         const lastBookId = dataSize === 0 ? 2147483647 : bookList[dataSize - 1].bookId;
 
-        const response = await axios.post(
-            `/api/book/list-more`,
+        const response = await apiClient.post(
+            `/book/list-more`,
             { lastNo: lastBookId, size: size }
         )
         setBookList([...bookList, ...response.data.list]);
@@ -220,7 +221,7 @@ export default function BookSpa() {
 
     //전송
     const send = useCallback(async ()=>{
-        const response = await axios.post("/api/book/", book);
+        const response = await apiClient.post("/book/", book);
         toast.success("신규 도서가 등록되었습니다");
         //setModal(false);//모달을 닫는건 맞지만...(권장하지 않음)
         closeModal();//모달을 닫는 함수를 부른다 (권장)
@@ -237,7 +238,7 @@ export default function BookSpa() {
     }, [book, /*bookList*/]);
 
     const edit = useCallback(async ()=>{
-        const response = await axios.put(`/api/book/${book.bookId}`, book);
+        const response = await apiClient.put(`/book/${book.bookId}`, book);
         toast.success(`${book.bookId}번 도서 정보 변경완료`);
         closeModal();
         //서버의 응답 결과(response.data)를 bookList에서 찾아서 덮어쓰기한다 (목록이 갱신된 척한다)
@@ -289,7 +290,7 @@ export default function BookSpa() {
             cancelButtonColor: "#b2bec3"
         })
         if(result.isConfirmed === false) return;
-        const response = await axios.delete(`/api/book/${target.bookId}`);
+        const response = await apiClient.delete(`/book/${target.bookId}`);
         //목록에서 찾아서 삭제하여 지워진 척
         setBookList(prev=>prev.filter(
             book => book.bookId !== target.bookId

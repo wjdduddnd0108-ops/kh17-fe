@@ -6,6 +6,7 @@ import axios from "axios";
 import {Form, Button, Col, Row } from "react-bootstrap";
 import { FaCheck, FaList, FaPenToSquare, FaSquarePen, FaTrash, FaXmark } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import { apiClient } from "../../utils/reaxios";
 
 export default function Practice1Detail(){
     const { practice1No } = useParams();
@@ -25,7 +26,7 @@ export default function Practice1Detail(){
     }, []);
 
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`/api/practice1/${practice1No}`);
+        const response = await apiClient.get(`/practice1/${practice1No}`);
         setPractice1(response.data);
     }, []);
 
@@ -43,7 +44,7 @@ export default function Practice1Detail(){
         });
         if(result.isConfirmed === false)return
 
-        const response = await axios.delete(`/api/practice1/${practice1No}`);
+        const response = await apiClient.delete(`/practice1/${practice1No}`);
         toast.error("강좌 삭제가 완료되었습니다");
         navigate("/practice1/list");
 
@@ -78,8 +79,8 @@ export default function Practice1Detail(){
     }, [practice1]);
 
     const updatePractice1 = useCallback(async (field)=>{
-        const response = await axios.patch(
-            `/api/practice1/${practice1No}`,
+        const response = await apiClient.patch(
+            `/practice1/${practice1No}`,
             {[field] : practice1[field]}
         );
         //백업 갱신

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { FaAsterisk, FaPlus } from "react-icons/fa6";
 import { Form, Col, Row, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { apiClient } from "../../utils/reaxios";
 export default function BookAdd() {
     //state
     const [book, setBook] = useState({
@@ -114,7 +115,7 @@ export default function BookAdd() {
     //- 데이터 전송(등록)
 
     const send = useCallback(async () => {
-        const response = await axios.post("/api/book/", book);
+        const response = await apiClient.post("/book/", book);
 
         toast.success("도서 등록이 완료되었습니다"); 
         navigate(`/book/detail/${response.data.bookId}`);

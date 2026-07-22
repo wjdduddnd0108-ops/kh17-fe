@@ -3,6 +3,7 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Col, Form, ListGroup, Row } from "react-bootstrap";
 import { throttle, debounce } from "lodash-es";
+import { apiClient } from "../../utils/reaxios";
 
 export default function CountrySearch() {
     //state
@@ -29,7 +30,7 @@ export default function CountrySearch() {
             setSearchList([]);
             return;
         }
-        const response = await axios.get(`/api/country/countryName/${keyword}`);
+        const response = await apiClient.get(`/country/countryName/${keyword}`);
         setSearchList(response.data);
     }, 350), []);
 

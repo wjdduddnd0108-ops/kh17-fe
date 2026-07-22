@@ -5,6 +5,7 @@ import { FaAsterisk } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "../../utils/reaxios";
 
 export default function CountryAdd() {
     //state - 역동적인 화면을 만들기 위한 핵심데이터
@@ -103,7 +104,7 @@ export default function CountryAdd() {
 
     //데이터 전송 함수
     const send = useCallback(async ()=>{
-        const response = await axios.post("/api/country/", country);
+        const response = await apiClient.post("/country/", country);
             toast.success("국가 등록이 완료되었습니다");
             navigate(`/country/detail/${response.data.countryNo}`);
     }, [country]);

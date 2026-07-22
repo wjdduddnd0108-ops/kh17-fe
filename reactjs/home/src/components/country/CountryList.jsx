@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaChevronDown, FaPlus } from "react-icons/fa6";
 import { Row, Col, Form, Table, Button} from "react-bootstrap"
 import { Link } from "react-router-dom";
+import { apiClient } from "../../utils/reaxios";
 
 export default function CountryList(){
     //state
@@ -26,9 +27,9 @@ export default function CountryList(){
         //     `http://localhost:8080/api/country/lastCountryNo/${lastCountryNo}/size/${size}`
         // );
 
-        const response = await axios.post(
+        const response = await apiClient.post(
             // "http://localhost:8080/api/country/list-more",
-            `/api/country/list-more`,
+            `/country/list-more`,
             { lastNo : lastCountryNo, size : size}
         )
         

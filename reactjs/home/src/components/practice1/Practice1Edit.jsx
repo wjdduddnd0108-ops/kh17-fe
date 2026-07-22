@@ -5,6 +5,7 @@ import { Button, Col, Row, Form } from "react-bootstrap";
 import { FaAsterisk, FaList, FaSquarePen, FaXmark } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { apiClient } from "../../utils/reaxios";
 
 export default function Practice1Edit() {
     const { practice1No } = useParams();
@@ -30,7 +31,7 @@ export default function Practice1Edit() {
     }, []);
 
     const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/practice1/${practice1No}`);
+        const response = await apiClient.get(`/practice1/${practice1No}`);
         setPractice1(response.data);
     }, []);
 
@@ -121,7 +122,7 @@ export default function Practice1Edit() {
     }, [practice1.practice1CourseType, result]);
 
     const send = useCallback(async () => {
-        const response = await axios.put(`/api/practice1/${practice1No}`, practice1);
+        const response = await apiClient.put(`/practice1/${practice1No}`, practice1);
         navigate(`/practice1/detail/${practice1No}`);
         toast.success("강좌 수정이 완료되었습니다");
     }, [practice1, practice1, navigate]);

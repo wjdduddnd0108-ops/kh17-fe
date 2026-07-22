@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import axios from "axios";
 import { FaAsterisk } from "react-icons/fa6";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { apiClient } from "../../utils/reaxios";
 
 export default function Practice1Add(){
     //state
@@ -120,7 +121,7 @@ export default function Practice1Add(){
     // },[practice1]);
 
     const send = useCallback(async ()=>{
-        const response = await axios.post("/api/practice1/", practice1);
+        const response = await apiClient.post("/practice1/", practice1);
         toast.success("강좌 등록이 완료되었습니다");
         navigate(`/practice1/detail/${response.data.practice1No}`);
     },[practice1]);

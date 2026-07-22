@@ -5,6 +5,7 @@ import { Button, Col, Row, Form } from "react-bootstrap";
 import { FaAsterisk, FaList, FaSquarePen, FaXmark } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { apiClient } from "../../utils/reaxios";
 
 export default function BookEdit() {
     const { bookId } = useParams();
@@ -31,7 +32,7 @@ export default function BookEdit() {
     }, []);
 
     const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/book/${bookId}`)
+        const response = await apiClient.get(`/book/${bookId}`)
         setBook(response.data);
     }, []);
 
@@ -151,7 +152,7 @@ export default function BookEdit() {
 
     //데이터 전송 함수
     const send = useCallback(async () => {
-        const response = await axios.put(`/api/book/${bookId}`, book);
+        const response = await apiClient.put(`/book/${bookId}`, book);
         navigate(`/book/detail/${bookId}`);
         toast.success("도서 수정이 완료되었습니다");
     }, [bookId, book, navigate]);
