@@ -7,6 +7,7 @@ import { loginUserState } from "@utils/storage";
 import { union } from "lodash-es";
 import { apiClient } from "@utils/reaxios";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function MyPage(){
     //jotai state에 저장된 내 정보를 가져와서 서버에 나머지 정보를 요청해야함
@@ -105,8 +106,16 @@ export default function MyPage(){
 
         <Row className="mt-5">
             <Col>
-                <Button as={Link} to="/account/edit" variant="success" className="w-100">
+                <Button as={Link} to="/account/change" variant="success" className="w-100">
                     <span>정보 수정</span>
+                </Button>
+            </Col>
+        </Row>
+
+        <Row className="mt-4">
+            <Col>
+                <Button as={Link} to="/account/password" variant="danger" className="w-100">
+                    <span className="ms-2">비밀번호 수정</span>
                 </Button>
             </Col>
         </Row>
