@@ -27,10 +27,13 @@ import AccountJoinSuccess from "@components/account/AccountJoinSuccess";
 import AccountLogin from "@components/account/AccountLogin";
 import MyPage from "@components/account/MyPage";
 import AccountPassword from "@components/account/AccountPassword";
+import AccountChange from "@components/account/AccountChange";
 
 import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
-import AccountChange from "../components/account/AccountChange";
+
+import AdminUsers from "@components/admin/AdminUsers";
+import Admin from "../guard/Admin";
 
 
 export default function Body(){
@@ -67,7 +70,8 @@ export default function Body(){
             <Route path="/account/password" element={<Private><AccountPassword/></Private>}/>
             <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
 
-
+            {/* 관리자 관련 */}
+            <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}/>
 
             {/* 세션테스트 */}
             <Route path="/session/test" element={<TestMain/>}/>
