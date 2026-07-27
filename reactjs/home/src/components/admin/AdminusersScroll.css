@@ -1,0 +1,4 @@
+body{
+    /* scroll이 100%로 고정되는 상황을 원천차단 (모바일에서 많이 발생) */
+    overflow-anchor: none;
+}

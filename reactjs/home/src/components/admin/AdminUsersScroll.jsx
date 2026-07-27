@@ -1,13 +1,17 @@
 import Jumbotron from "@templates/Jumbotron"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { FaChevronDown, FaEraser, FaMagnifyingGlass } from "react-icons/fa6";
 import { apiClient } from "@utils/reaxios";
 import { TbTilde } from "react-icons/tb";
 
+import "./AdminUsersScroll.css";
+
 import { ko } from "date-fns/locale";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+import { throttle } from "lodash-es";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -99,7 +103,8 @@ export default function AdminUsersScroll() {
     }, [condition]);
 
     const [list, setList] = useState([]);
-    const [last, setLast] = useState(true);
+    // const [last, setLast] = useState(true);//사용불가(그렇게됐다...)
+    const last = useRef(true);//연관항목없이도 아무데서나 접근 가능한 동기식 데이터
     const [size, setSize] = useState(10);
     const lastAccountId = useMemo(()=>{
         if(list.length === 0) return null;
@@ -109,6 +114,9 @@ export default function AdminUsersScroll() {
 
     //검색
     const sendSearch = useCallback(async e=>{
+        if(loading.current === true) return;//이미 로딩중이면 하지마!
+        loading.current = true;//로딩시작했다
+
         e.preventDefault();//기본 form 전송 차단
         
         // const { data } = await apiClient.post("/account/search", condition);
@@ -120,10 +128,18 @@ export default function AdminUsersScroll() {
 
         setList(data.list);//덮어쓰기
         // setList(prev=>[...prev, ...data.list]);//이어쓰기
-        setLast(data.last);
+        // setLast(data.last);
+        last.current = data.last;
+
+        loading.current = false;//로딩 끝났다
     }, [condition, lastAccountId, size]);
 
     const sendMore = useCallback(async e=>{
+        console.log("더보기가 실행하려고 생각중입니다");
+        if(loading.current === true) return;//이미 로딩중이면 하지마!
+        loading.current = true;//로딩시작했다
+        console.log("더보기가 실행되었습니다")
+
         const copy = {
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             ...condition, lastAccountId, size
@@ -132,8 +148,68 @@ export default function AdminUsersScroll() {
 
         // setList(data.list);//덮어쓰기
         setList(prev=>[...prev, ...data.list]);//이어쓰기
-        setLast(data.last);
+        // setLast(data.last);
+        last.current = data.last;
+
+        loading.current = false;//로딩 끝났다
     }, [condition, lastAccountId, size]);
+
+    const getScrollPercent = useCallback(()=>{
+        //필요한 데이터들을 추출
+        const { scrollY } = window;
+        const { scrollTop, scrollHeight, clientHeight } = window.document.documentElement;
+        //콘텐츠가 창보다 작은 경우 (스크롤이 없는 경우) 처리
+        if(scrollHeight <= clientHeight) return 0;
+        //현재 스크롤의 위치 계산
+        const current = scrollY ||scrollTop;
+        //스크롤 가능한 최대 위치 계산
+        const max = scrollHeight - clientHeight;
+        //부동소수점 방식에서 발생하는 오차를 제거
+        if(max - current < 1) return 100;
+        //비율을 계산해서 반환
+        return current * 100 / max;
+    }, []);
+
+    //로딩중 상태를 표시하기 위한 값
+    // const [loading, setLoading] = useState(false);//실행빈도가 낮을때
+    const loading = useRef(false);//실행빈도가 매우 높을 때 (ex : scroll, resize)
+
+    // 화면이 시작되면 스크롤 이벤트를 설정 + 화면이 사라지면 스크롤 이벤트를 제거
+    // -> 클린업 함수를 포함하여 useEffect 훅을 작성해야함
+
+    // 문제 발생 : 스크롤이벤트를 등록하는 시점의 sendMore에는 lastAccountNo = null, size = 10이다.
+    //- 갱신이 스스로 안된다
+    //- [1번 해결책] 사용되는 데이터를 Ref로 변경(하책)
+    //- [2번 해결책] 사용되는 함수를 Ref로 변경 (상책..?)
+    const sendMoreRef = useRef(null);
+    useEffect(()=>{
+        sendMoreRef.current = sendMore;
+    }, [sendMore]);
+
+    useEffect(()=>{
+        // console.log("화면시작했다");
+        const listener = throttle(()=>{
+            // console.log("스크롤 움직였어")
+            const percent = getScrollPercent();
+            console.log("현재 스크롤의 위치 : " + percent.toFixed(2) + "%");
+
+            //useRef로 만든 데이터는 연관항목에 없어도 마음대로 접근할 수 있다
+            if(last.current === false && percent === 100) {
+                if(sendMoreRef.current){
+                    // console.log("더보기 실행")
+                    sendMoreRef.current();
+                }
+            }
+        }, 250);
+
+        window.addEventListener("scroll", listener);
+
+        //클린업(clean-up) 함수
+        return ()=>{
+            // console.log("화면 끝났다");
+            window.removeEventListener("scroll", listener);
+        };
+    },[]);
     //view
     return (<>
         <Jumbotron title="관리자용 회원 검색"/>
@@ -445,19 +521,5 @@ export default function AdminUsersScroll() {
                 </Table>
             </Col>
         </Row>
-
-        {/* 더보기 버튼 */}
-        {last === false && (
-            <Row className="mt-4">
-                <Col>
-                    <Button variant="info" size="lg" className="w-100" onClick={sendMore}>
-                        <FaChevronDown/>
-                        더보기
-                        <FaChevronDown/>
-                    </Button>
-                </Col>
-            </Row>
-        )}
-
     </>)
 }

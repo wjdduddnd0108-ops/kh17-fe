@@ -1,5 +1,5 @@
 import Jumbotron from "@templates/Jumbotron"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { FaChevronDown, FaEraser, FaMagnifyingGlass } from "react-icons/fa6";
 import { apiClient } from "@utils/reaxios";
@@ -134,6 +134,7 @@ export default function AdminUsers() {
         setList(prev=>[...prev, ...data.list]);//이어쓰기
         setLast(data.last);
     }, [condition, lastAccountId, size]);
+
     //view
     return (<>
         <Jumbotron title="관리자용 회원 검색"/>
