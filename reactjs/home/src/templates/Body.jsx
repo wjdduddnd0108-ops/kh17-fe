@@ -33,6 +33,8 @@ import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
 
 import AdminUsers from "@components/admin/AdminUsers";
+import AdminUsersScroll from "@components/admin/AdminUsersScroll";
+
 import Admin from "../guard/Admin";
 
 
@@ -70,8 +72,9 @@ export default function Body(){
             <Route path="/account/password" element={<Private><AccountPassword/></Private>}/>
             <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
 
-            {/* 관리자 관련 */}
+            {/* 관리자 기능 */}
             <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}/>
+            <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}/>
 
             {/* 세션테스트 */}
             <Route path="/session/test" element={<TestMain/>}/>

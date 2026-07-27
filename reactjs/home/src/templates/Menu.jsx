@@ -88,8 +88,8 @@ export default function Menu() {
                     <Nav>
                         {isLogin === true && (<>
                         { isAdmin === true && (<>
-                        <Nav.Link as={Link} to="">관리메뉴</Nav.Link>
-                        <Nav.Link as={Link} to="/admin/users">회원검색</Nav.Link>
+                        <Nav.Link as={Link} to="/admin/users">관리메뉴</Nav.Link>
+                        <Nav.Link as={Link} to="/admin/users2">관리메뉴2</Nav.Link>
                         </>)}
                         { isAdmin === false && (<>
                         <Nav.Link as={Link} to="/account/mypage">내정보</Nav.Link>

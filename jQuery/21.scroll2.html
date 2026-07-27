@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+     <link rel="icon" href="/kh.png" type="image/png">
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div {box-shadow: 0 0 0 1px #cccccc;}
+
+        body {
+            height: 5123.45px;
+        }
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+            $(function(){
+                //scroll, resize 등은 window에 설정해야함
+                $(window).on("scroll", function(){
+                    console.log(getScrollPercent());
+                });
+
+                function getScrollPercent(){
+                    //필요한 데이터들을 추출
+                    const { scrollY} = window;
+                    const { scrollTop, scrollHeight, clientHeight } = window.document.documentElement;
+                    //콘텐츠가 창보다 작은 경우 (스크롤이 없는 경우) 처리
+                    if(scrollHeight <= clientHeight) return 0;
+                    //현재 스크롤의 위치 계산
+                    const current = scrollY ||scrollTop;
+                    //스크롤 가능한 최대 위치 계산
+                    const max = scrollHeight - clientHeight;
+                    //부동소수점 방식에서 발생하는 오차를 제거
+                    if(max - current < 1) return 100;
+                    //비율을 계산해서 반환
+                    return current * 100 / max;
+                }
+            });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>제목</h1>
+        </div>
+
+
+    </div>
+</body>
+</html>
