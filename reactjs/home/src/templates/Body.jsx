@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import BookList from "@components/book/BookList";
 
 import Home from "@components/Home";
-import NotFound from "@components/error/NotFound";
 
 import CountryList from "@components/country/CountryList";
 import CountryAdd from "@components/country/CountryAdd";
@@ -38,7 +37,8 @@ import AdminDetail from "@components/admin/AdminDetail";
 
 import Admin from "../guard/Admin";
 import AccountBlock from "@components/error/AccountBlock";
-import AccountNeedUpdate from "@components/error/AccountNeedUpdate";
+import NotFound from "@components/error/NotFound";
+import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
 
 
 export default function Body(){
@@ -74,6 +74,7 @@ export default function Body(){
             <Route path="/account/mypage" element={<Private><MyPage/></Private>}/>
             <Route path="/account/password" element={<Private><AccountPassword/></Private>}/>
             <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
+            <Route path="/account/needUpdate" element={<Private><AccountNeedUpdate/></Private>}/>
 
             {/* 관리자 기능 */}
             <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}/>
@@ -83,11 +84,11 @@ export default function Body(){
             {/* 세션테스트 */}
             <Route path="/session/test" element={<TestMain/>}/>
 
+            {/* error */}
+            <Route path="/account/block" element={<AccountBlock/>}/>
 
             {/* fallback route */}
             <Route path="*" element={<NotFound/>}/>
-            <Route path="/AccountBlock" element={<AccountBlock/>}/>
-            <Route path="/AccountNeedUpdate" element={<AccountNeedUpdate/>}/>
 
         </Routes>
     </>)

@@ -48,27 +48,34 @@ export default function AccountLogin() {
         try {
             // const {data} = await axios.post("/service/auth/login", account);
             const { data } = await authClient.post("/login", account);
+
+            //data에서 needUpdate와 나머지를 뽑아내서 나눠서 사용 (구조 분해 할당)
+            const {needUpdate, ...userData } = data;
+            loginAction(userData);
+
             //로그인 성공
             // console.log(data);
             // setLoginUser(data);//jotai storage에 저장 완료
-            loginAction(data);//jotai setter atom사용
 
-            if(data.needUpdate){
-                navigate("/AccountNeedUpdate");
+            if(needUpdate){//비밀번호를 바꾼지 오래되어 업데이트가 필요한 상황
+                navigate("/account/needUpdate");
             }
-            else{
+            else{//업데이트가 필요하지 않은 일반적인 상황
                 navigate("/");
             }
         }
         catch (e) {
+            //로그인 실패가 경우가 나눠진다
+            //- 404 : 정보 불일치
+            //- 403 : 차단된 회원
             if (e.response?.status === 403) {
-                navigate("/AccountBlock");
+                navigate("/account/block");
             }
             else if (e.response?.status === 404) {
                 await Swal.fire("아이디 또는 비밀번호가 일치하지 않습니다.");
             }
             else {
-                await Swal.fire("로그인 처리 중 오류가 발생했습니다.");
+                await Swal.fire("일시적인 서버 오류입니다.\n잠시 후 실행해주세요.");
             }
         }
     }, [account, loginAction, navigate]);

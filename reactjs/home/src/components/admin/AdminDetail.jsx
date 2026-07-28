@@ -241,7 +241,9 @@ export default function AdminDetail() {
 
         <Row className="mt-5">
             <Col className="text-end">
-                <Button variant="warning" className="ms-2 w-100" onClick={createTempPassword}>
+                <Button variant="warning" className="ms-2 w-100" 
+                    onClick={createTempPassword}
+                    disabled={sending === true}>
                     {sending === false &&(<>
                         <MdOutlinePassword />
                         <span className="ms-2">비밀번호 변경하기</span>
@@ -274,9 +276,7 @@ export default function AdminDetail() {
             </Col>
         </Row>
         */}
-
-
-
+        
         <Row className="mt-2">
             <Col className="text-end">
                 <Button className="ms-2 w-100" variant="secondary"
