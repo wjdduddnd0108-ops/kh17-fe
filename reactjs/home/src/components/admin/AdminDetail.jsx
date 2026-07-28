@@ -1,12 +1,16 @@
 import Jumbotron from "@templates/Jumbotron";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { apiClient } from "@utils/reaxios";
 import { Link, Navigate, Route, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Col, Form, Placeholder, Row } from "react-bootstrap";
-import { FaList } from "react-icons/fa6";
+import { FaList, FaSpinner, FaUserLock } from "react-icons/fa6";
 import axios from "axios";
 import LoadingText from "@templates/LoadingText";
+import Swal from "sweetalert2";
+import { MdOutlinePassword } from "react-icons/md";
+import { certClient } from "../../utils/reaxios";
+import { secondsInHour } from "date-fns/constants";
 
 export default function AdminDetail() {
     //주소에 포함되어 있는 정보
@@ -28,7 +32,7 @@ export default function AdminDetail() {
 
     //callback
     const loadData = useCallback(async () => {
-        const { data } = await apiClient.get(`/account/${accountId}`)
+        const { data } = await apiClient.get(`/admin/${accountId}`)
         setAccount(data);
     }, [accountId]);
 
@@ -61,6 +65,62 @@ export default function AdminDetail() {
             toast.error("차단 여부 변경에 실패했습니다");
         }
     });
+
+
+    //강사님
+    // const block = useCallback(async ()=>{
+    //     const result= await Swal.fire({
+    //         title: `정말 ${account?.accountBLock === "N" ? "차단" : "차단 해제"}하시겠습니까?`,
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonText: "차단",
+    //         cancelButtonText: "취소",
+    //         confirmButtonColor: "#d63031",
+    //         cancelButtonColor: "#b2bec3"
+    //     });
+    //     if(result.isConfirmed === false)return;//취소
+
+    //     const { data } = await apiClient.patch(`/admin/${accountId}`);
+    //     // console.log(data);
+    //     setAccount(data);
+
+    //     //알림 처리
+    //     if(data.accountBlock === "Y") {
+    //         toast.error("회원 차단이 완료되었습니다");
+    //     }
+    //     else{
+    //         toast.success("회원 차단이 해제되었습니다");
+    //     }
+    // }, [])
+
+    // const sending = useRef(false);
+    const [sending, setSending] = useState(false);
+
+    const createTempPassword = useCallback(async()=>{
+        const result= await Swal.fire({
+            title: `임시 비밀번호를 변경하시겠습니까?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+            confirmButtonColor: "#d63031",
+            cancelButtonColor: "#b2bec3"
+        });
+        if(result.isConfirmed === false) return;//취소
+
+        if(sending === true) return;
+        setSending(true);
+
+        try{
+            const { data } = await apiClient.post(`/admin/tempPassword/${accountId}`);
+            toast.success("임시 비밀번호가 발송되었습니다");
+        }
+        catch(e){
+            toast.error("이메일 발송에 실패하였습니다");
+        }
+
+        setSending(false);
+    },[]);
 
     //로딩중일 경우의 화면을 따로 보여줄 때
     // if(account === null) {
@@ -128,6 +188,13 @@ export default function AdminDetail() {
         </Row>
 
         <Row className="mt-4">
+            <Col sm={3} className="fw-bold text-info">차단상태</Col>
+            <Col sm={9} className="text-secondary">
+                <LoadingText value={account?.accountBlock} width={80}/>
+            </Col>
+        </Row>
+
+        <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">가입일</Col>
             <Col sm={9} className="text-secondary">
                 <LoadingText value={account?.accountJoin} width={240}/>
@@ -155,6 +222,7 @@ export default function AdminDetail() {
             </Col>
         </Row>
 
+        {/* 관리자 제어용 버튼들 */}
         <Row className="mt-2">
             <Form.Label column sm={3}>차단여부</Form.Label>
             <Col sm={9}>
@@ -171,9 +239,45 @@ export default function AdminDetail() {
             </Col>
         </Row>
 
-
-
         <Row className="mt-5">
+            <Col className="text-end">
+                <Button variant="warning" className="ms-2 w-100" onClick={createTempPassword}>
+                    {sending === false &&(<>
+                        <MdOutlinePassword />
+                        <span className="ms-2">비밀번호 변경하기</span>
+                    </>)}
+                    {sending === true &&(<>
+                        <FaSpinner className="spin"/>
+                        <span className="ms-2">변경메일 발송중...</span>
+                    </>)}
+                    </Button>
+                    
+            </Col>
+        </Row>
+
+
+        {/*  강사님
+        <Row className="mt-5">
+            <Col className="text-end">
+
+                <Button variant="danger" className="w-md-auto" onClick={block}>
+                    {account?.accountBlock === "Y" ? (<>
+                        <FaUserLock/>
+                        <span className="ms-2">차단 해제하기</span>
+                    </>):(<>
+                        <FaUserLock/>
+                    <span className="ms-2">차단 설정하기</span>
+                    </>)}
+                </Button>
+
+
+            </Col>
+        </Row>
+        */}
+
+
+
+        <Row className="mt-2">
             <Col className="text-end">
                 <Button className="ms-2 w-100" variant="secondary"
                     as={Link} to="/admin/users2">
