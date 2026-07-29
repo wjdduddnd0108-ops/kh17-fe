@@ -34,6 +34,7 @@ import Private from "@guard/Private";
 import AdminUsers from "@components/admin/AdminUsers";
 import AdminUsersScroll from "@components/admin/AdminUsersScroll";
 import AdminDetail from "@components/admin/AdminDetail";
+import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
 
 import Admin from "../guard/Admin";
 import AccountBlock from "@components/error/AccountBlock";
@@ -80,6 +81,9 @@ export default function Body(){
             <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}/>
             <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}/>
             <Route path="/admin/detail/:accountId" element={<Admin><AdminDetail/></Admin>}/>
+
+            <Route path="/admin/saleAdd" element={<Admin><AdminSaleAdd/></Admin>}/>
+
 
             {/* 세션테스트 */}
             <Route path="/session/test" element={<TestMain/>}/>
