@@ -41,6 +41,10 @@ import AccountBlock from "@components/error/AccountBlock";
 import NotFound from "@components/error/NotFound";
 import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
 
+import SaleList from "@components/sale/SaleList";
+import SaleDetail from "@components/sale/SaleDetail";
+
+
 
 export default function Body(){
     return(<>
@@ -76,6 +80,8 @@ export default function Body(){
             <Route path="/account/password" element={<Private><AccountPassword/></Private>}/>
             <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
             <Route path="/account/needUpdate" element={<Private><AccountNeedUpdate/></Private>}/>
+            <Route path="/account/needUpdat" element={<Private><AccountNeedUpdate/></Private>}/>
+            
 
             {/* 관리자 기능 */}
             <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}/>
@@ -83,6 +89,12 @@ export default function Body(){
             <Route path="/admin/detail/:accountId" element={<Admin><AdminDetail/></Admin>}/>
 
             <Route path="/admin/saleAdd" element={<Admin><AdminSaleAdd/></Admin>}/>
+
+
+            <Route path="/sale/list" element={<SaleList/>}/>
+            <Route path="/sale/detail/:saleNo" element={<SaleDetail/>}/>
+
+
 
 
             {/* 세션테스트 */}
