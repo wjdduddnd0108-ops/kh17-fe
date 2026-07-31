@@ -78,6 +78,11 @@ export default function AdminSaleEdit() {
             [ JSON.stringify(copy) ],
             { type : "application/json" }
         ));
+        //[2] 썸네일은 즉시 변경되게 구현된 상황(변경가능)
+        //[3] 상세이미지는 추가되는 항목들만 전송하여 저장처리
+        Array.from(detailImages).forEach(img=>{
+            form.append("detailImages", img);
+        });
 
         const { data } = await apiClient.put(`/sale/${saleNo}`, form);
         console.log(data);
@@ -150,6 +155,22 @@ export default function AdminSaleEdit() {
             image => image.attachNo !== attach.attachNo
         ));
     }, []);
+
+    //상세이미지 관련 도구들
+    const [detailImages, setDetailImages] = useState([]);
+    const detailImagesRef = useRef();
+    const changeDetailImages = useCallback(e=>{
+        setDetailImages(e.target.files);
+    }, []);
+    const clearDetailImages = useCallback(e=>{
+        setDetailImages([]);
+    }, []);
+    useEffect(()=>{
+        if(detailImages.length > 0) return;//이미지 있으면 Pass!
+        if(detailImagesRef.current) {
+            detailImagesRef.current.value = "";
+        }
+    }, [detailImages]);
 
 
     //sale은 절대로 null이면 안된다
@@ -351,10 +372,27 @@ export default function AdminSaleEdit() {
             </Col>
         </Row>
 
+        {/* 상세이미지 */}
+        <Row className="mt-4">
+            <Form.Label column sm={3}>신규 상세이미지</Form.Label>
+            <Col sm={9}>
+                <div className="d-flex">
+                    <Form.Control type="file" accept="image/*" multiple
+                        ref={detailImagesRef} 
+                        onInput={changeDetailImages}/>
+                    {detailImages.length > 0 && (
+                    <Button variant="danger" onClick={clearDetailImages} className="ms-2">
+                        <FaXmark/>                        
+                    </Button>
+                    )}
+                </div>
+            </Col>
+        </Row>
+
         {/* 수정버튼 */}
         <Row className="mt-5">
             <Col className="text-end">
-                <Button variant="success" size="lg" className="w-md-auto" 
+                <Button variant="success" size="lg" className="w-100" 
                         onClick={sendData}>
                     <FaSquarePen/>
                     <span className="ms-2">상품 수정하기</span>              
