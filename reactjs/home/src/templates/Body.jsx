@@ -43,6 +43,7 @@ import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
 
 import SaleList from "@components/sale/SaleList";
 import SaleDetail from "@components/sale/SaleDetail";
+import AdminSaleEdit from "@components/admin/sale/AdminSaleEdit";
 
 
 
@@ -87,6 +88,8 @@ export default function Body(){
             <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}/>
             <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}/>
             <Route path="/admin/detail/:accountId" element={<Admin><AdminDetail/></Admin>}/>
+            <Route path="/admin/saleEdit/:saleNo" element={<Admin><AdminSaleEdit/></Admin>}/>
+
 
             <Route path="/admin/saleAdd" element={<Admin><AdminSaleAdd/></Admin>}/>
 
