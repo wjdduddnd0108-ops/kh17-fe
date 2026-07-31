@@ -5,7 +5,7 @@ import { Badge, Button, Card, Col, Row } from "react-bootstrap";
 
 import NoImage from "@assets/images/no-image.png";
 import { Link } from "react-router-dom";
-import { FaArrowTrendDown } from "react-icons/fa6";
+import { FaArrowRight, FaArrowTrendDown } from "react-icons/fa6";
 
 //무조건 상대경로로 불러올 때 ./ 부터 시작해야함 (파일명만 적으면 안됨)
 import "./SaleList.css";
@@ -61,34 +61,36 @@ export default function SaleList() {
                                 objectPosition: "center"
                             }
                         }/>
-                    <Card.Body>
+                     <Card.Body>
                         <Card.Title className="text-truncate">{item.saleName}</Card.Title>
                         <Card.Text>
                             <div>
                                 <Badge bg="info">{item.saleCategory}</Badge>
                             </div>
                             <div className="mt-4 fs-4" style={{height:120}}>
-                                <s className="text-muted">{item.saleOriginalPrice.toLocaleString()}원</s>
-                                <br/>
                                 {isDiscount ? (<>
-                                <b className="text-danger">{item.saleDiscountPrice.toLocaleString()}원</b>
-                                {/* ( {100 - item.saleDiscountPrice * 100 / item.saleOriginalPrice}%) */}
-                                <tr/>
-                                {/* ({calculateDiscountPercent(item)} %) */}
+                                <s className="text-muted">{item.saleOriginalPrice.toLocaleString()} 원</s>
+                                <br/>
+                                <b className="text-danger">{item.saleDiscountPrice.toLocaleString()} 원</b>
+                                <br/>
+                                {/* ( ↓ {100 - item.saleDiscountPrice * 100 / item.saleOriginalPrice} % ) */}
+                                {/* ( ↓ {calculateDiscountPercent(item)} %) */}
                                 <span className="text-success">
-                                    <FaArrowTrendDown style={{transform:"rotate(55deg)"}}/>
-                                ({result} %)
+                                    <FaArrowTrendDown style={{transform:"rotate(55deg)"}}/> 
+                                    {result}%
                                 </span>
                                 </>) : (<>
-                                <b>{item.saleOriginalPrice.toLocaleString}</b>
-                                </>)
-                                }
-
+                                <b>{item.saleOriginalPrice.toLocaleString()} 원</b>
+                                </>) }
                             </div>
                         </Card.Text>
-                        <Button variant="primary" as={Link} to={`/sale/detail/${item.saleNo}`}>
-                            상세보기 →
-                        </Button>
+
+                        <div className="text-end">
+                            <Button variant="primary" as={Link} to={`/sale/detail/${item.saleNo}`}>
+                                <span className="me-2">상세보기</span> 
+                                <FaArrowRight/>
+                            </Button>
+                        </div>
                     </Card.Body>
                 </Card>
             </div>
