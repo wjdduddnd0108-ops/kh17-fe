@@ -1,28 +1,37 @@
 import Jumbotron from "@templates/Jumbotron";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { FaPlus, FaSquarePen, FaXmark } from "react-icons/fa6";
+import { Button, Col, Form, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import { FaPlus, FaRotateRight, FaSquarePen, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import Editor from "react-simple-wysiwyg";
 import NoImage from "@assets/images/no-image.png";
+import Swal from "sweetalert2";
 
 export default function AdminSaleEdit() {
     //parameter
     const { saleNo } = useParams();
 
+    //hover가 가능한 환경 조사
+    const canHover = useMemo(()=>{
+        return window.matchMedia(
+        "(hover: hover) and (pointer: fine)"
+        ).matches;
+    }, []);
+    //모바일, 데스크탑까지 고려한 최종 hover
+
     //state
     const [sale, setSale] = useState(null);
     const [beforeThumbnail, setBeforeThumbnail] = useState(null);//AttachDto(DB정보)
-    const [detailImages, setDetailImages] = useState([]);
+    const [beforeDetailImages, setBeforeDetailImages] = useState([]);
 
     const loadData = useCallback(async ()=>{
         const { data } = await apiClient.get(`/sale/${saleNo}`);
         const { saleDto, thumbnail, details } = data;
         setSale(saleDto);
         setBeforeThumbnail(thumbnail);
-        setDetailImages(details);
+        setBeforeDetailImages(details);
         //할인 체크박스 처리 추가
         setDiscount(saleDto.saleOriginalPrice > saleDto.saleDiscountPrice);
     }, []);
@@ -116,6 +125,32 @@ export default function AdminSaleEdit() {
         }
     }, [thumbnail]);
 
+    //마우스가 올라갔을때를 감지하기 위한 state
+    const [hover, setHover] =useState(false);
+
+    //상세이미지 제거
+    const deleteDetailImage = useCallback(async (attach)=>{
+        //확인창
+        const result= await Swal.fire({
+            title: `상세 이미지를 삭제하시겠습니까?`,
+            text:"삭제한 이미지는 다시 복구할 수 없습니다",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "네",
+            cancelButtonText: "아니오",
+            confirmButtonColor: "#d63031",
+            cancelButtonColor: "#b2bec3"
+        });
+        if(result.isConfirmed === false)return;//취소
+
+        //apiClient를 이용한 삭제요청
+        await apiClient.delete(`/sale/detailImage/sale/${saleNo}/attach/${attach.attachNo}`);
+
+        setBeforeDetailImages(prev=>prev.filter(
+            image => image.attachNo !== attach.attachNo
+        ));
+    }, []);
+
 
     //sale은 절대로 null이면 안된다
     //→ sale이 null이면 기다려야 한다
@@ -202,14 +237,24 @@ export default function AdminSaleEdit() {
             <Form.Label column sm={3}>대표이미지</Form.Label>
             <Col sm={9}>
                 <div className="d-flex">
+                    <Button as="label" variant="success">
                     <Form.Control type="file" accept="image/*" 
                         ref={thumbnailRef} 
-                        onInput={changeThumbnail}/>
-                    {thumbnail !== null && (
-                    <Button variant="danger" onClick={clearThumbnail} className="ms-2">
-                        <FaXmark/>                        
+                        onInput={changeThumbnail}
+                        className="d-none"/>
+                    {beforeThumbnail === null &&(<>
+                        <FaPlus/>
+                        <span className="ms-2">썸네일 등록</span>
+                    </>)}
+                    {beforeThumbnail !== null &&(<>
+                        <FaRotateRight/>
+                        <span className="ms-2">썸네일 변경</span>
+                    </>)}
                     </Button>
-                    )}
+                    <Button variant="danger" onClick={clearThumbnail} className="ms-2">
+                        <FaXmark/>    
+                        <span className="ms-2">썸네일 제거</span>                    
+                    </Button>
                 </div>
             </Col>
         </Row>
@@ -217,11 +262,92 @@ export default function AdminSaleEdit() {
             <Col sm={{offset:3, span:9}}>
                 {/* 기존 이미지를 표시하고 제거, 변경 버튼을 추가 */}
                 {beforeThumbnail === null && (
-                <img src={NoImage} width={100} className="border"/>
+                <img src={NoImage} width={300} className="border"/>
                 ) }
                 {beforeThumbnail !== null && (
                 <img src={`${import.meta.env.VITE_SERVER_URL}/api/attach/${beforeThumbnail.attachNo}`} width={300} className="border"/>
                 ) }
+            </Col>
+        </Row>
+
+        {/* position을 이용해서 버튼과 이미지를 합체 */}
+        <Row className="mt-2">
+            <Col sm={{offset:3, span:9}}>
+                <div className="position-relative" style={{width:300, minHeight:300}}
+                    onMouseEnter={e=>setHover(true)}
+                    onMouseLeave={e=>setHover(false)}>
+                    {/* 기존 이미지를 표시하고 제거, 변경 버튼을 추가 */}
+                    {beforeThumbnail === null && (
+                    <img src={NoImage}
+                        className="position-absolute top-0 start-0 w-100"/>
+                    ) }
+                    {beforeThumbnail !== null && (
+                    <img src={`${import.meta.env.VITE_SERVER_URL}/api/attach/${beforeThumbnail.attachNo}`} 
+                        className="position-absolute top-0 start-0 w-100"/>
+                    ) }
+
+                    <Button as="label" variant="success" 
+                        className="position-absolute" style={
+                            {
+                                top:10, 
+                                right:60,
+                                transition : "opacity 0.1s ease-out",
+                                opacity: hover ? 100 : 0
+
+                            }
+                        }>
+                    <Form.Control type="file" accept="image/*" 
+                        ref={thumbnailRef} 
+                        onInput={changeThumbnail}
+                        className="d-none"/>
+                    {beforeThumbnail === null &&(<><FaPlus/></>)}
+                    {beforeThumbnail !== null &&(<><FaRotateRight/></>)}
+                    </Button>
+                    <Button variant="danger" onClick={clearThumbnail} 
+                        className="ms-2 position-absolute" style={
+                            {
+                                top:10, 
+                                right:10,
+                                transition : "opacity 0.1s ease-out",
+                                opacity: hover ? 100 : 0
+
+                            }
+                        }>
+                        <FaXmark/>                      
+                    </Button>
+
+                </div>
+            </Col>
+        </Row>
+
+        {/* 
+            상세이미지는 등록과 동일하게 처리되도록 구현하는 것이 좋음
+            1. 기존 이미지들은 작게 표시 or 목록으로 표시 (클릭하면 뷰어가 나오게)
+            2. 기존 이미지들을 삭제할 수 있는 버튼을 제공 (누르면 경고 후 바로 삭제)
+            3. 신규 이미지들을 추가할 수 있는 입력창을 생성 (등록화면과 동일)
+            4. 수정완료 버튼을 누르면 전송하여 처리 (or 선택 시점에 등록할 수도 있음)
+        */}
+        <Row className="mt-5">
+            <Form.Label column sm={3}>상세이미지</Form.Label>
+            <Col sm={9}>
+                <ListGroup>
+                    {beforeDetailImages.map(attach=>(
+                    <ListGroupItem key={attach.attachNo}>
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                {attach.attachName}
+                                <span className="ms-2 text-info">
+                                    ({ (attach.attachSize/1024/1024).toFixed(2)} MB)
+                                </span>
+                            </div>
+                            <div>
+                                <FaXmark className="text-danger" 
+                                    onClick={e=>deleteDetailImage(attach)}/>
+                            </div>
+                        </div>
+                    </ListGroupItem>
+                    ))}
+                </ListGroup>
             </Col>
         </Row>
 
