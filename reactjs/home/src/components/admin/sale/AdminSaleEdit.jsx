@@ -210,6 +210,18 @@ export default function AdminSaleEdit() {
         return beforeDetailImages.reduce((acc, cur)=> acc && cur.choice , true);
     }, [beforeDetailImages]);
 
+    const deleteCheckedDetailImages = useCallback(async ()=>{
+        const detailNumbers = beforeDetailImages.filter(
+            attach => attach.choice === true//체크된 항목만 걸러라
+        ).map(
+            attach => attach.attachNo//전체 정보말고 번호만 추려라 
+        );
+        console.log(detailNumbers);
+
+        const { data } = await apiClient.post(`/sale/deleteDetailImages/${saleNo}`, detailNumbers);
+        //화면갱신
+    }, [beforeDetailImages]);
+
 
     //sale은 절대로 null이면 안된다
     //→ sale이 null이면 기다려야 한다
@@ -391,8 +403,12 @@ export default function AdminSaleEdit() {
             <Col sm={9}>
                 {/* 전체선택/해제 */}
                 <Form.Check type="checkbox" label="전체 선택"
-                    // checked={}
+                    checked={isAllChecked}
                     onChange={checkAllDetailImages}/>
+
+                <Button variant="danger" onClick={deleteCheckedDetailImages}>
+                    체크된 항목 삭제
+                </Button>
                 <ListGroup>
                     {beforeDetailImages.map(attach=>(
                     <ListGroupItem key={attach.attachNo}>
