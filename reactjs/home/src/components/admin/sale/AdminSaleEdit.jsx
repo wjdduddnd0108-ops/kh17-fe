@@ -78,10 +78,10 @@ export default function AdminSaleEdit() {
         //선택된 파일을 서버로 전송시켜서 진짜 이미지 변경을 시킨다(+업로드 & DB변경)
         const file = e.target.files[0];
 
+        // [1] 서버로 업로드한 결과를 적용(최종 수정 누르지 않고 즉석에서 가능한 방법)
         const form = new FormData();
         form.append("thumbnail", file);
         const { data } = await apiClient.patch(`/sale/thumbnail/${saleNo}`, form);
-
         setBeforeThumbnail(data.attach);//변경된 이미지를 기존 이미지 정보에 덮어쓰기
     }, []);
     const clearThumbnail = useCallback(async ()=>{
@@ -178,6 +178,37 @@ export default function AdminSaleEdit() {
         //navigate(`/sale/detail/${saleNo}`);//상셍로 이동
         await loadData();//냅둘 경우
     }, [sale, discount, detailImages]);
+
+    // 체크될 경우 항목을 신설하거나 true/false를 교체하는 함수
+    const choiceDetailImages = useCallback((target, e)=>{
+        setBeforeDetailImages(prev=>prev.map(
+            attach => {
+                if(attach.attachNo === target.attachNo){//내가 찾는 항목
+                    return{
+                        ...attach,
+                        choice : e.target.checked
+                    };
+                }
+                return {...attach};//내가 찾는 항목이 아닌 경우
+            }
+        ));
+    },[]);
+
+    //전체선택 관련 항목들
+    const checkAllDetailImages = useCallback(e=>{
+        setBeforeDetailImages(prev => prev.map(
+            attach => ({
+                ...attach,
+                choice : e.target.checked
+            })
+        ))
+    },[]);
+    const isAllChecked = useMemo(()=>{
+        //reduce를 이용하면 배열을 누적 계산하여 1개의 값을 만들어낼 수 있다
+        //논리 1개 (true/false)를 만들어내고 싶으므로 유용한 계산
+        //배열.reduce(계산함수, 초기값) 형태로 쓰며 계산함수의 첫번째 인자는 누적된 값, 두번째 인자는 현재대상
+        return beforeDetailImages.reduce((acc, cur)=> acc && cur.choice , true);
+    }, [beforeDetailImages]);
 
 
     //sale은 절대로 null이면 안된다
@@ -358,6 +389,10 @@ export default function AdminSaleEdit() {
         <Row className="mt-5">
             <Form.Label column sm={3}>상세이미지</Form.Label>
             <Col sm={9}>
+                {/* 전체선택/해제 */}
+                <Form.Check type="checkbox" label="전체 선택"
+                    // checked={}
+                    onChange={checkAllDetailImages}/>
                 <ListGroup>
                     {beforeDetailImages.map(attach=>(
                     <ListGroupItem key={attach.attachNo}>
@@ -369,8 +404,14 @@ export default function AdminSaleEdit() {
                                 </span>
                             </div>
                             <div>
-                                <FaXmark className="text-danger" 
-                                    onClick={e=>deleteDetailImage(attach)}/>
+                                {/* 하나만 삭제 가능한 기존 버튼 */}
+                                {/* <FaXmark className="text-danger" 
+                                    onClick={e=>deleteDetailImage(attach)}/> */}
+
+                                {/* 체크박스 */}
+                                <Form.Check type="checkbox"
+                                    checked={attach.choice === true}
+                                    onChange={e=>choiceDetailImages(attach, e)}/>
                             </div>
                         </div>
                     </ListGroupItem>
