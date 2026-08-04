@@ -34,6 +34,16 @@ export const  apiClient = axios.create({
 //- axios에는 interceptor(감시도구)라는 기능이 존재 
 //- axios 공식 사이트에서 제공하는 interceptor 구문을 가져다가 수정
 
+//요청에 대한 인터셉터
+// - 정상 요청의 경우 커스텀 헤더를 하나 생성해서 현재 페이지의 주소를 첨부하도록 구현
+axios.interceptors.request.use(
+  config=>{
+    config.headers["X-Client-Page"] = window.location.href;
+    return config;
+  },
+  error=>error
+);
+
 // 응답에 대한 인터셉터
 apiClient.interceptors.response.use(
   response=>response,

@@ -83,6 +83,10 @@ export default function Menu() {
                             <NavDropdown.Item as={Link} to="/book/spa">도서정보2</NavDropdown.Item>
                             
                         </NavDropdown>
+                        <NavDropdown title="카카오페이" id="basic-nav-dropdown">
+                            <NavDropdown.Item as={Link} to="/pay/v1/buy">무식한 결제</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/pay/v1/buy/success">결제완료</NavDropdown.Item>
+                        </NavDropdown>
                         <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link>
                         <Nav.Link as={Link} to="/sale/list">상품 목록</Nav.Link>
                         

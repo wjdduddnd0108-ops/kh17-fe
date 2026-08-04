@@ -175,7 +175,8 @@ export default function AdminSaleEdit() {
         // console.log(data);
         
         toast.success("상품 수정이 완료되었습니다");
-        //navigate(`/sale/detail/${saleNo}`);//상셍로 이동
+        clearDetailImages();
+        //navigate(`/sale/detail/${saleNo}`);//상세로 이동
         await loadData();//냅둘 경우
     }, [sale, discount, detailImages]);
 
@@ -220,7 +221,13 @@ export default function AdminSaleEdit() {
 
         const { data } = await apiClient.post(`/sale/deleteDetailImages/${saleNo}`, detailNumbers);
         //화면갱신
+        //- loadData는 안되고 화면에서 요소를 직접 제거해야함 (filter 사용)
+        toast.success("상세 이미지가 삭제되었습니다");
+        setBeforeDetailImages(prev=>prev.filter(
+            attach => !detailNumbers.includes(attach.attachNo)//지운 번호가 아닌 요소만 추출
+        ))
     }, [beforeDetailImages]);
+    
 
 
     //sale은 절대로 null이면 안된다
