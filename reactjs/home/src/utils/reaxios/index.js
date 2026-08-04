@@ -36,7 +36,7 @@ export const  apiClient = axios.create({
 
 //요청에 대한 인터셉터
 // - 정상 요청의 경우 커스텀 헤더를 하나 생성해서 현재 페이지의 주소를 첨부하도록 구현
-axios.interceptors.request.use(
+apiClient.interceptors.request.use(
   config=>{
     config.headers["X-Client-Page"] = window.location.href;
     return config;
