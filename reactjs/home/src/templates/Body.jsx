@@ -118,7 +118,7 @@ export default function Body(){
             <Route path="/pay/v1/buy/fail" element={<KakaopayBuyFailVersion1/>}/>
 
             <Route path="/pay/v2/buy" element={<Private><KakaopayBuyVersion2/></Private>}/>
-            <Route path="/pay/v2/buy/success" element={<Private><KakaopayBuySuccessVersion2/></Private>}/>
+            <Route path="/pay/v2/buy/success/:purchaseNo" element={<Private><KakaopayBuySuccessVersion2/></Private>}/>
             <Route path="/pay/v2/buy/cancel" element={<Private><KakaopayBuyCancelVersion2/></Private>}/>
             <Route path="/pay/v2/buy/fail" element={<Private><KakaopayBuyFailVersion2/></Private>}/>
 

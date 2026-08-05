@@ -115,7 +115,7 @@ export default function SaleDetail() {
                 </div>
                 {/* 수량선택 */}
                 <div className="mt-2">
-                    <Form.Control type="number" className="d-inline-block"
+                    <Form.Control type="number" inputMode="numeric" className="d-inline-block"
                         style={{ widht: 80 }} value={quantity} 
                         onChange={e=>{
                             const number = parseInt(e.target.value) || 1;

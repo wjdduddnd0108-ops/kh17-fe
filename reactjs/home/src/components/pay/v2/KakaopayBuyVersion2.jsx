@@ -34,6 +34,7 @@ export default function KakaopayBuyVersion2() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [orders, setOrders] = useState([]);
+    console.log(orders);
     useEffect(() => {
         loadData();
     }, []);
