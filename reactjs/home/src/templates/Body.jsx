@@ -27,6 +27,7 @@ import AccountLogin from "@components/account/AccountLogin";
 import MyPage from "@components/account/MyPage";
 import AccountPassword from "@components/account/AccountPassword";
 import AccountChange from "@components/account/AccountChange";
+import AccountCart from "@components/account/AccountCart";
 
 import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
@@ -92,6 +93,8 @@ export default function Body(){
             <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
             <Route path="/account/needUpdate" element={<Private><AccountNeedUpdate/></Private>}/>
             <Route path="/account/needUpdat" element={<Private><AccountNeedUpdate/></Private>}/>
+            
+            <Route path="/account/cart" element={<Private><AccountCart/></Private>}/>
             
 
             {/* 관리자 기능 */}

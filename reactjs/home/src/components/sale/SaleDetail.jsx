@@ -59,7 +59,6 @@ export default function SaleDetail() {
             confirmButtonColor: "#d63031",
             cancelButtonColor: "#b2bec3"
         });
-
         if (result.isConfirmed == false) return;//취소
 
         //삭제 요청
@@ -69,13 +68,32 @@ export default function SaleDetail() {
         navigate("/sale/list");
     }, []);
 
+    const isLogin = useAtomValue(isLoginState);
+
     //구매 확인 페이지로 주소를 잘 만들어서 전달
-    const purchase = useCallback(() => {
+    const purchase = useCallback(async() => {
+        if(!isLogin) {
+            const result = await Swal.fire({
+                title:"로그인이 필요한 서비스입니다",
+                text:"확인을 누르시면 로그인 페이지로 이동합니다",
+                icon:"info",
+                showCancelButton:true,
+                confirmButtonText:"확인",
+                cancelButtonText:"취소",
+                confirmButtonColor:"#0984e3",
+                cancelButtonColor:"#b2bec3",
+            });
+    
+            if(result.isConfirmed) {//확인을 눌렀다면
+                navigate("/account/login");
+            }
+            return;
+        }
+
         navigate(`/pay/v2/buy?sale=${saleNo}:${quantity}`)
     }, [saleNo, quantity]);
 
     //장바구니 담기
-    const isLogin = useAtomValue(isLoginState);
     const addCart = useCallback(async () => {
         if (!isLogin) {
             const result = await Swal.fire({
@@ -85,8 +103,8 @@ export default function SaleDetail() {
                 showCancelButton: true,
                 confirmButtonText: "확인",
                 cancelButtonText: "취소",
-                confirmButtonColor: "#b2bec3",
-                cancelButtonColor: "#0984e3"
+                confirmButtonColor: "#0984e3",
+                cancelButtonColor: "#b2bec3"
             });
             if (result.isConfirmed){
                 navigate("/account/login");
@@ -107,8 +125,8 @@ export default function SaleDetail() {
                 showCancelButton: true,
                 confirmButtonText: "장바구니로 이동",
                 cancelButtonText: "계속 쇼핑",
-                confirmButtonColor: "#dfe6e9",
-                cancelButtonColor: "#00b894"
+                confirmButtonColor: "#00b894",
+                cancelButtonColor: "#dfe6e9"
             });
             if (result.isConfirmed){//확인을 눌렀다면
                 navigate("/account/cart");
@@ -118,7 +136,7 @@ export default function SaleDetail() {
     //sale은 절대로 null이면 안된다
     //-> sale이 null이면 기다려야 한다
     if (sale === null) {
-        return <h1>기다려</h1>
+        return <h1>로딩중..</h1>
     }
 
     return (<>
