@@ -14,6 +14,8 @@ import { isAdminState } from "@utils/storage";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
+import { isLoginState } from "@utils/storage";
+
 export default function SaleDetail() {
     const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ export default function SaleDetail() {
     const [sale, setSale] = useState(null);
     const [thumbnail, setThumbnail] = useState(null);
     const [detailImages, setDetailImages] = useState([]);
-    const [quantity, setQuantity] =useState(1);
+    const [quantity, setQuantity] = useState(1);
 
     const loadData = useCallback(async () => {
         const { data } = await apiClient.get(`/sale/${saleNo}`);
@@ -68,9 +70,50 @@ export default function SaleDetail() {
     }, []);
 
     //구매 확인 페이지로 주소를 잘 만들어서 전달
-    const purchase = useCallback(()=>{
+    const purchase = useCallback(() => {
         navigate(`/pay/v2/buy?sale=${saleNo}:${quantity}`)
-    },[saleNo, quantity]);
+    }, [saleNo, quantity]);
+
+    //장바구니 담기
+    const isLogin = useAtomValue(isLoginState);
+    const addCart = useCallback(async () => {
+        if (!isLogin) {
+            const result = await Swal.fire({
+                title: "로그인이 필요한 서비스입니다?",
+                text: "확인을 누르시면 로그인 페이지로 이동합니다",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "확인",
+                cancelButtonText: "취소",
+                confirmButtonColor: "#b2bec3",
+                cancelButtonColor: "#0984e3"
+            });
+            if (result.isConfirmed){
+                navigate("/account/login");
+            };
+            return;
+        }
+
+        const { data } = await apiClient.post("/cart/", {
+            item: saleNo,//상품번호
+            qty: quantity//구매수량
+        });
+        console.log(data);
+
+        //장바구니 담겼다는 알림
+         const result = await Swal.fire({
+                title: "상품이 장바구니에 담겼습니다",
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonText: "장바구니로 이동",
+                cancelButtonText: "계속 쇼핑",
+                confirmButtonColor: "#dfe6e9",
+                cancelButtonColor: "#00b894"
+            });
+            if (result.isConfirmed){//확인을 눌렀다면
+                navigate("/account/cart");
+            };
+    }, [quantity]);
 
     //sale은 절대로 null이면 안된다
     //-> sale이 null이면 기다려야 한다
@@ -116,13 +159,13 @@ export default function SaleDetail() {
                 {/* 수량선택 */}
                 <div className="mt-2">
                     <Form.Control type="number" inputMode="numeric" className="d-inline-block"
-                        style={{ widht: 80 }} value={quantity} 
-                        onChange={e=>{
+                        style={{ widht: 80 }} value={quantity}
+                        onChange={e => {
                             const number = parseInt(e.target.value) || 1;
                             setQuantity(number);
-                        }}/>
+                        }} />
                     <Button variant="success" onClick={purchase}>구매</Button>
-                    <Button variant="secondary">담기</Button>
+                    <Button variant="secondary" className="ms-2" onClick={addCart}>담기</Button>
                 </div>
             </Col>
         </Row>
@@ -171,9 +214,9 @@ export default function SaleDetail() {
                         </span>
                     </Button>
                     {/* 수정링크 */}
-                    <Button variant="warning" size="lg" as={Link} to={`/admin/saleEdit/${saleNo}`} 
-                            className="ms-2">
-                        <FaSquarePen/>
+                    <Button variant="warning" size="lg" as={Link} to={`/admin/saleEdit/${saleNo}`}
+                        className="ms-2">
+                        <FaSquarePen />
                         <span className="ms-2">
                             상품정보 수정
                         </span>
