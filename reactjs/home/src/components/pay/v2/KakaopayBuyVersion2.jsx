@@ -5,6 +5,7 @@ import { apiClient } from "@utils/reaxios";
 import { Button, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import NoImage from "@assets/images/no-image.png";
 import { FaArrowTrendDown, FaCartPlus } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 /* 
     계획
@@ -93,28 +94,41 @@ export default function KakaopayBuyVersion2() {
     }, []);
 
     //할인율 계산 함수
-    const calculateDiscountRate = useCallback((order)=>{
-        if(order.saleOriginalPrice <= order.saleDiscountPrice) return 0;
-        if(order.saleDiscountPrice === 0) return 100;
+    const calculateDiscountRate = useCallback((order) => {
+        if (order.saleOriginalPrice <= order.saleDiscountPrice) return 0;
+        if (order.saleDiscountPrice === 0) return 100;
         const discount = order.saleOriginalPrice - order.saleDiscountPrice;
         const rate = discount * 100 / order.saleOriginalPrice;
         return rate.toFixed(0);//소수점 2자리
-    },[]);
+    }, []);
 
     //구매
     //- 서버에 알려줘야 할 정보 : 상품번호 + 구매수량
     const navigate = useNavigate();
-    const purchase = useCallback(async ()=>{
-        const { data } = await apiClient.post(
-            "/kakaopay/v2/buy",
-            {
-                orders : orders.map(order => ({
-                    saleNo : order.saleNo,
-                    quantity : order.quantity
-                }))
+    const purchase = useCallback(async () => {
+        try {
+            const { data } = await apiClient.post(
+                "/kakaopay/v2/buy",
+                {
+                    orders: orders.map(order => ({
+                        saleNo: order.saleNo,
+                        quantity: order.quantity
+                    }))
+                }
+            );
+            navigate(data.url);
+        }
+        catch (e) {
+            //403인 경우는 구매 가능 수량이 요청 수량보다 적은 경우
+            if (e.status === 403) {
+                //확인창
+                const result = await Swal.fire({
+                    title: "구매 불가 안내",
+                    text: "구매 가능한 수량을 초과하여 구매하실 수 없습니다",
+                    icon: "error",
+                });
             }
-        );
-        navigate(data.url);
+        }
     }, [orders]);
 
     return (<>
@@ -165,7 +179,7 @@ export default function KakaopayBuyVersion2() {
         <Row className="mt-5">
             <Col>
                 <Button variant="success" size="lg" className="w-100" onClick={purchase}>
-                    <FaCartPlus/>
+                    <FaCartPlus />
                     <span className="ms-2">구매하기</span>
                 </Button>
             </Col>

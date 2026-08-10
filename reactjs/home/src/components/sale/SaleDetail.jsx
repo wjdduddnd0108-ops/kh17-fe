@@ -178,10 +178,15 @@ export default function SaleDetail() {
                 <div className="mt-2">
                     <Form.Control type="number" inputMode="numeric" className="d-inline-block"
                         style={{ widht: 80 }} value={quantity}
+                        onFocus={e=>e.target.select()}
                         onChange={e => {
-                            const number = parseInt(e.target.value) || 1;
+                            let number = parseInt(e.target.value) || 1;
+                            if(number < 1 )//최소값 보정 : number = Math.max(number, 1);
+                                number = 1;
+                            if(number > sale.saleStock)//최대값 보정
+                                number = sale.saleStock;
                             setQuantity(number);
-                        }} />
+                        }}/>
                     <Button variant="success" onClick={purchase}>구매</Button>
                     <Button variant="secondary" className="ms-2" onClick={addCart}>담기</Button>
                 </div>

@@ -57,6 +57,7 @@ import KakaopayBuyCancelVersion2 from "@components/pay/v2/KakaopayBuyCancelVersi
 import KakaopayBuyFailVersion2 from "@components/pay/v2/KakaopayBuyFailVersion2";
 import KakaopayBuyDetailVersion2 from "@components/pay/v2/KakaopayBuyDetailVersion2";
 
+import WebSocketV1BasicClient from "@components/websocket/WebSocketV1BasicClient";
 
 export default function Body(){
     return(<>
@@ -127,11 +128,17 @@ export default function Body(){
             <Route path="/pay/v2/buy/fail" element={<Private><KakaopayBuyFailVersion2/></Private>}/>
             <Route path="/pay/v2/buy/detail/:purchaseNo" element={<Private><KakaopayBuyDetailVersion2/></Private>}/>
 
+            {/* 웹소켓 */}
+            <Route path="/websocket/v1" element={<WebSocketV1BasicClient/>}/>
+
             {/* error */}
             <Route path="/account/block" element={<AccountBlock/>}/>
 
             {/* fallback route */}
             <Route path="*" element={<NotFound/>}/>
+
+
+
 
         </Routes>
     </>)
