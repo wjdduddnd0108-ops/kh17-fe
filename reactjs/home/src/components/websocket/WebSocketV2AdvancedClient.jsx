@@ -136,8 +136,13 @@ export default function WebSocketV2AdvancedClient() {
                             <div className="profile-wrapper">
                                 <img src="https://picsum.photos/100"/>
                             </div>
-                            <div className="content-wrapper">{message.content}</div>
-                            <div className="time-wrapper">a h:mm</div>
+                            <div className="content-wrapper">
+                                <div className="sender">피카츄</div>
+                                <div className="content">
+                                    <div className="body">{message.content}</div>
+                                    <div className="time">{dayjs(message.time).format("a h:mm")}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     ))}

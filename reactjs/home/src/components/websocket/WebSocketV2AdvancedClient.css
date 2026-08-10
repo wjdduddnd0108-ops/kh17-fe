@@ -20,8 +20,20 @@
 .message-wrapper > .message-outer > .message-inner > .profile-wrapper > img {
     width: 100%;
 }
-.message-wrapper > .message-outer > .message-inner > .content-wrapper {
+
+.message-wrapper > .message-outer > .message-inner > .content-wrapper > .sender {
+    margin-bottom: 0.35em;
+}
+.message-wrapper > .message-outer > .message-inner > .content-wrapper > .content {
+    display: flex;
+    align-items: flex-end;
+}
+.message-wrapper > .message-outer > .message-inner > .content-wrapper > .content > .body {
     background-color: white;
     border-radius: 0.2em;
     padding: 0.5em;
+}
+.message-wrapper > .message-outer > .message-inner > .content-wrapper > .content > .time {
+    margin-left: 0.5em;
+    font-size: 0.75em;
 }
