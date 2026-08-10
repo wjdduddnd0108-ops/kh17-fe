@@ -129,23 +129,31 @@ export default function WebSocketV2AdvancedClient() {
         <Row className="mt-5">
             <Col>
                 <div className="message-wrapper">
-                    {history.map((message, index)=>(
-                    <div className="message-outer" key={index}>
-                        <div className="message-inner">
-                            {/* 가로로 3칸을 나눠 순서대로 프로필/작성자+내용/작성시각으로 구현*/}
-                            <div className="profile-wrapper">
-                                <img src="https://picsum.photos/100"/>
-                            </div>
-                            <div className="content-wrapper">
-                                <div className="sender">피카츄</div>
-                                <div className="content">
-                                    <div className="body">{message.content}</div>
-                                    <div className="time">{dayjs(message.time).format("a h:mm")}</div>
+                    {history.map((message, index)=>{
+                    //추가 계산 코드 작성
+                    const my = uuid === message.sender;
+                    return (
+                        <div className={`message-outer ${my ? "my" : ""}`} key={index}>
+                            <div className="message-inner">
+                                {/* 가로로 3칸을 나눠 순서대로 프로필/작성자+내용/작성시각으로 구현*/}
+                                {my === false && (
+                                <div className="profile-wrapper">
+                                    <img src="https://picsum.photos/100"/>
+                                </div>
+                                )}
+                                <div className="content-wrapper">
+                                    {my === false && (
+                                    <div className="sender">{message.sender}</div>
+                                    )}
+                                    <div className="content">
+                                        <div className="body">{message.content}</div>
+                                        <div className="time">{dayjs(message.time).format("a h:mm")}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    ))}
+                        )
+                    })}
                 </div>
             </Col>
         </Row>
