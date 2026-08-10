@@ -58,6 +58,7 @@ import KakaopayBuyFailVersion2 from "@components/pay/v2/KakaopayBuyFailVersion2"
 import KakaopayBuyDetailVersion2 from "@components/pay/v2/KakaopayBuyDetailVersion2";
 
 import WebSocketV1BasicClient from "@components/websocket/WebSocketV1BasicClient";
+import WebSocketV2AdvancedClient from "@components/websocket/WebSocketV2AdvancedClient";
 
 export default function Body(){
     return(<>
@@ -130,6 +131,7 @@ export default function Body(){
 
             {/* 웹소켓 */}
             <Route path="/websocket/v1" element={<WebSocketV1BasicClient/>}/>
+            <Route path="/websocket/v2" element={<WebSocketV2AdvancedClient/>}/>
 
             {/* error */}
             <Route path="/account/block" element={<AccountBlock/>}/>

@@ -1,0 +1,27 @@
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    background-color: #A1BFD9;
+}
+.message-wrapper > .message-outer {
+    padding: 0.5em;
+}
+.message-wrapper > .message-outer > .message-inner {
+    display: flex;
+}
+.message-wrapper > .message-outer > .message-inner > .profile-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 1em;
+}
+.message-wrapper > .message-outer > .message-inner > .profile-wrapper > img {
+    width: 100%;
+}
+.message-wrapper > .message-outer > .message-inner > .content-wrapper {
+    background-color: white;
+    border-radius: 0.2em;
+    padding: 0.5em;
+}
