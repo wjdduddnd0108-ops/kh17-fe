@@ -11,6 +11,11 @@ const path = (value)=>fileURLToPath(new URL(value, import.meta.url));
 
 // https://vite.dev/config/
 export default defineConfig({
+  //외부 접속 허용 설정
+  server: {
+    host: "0.0.0.0",
+    port: 5173
+  },
   plugins: [react()],
   resolve: {
     alias:{
