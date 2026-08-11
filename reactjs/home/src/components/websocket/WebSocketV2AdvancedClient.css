@@ -90,3 +90,13 @@
     font-weight: bold;
     font-style: italic;
 }
+
+/* 시스템 메세지 디자인 */
+.system-message {
+    text-align: center;
+    font-size: 16px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    padding: 0.15em;
+    background-color: rgba(0, 0, 0, 0.3);
+}
