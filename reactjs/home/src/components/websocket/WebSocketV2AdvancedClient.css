@@ -3,15 +3,22 @@
     flex-direction: column-reverse;
     font-size: 16px;
     background-color: #A1BFD9;
+
+    /* 높이제한을 걸고 스크롤을 추가하고 싶다면 */
+    max-height: 500px;
+    overflow: auto;
 }
-.message-wrapper > .message-outer {
+
+.message-wrapper>.message-outer {
     padding: 0.5em;
 }
-.message-wrapper > .message-outer > .message-inner {
+
+.message-wrapper>.message-outer>.message-inner {
     display: flex;
     /* flex-direction: row-reverse; */
 }
-.message-wrapper > .message-outer > .message-inner > .profile-wrapper {
+
+.message-wrapper>.message-outer>.message-inner>.profile-wrapper {
     min-width: 50px;
     width: 50px;
     height: 50px;
@@ -19,53 +26,67 @@
     overflow: hidden;
     margin-right: 1em;
 }
-.message-wrapper > .message-outer > .message-inner > .profile-wrapper > img {
+
+.message-wrapper>.message-outer>.message-inner>.profile-wrapper>img {
     width: 100%;
 }
 
-.message-wrapper > .message-outer > .message-inner > .content-wrapper > .sender {
+.message-wrapper>.message-outer>.message-inner>.content-wrapper {
+    flex-grow: 1;
+}
+
+.message-wrapper>.message-outer>.message-inner>.content-wrapper>.sender {
     margin-bottom: 0.35em;
 }
-.message-wrapper > .message-outer > .message-inner > .content-wrapper > .content {
+
+.message-wrapper>.message-outer>.message-inner>.content-wrapper>.content {
     display: flex;
     /* flex-direction: row-reverse; */
     align-items: flex-end;
 }
-.message-wrapper > .message-outer > .message-inner > .content-wrapper > .content > .body {
+
+.message-wrapper>.message-outer>.message-inner>.content-wrapper>.content>.body {
     background-color: white;
     border-radius: 0.2em;
     padding: 0.5em;
     max-width: 75%;
     word-break: break-all;
 }
-.message-wrapper > .message-outer > .message-inner > .content-wrapper > .content > .time {
+
+.message-wrapper>.message-outer>.message-inner>.content-wrapper>.content>.time {
     margin-left: 0.5em;
     font-size: 0.75em;
 }
 
 /* 내 메세지에 대한 처리(디자인 재정의) */
-.message-wrapper > .message-outer.my > .message-inner {
+.message-wrapper>.message-outer.my>.message-inner {
     flex-direction: row-reverse;
 }
 
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content {
+.message-wrapper>.message-outer.my>.message-inner>.content-wrapper>.content {
     flex-direction: row-reverse;
 }
 
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .time {
+.message-wrapper>.message-outer.my>.message-inner>.content-wrapper>.content>.time {
     margin-left: 0px;
     margin-right: 0.5em;
 }
 
-.message-wrapper > .message-outer.my > .message-inner > .profile-wrapper {
+.message-wrapper>.message-outer.my>.message-inner>.profile-wrapper {
     margin-right: 0px;
     margin-left: 1em;
 }
 
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .sender {
+.message-wrapper>.message-outer.my>.message-inner>.content-wrapper>.sender {
     text-align: right;
 }
 
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .body {
+.message-wrapper>.message-outer.my>.message-inner>.content-wrapper>.content>.body {
     background-color: #FFEB00;
+}
+
+/* DM인 경우 작성자를 강조하도록 표시 */
+.message-wrapper>.message-outer>.message-inner.dm>.content-wrapper>.sender {
+    font-weight: bold;
+    font-style: italic;
 }

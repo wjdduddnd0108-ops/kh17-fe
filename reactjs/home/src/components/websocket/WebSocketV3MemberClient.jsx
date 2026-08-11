@@ -1,10 +1,12 @@
 import { Client } from "@stomp/stompjs";
-import Jumbotron from "@templates/Jumbotron";
+import { useAtomValue } from "jotai";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { FaPaperPlane } from "react-icons/fa6";
 import SockJS from "sockjs-client";
-import { v4 as uuidv4 } from "uuid";//랜덤한 UUID 한 개 생성
+import { loginUserState } from "@utils/storage";
+import { Button, Col, Row, Form, Badge } from "react-bootstrap";
+import { FaCircleInfo, FaPaperPlane } from "react-icons/fa6";
+import Jumbotron from "@templates/Jumbotron";
+import { LuMessageCircleMore } from "react-icons/lu";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -12,15 +14,13 @@ dayjs.locale("ko");//한국어로 설정
 
 import "./WebSocketV2AdvancedClient.css";
 
-export default function WebSocketV2AdvancedClient() {
+export default function WebSocketV3MemberClient() {
 
     const [client, setClient] = useState(null);//서버와의 연결정보를 가진 객체
-    const [uuid] = useState(()=>uuidv4());//현재 사용자의 식별번호
-    const [history, setHistory] = useState([]);//메세지 저장소
+    const loginUser = useAtomValue(loginUserState);
+    const [history, setHistory] = useState([]);//메세지 이력
     const [input, setInput] = useState("");//사용자의 입력
 
-    //WebSocket 연결은 들어오자마자 해야하며, 나갈 때 반드시 해제해야 한다
-    //→ 연관항목이 없는 useEffect를 사용하고 Clean-Up 함수를 생성해야 한다
     useEffect(()=>{
         //최초 1회 실행해야할 작업
         const client = connectToServer();
@@ -36,23 +36,23 @@ export default function WebSocketV2AdvancedClient() {
     //연결 함수
     const connectToServer = useCallback(()=>{
         //연결(socket) 생성
-        //const socket = new WebSocket("ws://localhost:8080/ws");
-        const socket = new SockJS(`${import.meta.env.VITE_SERVER_URL}/ws`);
+        const socket = new SockJS(`${import.meta.env.VITE_SERVER_URL}/ws-member`);
 
         //연결을 관리할 도구(client) 생성하여 반환
         const client = new Client({
             //연결 객체를 생성하는 함수
             webSocketFactory : () => socket , 
-            //(+추가) 서버로 전달될 헤더 설정
-            connectHeaders: {
-                uuid : uuid
-            },
-
+            
             //웹소켓의 상황별 Callback 지정
             onConnect: ()=>{//연결되었을 때
-                client.subscribe("/public/advanced", (message)=>{
-                    const json = JSON.parse(message.body);//JSON 해석해서
-                    setHistory(prev=>[...prev, json]);//히스토리에 추가
+                //채널구독 및 수신작업 안내
+                client.subscribe("/public/chat", (message)=>{
+                    const json = JSON.parse(message.body);
+                    setHistory(prev=>[...prev, json]);
+                });
+                client.subscribe(`/private/dm/${loginUser.accountId}`, (message)=>{
+                    const json = JSON.parse(message.body);
+                    setHistory(prev=>[...prev, json]);
                 });
             },
             //디버깅 설정(옵션)
@@ -63,14 +63,13 @@ export default function WebSocketV2AdvancedClient() {
         client.activate();
 
         return client;
-    }, [uuid]);
+    }, []);
     //연결 종료 함수
     const disconnectFromServer = useCallback((client)=>{
         if(client) {//client가 존재한다면
             client.deactivate();//비활성화
         }
     }, []);
-
 
     //메세지 전송 함수
     const sendMessage = useCallback(()=>{
@@ -83,8 +82,7 @@ export default function WebSocketV2AdvancedClient() {
 
         //STOMP 규격에 맞는 메세지 생성
         const stompMessage = {
-            destination: "/app/advanced",//서버로 보낼 목적지
-            headers: {uuid : uuid},//(+추가) 헤더를 key=value 형태로 전달
+            destination: "/app/chat",//서버로 보낼 목적지
             body: JSON.stringify(json),//전송할 내용 (직렬화된 JSON)
         };
 
@@ -100,12 +98,20 @@ export default function WebSocketV2AdvancedClient() {
         return true;
     }, [client]);
 
+    //(+추가) 스크롤을 끝으로 갱신시키는 처리 (반대도 가능) , * reverse인 상황
+    const messageWrapperRef = useRef();
+    useEffect(()=>{
+        //messageWrapperRef.current.scrollTop = 0;//처음으로 (하단)
+        messageWrapperRef.current.scrollTop = -messageWrapperRef.current.scrollHeight; //마지막으로 (상단)
+    }, [history]); 
+
     //시간을 표시해야 되는 상황인지 판정하는 함수
     const checkTimeVisible = useCallback((curr, prev)=>{
         if(!curr) return true;//null, undefined 모두 제거
         if(!prev) return true;//null, undefined 모두 제거
 
-        if(curr.sender !== prev.sender) return true;//작성자가 다르면 시간 표시
+        if(curr.senderId !== prev.senderId) return true;//작성자 ID가 다르면 시간 표시
+        if(curr.type !== prev.type) return true;//메세지 유형이 다르면 시간 표시
         
         const currTime = dayjs(curr.time);
         const prevTime = dayjs(prev.time);
@@ -118,20 +124,19 @@ export default function WebSocketV2AdvancedClient() {
         if(!curr) return true;//null, undefined 제거
         if(!next) return true;//null, undefined 제거
     
-        if(curr.sender !== next.sender) return true;//작성자가 다르면 표시
+        if(curr.senderId !== next.senderId) return true;//작성자가 다르면 표시
+        if(curr.type !== next.type) return true;//메세지 유형이 다르면 시간 표시
 
         return false;
     }, []);
 
-    //(+추가) 스크롤을 끝으로 갱신시키는 처리 (반대도 가능) , * reverse인 상황
-    const messageWrapperRef = useRef();
-    useEffect(()=>{
-        //messageWrapperRef.current.scrollTop = 0;//처음으로 (하단)
-        messageWrapperRef.current.scrollTop = -messageWrapperRef.current.scrollHeight; //마지막으로 (상단)
-    }, [history]); 
-
     return (<>
-        <Jumbotron title="WebSocket Version 2" content="STOMP 메세지에 헤더를 추가해서 사용하기"/>
+        <Jumbotron title="WebSocket Version 3" content="인증된 사용자끼리의 웹소켓 통신 구현"/>
+        <Row>
+            <Col>
+                <h4>현재 아이디 : {loginUser.accountId}</h4>
+            </Col>
+        </Row>
 
         <Row className="mt-5">
             <Form.Label column sm={3}>메세지 입력</Form.Label>
@@ -164,13 +169,17 @@ export default function WebSocketV2AdvancedClient() {
             <Col>
                 <div className="message-wrapper" ref={messageWrapperRef}>
                     {history.map((message, index)=>{
-                        //추가 계산 코드 작성
-                        const my = uuid === message.sender;
+                        //내 메세지인지 판정
+                        const my = loginUser.accountId === message.senderId;
                         const isDiffSender = checkSenderVisible(history[index], history[index+1]);
-                        return (
+                        const isDiffTime = checkTimeVisible(history[index], history[index-1]);
+
+                        return  (
                         <div className={`message-outer ${my ? "my" : ""}`} key={index}>
+                            {/* 일반 채팅 메세지 */}
+                            { message.type === "chat" && (
                             <div className="message-inner">
-                                {/* 가로로 3칸을 나눠 순서대로 프로필/작성자+내용/작성시각으로 구현 */}
+                                {/* 프로필 출력 */}
                                 { !my && (
                                 <div className="profile-wrapper">
                                     { (isDiffSender) && (
@@ -178,26 +187,83 @@ export default function WebSocketV2AdvancedClient() {
                                     )}
                                 </div>
                                 ) }
+                                {/* 컨텐츠(작성자), 내용, 시간 등 출력 */}
                                 <div className="content-wrapper">
                                     { (!my && isDiffSender) && (
-                                    <div className="sender">{message.sender}</div>
+                                    <div className="sender">
+                                        {message.senderNickname}
+                                        <Badge bg="primary" className="ms-2">
+                                            {message.senderLevel}
+                                        </Badge>
+                                    </div>
                                     )}
                                     <div className="content">
                                         <div className="body">{message.content}</div>
                                         {/* 시간은 경우에 따라서 나오지 않을 수도 있다 */}
                                         <div className="time">
-                                        { checkTimeVisible(history[index], history[index-1]) && (
+                                        { isDiffTime && (
                                             dayjs(message.time).format("a h:mm")
                                         )}
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            ) }
+
+                            {/* DM 메세지 */}
+                            { message.type === "dm" && (
+                            <div className="message-inner dm">
+                                {/* 프로필 출력 */}
+                                { !my && (
+                                <div className="profile-wrapper">
+                                    { (isDiffSender) && (
+                                    <img src="https://picsum.photos/100"/>
+                                    )}
+                                </div>
+                                ) }
+                                {/* 컨텐츠(작성자), 내용, 시간 등 출력 */}
+                                <div className="content-wrapper">
+                                    { isDiffSender && (
+                                    <div className="sender">
+                                        {/* 
+                                            DM은  
+                                            - 발신자에게는 수신자의 정보가
+                                            - 수신자에게는 발신자의 정보가 
+                                            나와야함
+                                        */}
+                                        <LuMessageCircleMore className="me-2"/>
+                                        
+                                        { my ? (<>
+                                            {`To.${message.receiverNickname}`}
+                                            <Badge bg="primary" className="ms-2">
+                                                {message.receiverLevel}
+                                            </Badge>
+                                        </>) : (<>
+                                            {`From.${message.senderNickname}`}
+                                            <Badge bg="primary" className="ms-2">
+                                                {message.senderLevel}
+                                            </Badge>
+                                        </>) }
+                                    </div>
+                                    )}
+                                    <div className="content">
+                                        <div className="body">{message.content}</div>
+                                        {/* 시간은 경우에 따라서 나오지 않을 수도 있다 */}
+                                        <div className="time">
+                                        { isDiffTime && (
+                                            dayjs(message.time).format("a h:mm")
+                                        )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            ) }
+                            
                         </div>
-                        )
+                        );
                     })}
                 </div>
             </Col>
         </Row>
-    </>)
+    </>);
 }
