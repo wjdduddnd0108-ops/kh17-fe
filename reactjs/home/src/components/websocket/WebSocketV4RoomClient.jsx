@@ -1,5 +1,4 @@
 import Jumbotron from "@templates/Jumbotron";
-import { Client } from "@stomp/stompjs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
@@ -7,16 +6,19 @@ import Swal from "sweetalert2";
 import { Badge, Button, Col, Form, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { useAtomValue } from "jotai";
 import { loginUserState } from "@utils/storage";
-import { FaPaperPlane, FaUsers } from "react-icons/fa6";
+import { FaChevronDown, FaPaperPlane, FaUsers } from "react-icons/fa6";
 import SockJS from "sockjs-client";
-
+import { Client } from "@stomp/stompjs";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");//한국어로 설정
+import { GiExitDoor } from "react-icons/gi";
+import { FaPlus, FaXmark } from "react-icons/fa6";
 
 export default function WebSocketV4RoomClient() {
     //방번호 읽기
     const { roomNo } = useParams();
+
     const navigate = useNavigate();
 
     //방정보 불러오기
@@ -28,16 +30,16 @@ export default function WebSocketV4RoomClient() {
             setUsers(data.users);
         }
         catch (e) {
-            if (e.response?.status === 403) {
+            if (e.status === 403) {
                 await Swal.fire("당신은 방 참여자가 아닙니다");
                 navigate("/websocket/v4");//목록으로 이동
             }
-            else if (e.response?.status === 404) {
+            else if (e.status === 404) {
                 await Swal.fire("존재하지 않는 방입니다");
                 navigate("/websocket/v4");//목록으로 이동
             }
-            else {
-                await Swal.fire("일시적인 서버 오류입니다.\n잠시 후 실행해주세요.");
+            else {//500
+                await Swal.fire("일시적인 서버 오류입니다.\n잠시 후 실행해주세요");
                 navigate("/websocket/v4");//목록으로 이동
             }
         }
@@ -49,13 +51,45 @@ export default function WebSocketV4RoomClient() {
     //웹소켓 관련
     const loginUser = useAtomValue(loginUserState);
     const [client, setClient] = useState(null);//서버와의 연결정보를 가진 객체
-    const [history, setHistory] = useState([]);//메세지 이력
     const [input, setInput] = useState("");//사용자의 입력
-    const [users, setUsers] = useState([]);//접속한 사용자의 목록
-    const inputRef = useRef();
 
+    const [history, setHistory] = useState([]);//메세지 이력
+
+    const inputRef = useRef();//입력창 제어용 리모컨
+    const [users, setUsers] = useState([]);//접속한 사용자의 목록
+
+    const [last, setLast] = useState(true);//더보기 가능 여부
+    const lastMessageNo = useMemo(() => {
+        if (!history) return null;
+        if (history.length === 0) return null;
+        return history[0].no || null;
+    }, [history]);
+
+    //웹소켓과 별개로 채팅내역을 불러오는 작업이 필요 (AJAX 사용)
     useEffect(() => {
-        if (room === null) return;//방 정보가 존재하지 않으면 연결을 하지마라(기존과 차이점)
+        loadHistory();
+    }, []);
+    const loadHistory = useCallback(async () => {
+        const { data } = await apiClient.post(
+            `/room/${roomNo}/messages`,
+            { size: 100 }
+        );
+        setHistory(data.messages);//덮어쓰기
+        setLast(data.last);
+    }, []);
+    const loadMoreHistory = useCallback(async () => {
+        const { data } = await apiClient.post(
+            `/room/${roomNo}/messages`,
+            { size: 100, lastMessageNo: lastMessageNo }
+        );
+        setHistory(prev => [...data.messages, ...prev]);//앞에 추가
+        setLast(data.last);
+    }, [lastMessageNo]);
+
+
+    //연결 및 해제
+    useEffect(() => {
+        if (room === null) return;//방 정보가 존재하지 않으면 연결을 하지마라! (기존과 차이점)
 
         //최초 1회 실행해야할 작업
         const client = connectToServer();
@@ -100,9 +134,9 @@ export default function WebSocketV4RoomClient() {
                     //toast.error(json.content);
                 });
                 client.subscribe(`/private/${roomNo}/users/${loginUser.accountId}`, (message) => {
+                    //여기서의 메세지는 List<TokenParseResponseVO>이다. 즉, 배열이다.
                     const jsonArray = JSON.parse(message.body);
                     setUsers(jsonArray);
-                    //toast.error(json.content);
                 });
             },
             //디버깅 설정(옵션)
@@ -150,12 +184,27 @@ export default function WebSocketV4RoomClient() {
 
     //(+추가) 스크롤을 끝으로 갱신시키는 처리 (반대도 가능) , * reverse인 상황
     const messageWrapperRef = useRef();
+    const topFlag = useRef(true);//최상단(마지막)이면 true, 아니면 false인 값 (태그 제어 목적이 아님)
     useEffect(() => {
-        if(messageWrapperRef.current){
+        if (topFlag.current === true) {
+            keepScrollTop();
+        }
+    }, [history]);
+    const isScrollTop = useCallback(() => {
+        if (messageWrapperRef.current) {
+            // console.log("스크롤 최상단인지 계산중...");
+            const { scrollTop, scrollHeight, clientHeight } = messageWrapperRef.current;
+            const diff = scrollHeight - (Math.abs(scrollTop) + clientHeight);
+            topFlag.current = diff <= 5;
+            console.log("스크롤 최상단 여부 : " + topFlag.current);
+        }
+    }, []);
+    const keepScrollTop = useCallback(() => {
+        if (messageWrapperRef.current) {
             //messageWrapperRef.current.scrollTop = 0;//처음으로 (하단)
             messageWrapperRef.current.scrollTop = -messageWrapperRef.current.scrollHeight; //마지막으로 (상단)
         }
-    }, [history]);
+    }, []);
 
     //시간을 표시해야 되는 상황인지 판정하는 함수
     const checkTimeVisible = useCallback((curr, prev) => {
@@ -182,7 +231,43 @@ export default function WebSocketV4RoomClient() {
         return false;
     }, []);
 
+    //방 나가기
+    const exitRoom = useCallback(async () => {
+        const result = await Swal.fire({
+            title: "방을 나가시겠습니까?",
+            text: "사라진 대화내역은 다시 복구할 수 없습니다",
+            icon: "warning",
+            confirmButtonText: "네 나가겠습니다",
+            cancelButtonText: "아니오, 나가지 않겠습니다",
+            showCancelButton: true
+        });
+        if (result.isConfirmed === false) return;
 
+        await apiClient.post("/room/leave", {
+            roomNo: Number(roomNo)
+        });
+
+        navigate("/websocket/v4");
+    }, [roomNo, navigate]);
+
+    const kickRoom = useCallback(async () => {
+        const result = await Swal.fire({
+            title: `${target.accountId}님을 추방하시겠습니까?`,
+            icon: "warning",
+            confirmButtonText: "네, 추방하겠습니다",
+            cancelButtonText: "아니오, 추방하지 않겠습니다",
+            showCancelButton: true
+        });
+        if (result.isConfirmed === false) return;
+
+        //사용자 목록에서 제거
+        const { data } = await apiClient.post(
+            "/room/kick", { roomNo : roomNo, accountId : target.accountId}
+        );
+    }, []);
+
+
+    //화면
     if (room === null) {
         return (<h1>로딩중...</h1>);
     }
@@ -191,17 +276,27 @@ export default function WebSocketV4RoomClient() {
         <Jumbotron title="그룹 채팅 예제" content={`현재 입장하신 방은 ${roomNo}번방 입니다`} />
 
         {/* 방 정보 출력 */}
-        <Row className="mt-5">
+        <Row className="mt-2">
             <Col sm={3} className="text-info fw-bold">방 제목</Col>
             <Col sm={9}>{room.roomName}</Col>
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-2">
             <Col sm={3} className="text-info fw-bold">방장</Col>
             <Col sm={9}>{room.roomOwner ?? "없음"}</Col>
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-2">
             <Col sm={3} className="text-info fw-bold">인원</Col>
-            <Col sm={9}>{users.length} /{room.roomLimit ?? "제한 없음"}</Col>
+            <Col sm={9}>{users.length} / {room.roomLimit ?? "제한 없음"}</Col>
+        </Row>
+
+        {/* 나가기 버튼 */}
+        <Row>
+            <Col className="text-end">
+                <Button variant="danger" onClick={exitRoom}>
+                    <GiExitDoor />
+                    <span className="ms-2">나가기</span>
+                </Button>
+            </Col>
         </Row>
 
         {/* 입력창 */}
@@ -218,11 +313,12 @@ export default function WebSocketV4RoomClient() {
                             //엔터를 누르면 전송버튼과 동일한 기능을 실행
                             if (e.key === "Enter") sendMessage();
                         }}
+                        ref={inputRef}
                     />
 
                     <Button variant="success" className="text-nowrap ms-2"
                         disabled={isConnect === false} onClick={sendMessage}>
-                        <FaPaperPlane/>
+                        <FaPaperPlane />
                         <span className="ms-2 d-none d-sm-inline">전송</span>
                     </Button>
                 </div>
@@ -240,7 +336,17 @@ export default function WebSocketV4RoomClient() {
 
             {/* 메세지 이력 */}
             <Col sm={9}>
-                <div className="message-wrapper" ref={messageWrapperRef}>
+                <div className="message-wrapper" ref={messageWrapperRef}
+                    onScroll={isScrollTop}>
+                    {/* 첫지점(맨아래) */}
+                    {last === false && (
+                        <Button variant="secondary" onClick={loadMoreHistory}>
+                            <FaChevronDown />
+                            <span className="mx-2">메세지 더 불러오기</span>
+                            <FaChevronDown />
+                        </Button>
+                    )}
+
                     {history.map((message, index) => {
                         //내 메세지인지 판정
                         const my = loginUser.accountId === message.senderId;
@@ -271,56 +377,12 @@ export default function WebSocketV4RoomClient() {
                                                 </div>
                                             )}
                                             <div className="content">
-                                                <div className="body">{message.content}</div>
-                                                {/* 시간은 경우에 따라서 나오지 않을 수도 있다 */}
-                                                <div className="time">
-                                                    {isDiffTime && (
-                                                        dayjs(message.time).format("a h:mm")
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
+                                                <div className="body">
+                                                    {/* 테스트용 번호 */}
+                                                    <Badge>{message.no}</Badge>
 
-                                {/* DM 메세지 */}
-                                {message.type === "dm" && (
-                                    <div className="message-inner dm">
-                                        {/* 프로필 출력 */}
-                                        {!my && (
-                                            <div className="profile-wrapper">
-                                                {(isDiffSender) && (
-                                                    <img src="https://picsum.photos/100" />
-                                                )}
-                                            </div>
-                                        )}
-                                        {/* 컨텐츠(작성자), 내용, 시간 등 출력 */}
-                                        <div className="content-wrapper">
-                                            {isDiffSender && (
-                                                <div className="sender">
-                                                    {/* 
-                                            DM은  
-                                            - 발신자에게는 수신자의 정보가
-                                            - 수신자에게는 발신자의 정보가 
-                                            나와야함
-                                        */}
-                                                    <LuMessageCircleMore className="me-2" />
-
-                                                    {my ? (<>
-                                                        {`To.${message.receiverNickname}`}
-                                                        <Badge bg="primary" className="ms-2">
-                                                            {message.receiverLevel}
-                                                        </Badge>
-                                                    </>) : (<>
-                                                        {`From.${message.senderNickname}`}
-                                                        <Badge bg="primary" className="ms-2">
-                                                            {message.senderLevel}
-                                                        </Badge>
-                                                    </>)}
+                                                    {message.content}
                                                 </div>
-                                            )}
-                                            <div className="content">
-                                                <div className="body">{message.content}</div>
                                                 {/* 시간은 경우에 따라서 나오지 않을 수도 있다 */}
                                                 <div className="time">
                                                     {isDiffTime && (
@@ -342,6 +404,8 @@ export default function WebSocketV4RoomClient() {
                             </div>
                         );
                     })}
+
+                    {/* 마지막(맨위) */}
                 </div>
             </Col>
 
@@ -357,17 +421,27 @@ export default function WebSocketV4RoomClient() {
                             }}
                             style={{ "cursor": "pointer" }}>
 
-                            <span>{user.accountId}</span>
-
-                            {user.accountId === loginUser.accountId && (
-                                <span className="ms-1 fw-bold">(나)</span>
-                            )}
+                            <div className="d-flex justify-content-between">
+                                <div>
+                                    <span>{user.accountId}</span>
+                                    {user.accountId === loginUser.accountId && (
+                                        <span className="ms-1 fw-bold">(나)</span>
+                                    )}
+                                </div>
+                                <div>
+                                    {/* 방장이면서 자신을 제외한 사람에게 X마크를 추가 */}
+                                    { ( room.roomOwner === loginUser.accountId 
+                                        &&
+                                        user.accountId !== loginUser.accountId)&&(
+                                        <FaXmark className="text-danger fw-bold"
+                                            onClick={e=>kickRoom(user)}/>
+                                    )}
+                                </div>
+                            </div>
                         </ListGroupItem>
                     ))}
                 </ListGroup>
             </Col>
         </Row>
-
-
     </>)
 }
