@@ -28,10 +28,10 @@ jobs:
           cache-dependency-path: reactjs/demo01/package-lock.json
 
       - name: Install
-        uses: npm ci
+        run: npm ci
 
       - name: Build
-        uses: npm run build
+        run: npm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
